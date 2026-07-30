@@ -6,7 +6,9 @@
 
 ### 作用
 
-`$theoretical-basis` 用在科研探索和算法开发中。它把“先找依据，再动代码”变成一道明确的门槛：只要修改可能影响算法行为或科研结论，AI 就要先说明依据是什么、是否适用，以及它究竟支持哪一部分改动。
+`$theoretical-basis` 用在科研探索和算法开发中。它不只是帮你评估一个已经写好的方案，更重要的是约束 AI 自己的修改过程：当 AI 准备设计、调参、替换或重构算法模块时，它要主动停下来，先查这个改动有没有可追溯、可适用的理论依据，再决定能不能动代码。
+
+这会把常见的“看实验结果猜原因，然后继续改”换成更稳妥的顺序：先说清准备改什么、需要哪方面的依据，检索并核验来源，通过门禁后再做最小修改，最后用实验检查预期是否成立。
 
 规则很直接：
 
@@ -15,24 +17,28 @@
 - 双方都没有依据时，只有研究者明确同意，方案才能作为“待验证假设”继续；
 - 真要做假设实验，也要先写清基线、指标、对照、失败阈值和停止规则。
 
+实验结果可以支持或推翻一个事先写清的预测，但不能反过来充当理论依据。AI 不能因为某次指标上涨，就自行猜测机制成立并据此开始下一轮修改。
+
 完整运行规则以 [SKILL.md](./SKILL.md) 为准，来源等级、风险门槛、检索记录及实验协议见 [evidence-protocol.md](./references/evidence-protocol.md)。README 只提供安装和使用入口。
 
 ### 解决什么痛点？
 
-很多科研 Prompt 只写一句“把这个模块优化一下”，却没有说明什么证据足以支持修改，也没规定找不到依据时该怎么办。结果往往是 AI 先改代码，再倒过来补理由；论文、百科和论坛帖子混在一起，看似有引用，却说不清各自支持什么结论。
+很多科研 Prompt 只写一句“把这个模块优化一下”，却没有说明什么证据足以支持修改，也没规定找不到依据时该怎么办。AI 很容易盯着上一轮实验的涨跌猜原因，接着改参数、换结构，再为结果补一个听起来合理的解释。这样得到的是事后猜测，不是理论依据。
+
+另一个常见问题是 AI 先改代码，再倒过来找引用。论文、百科和论坛帖子混在一起，看似有来源，却说不清各自支持什么结论，也没有检查来源里的假设是否适用于当前模块。
 
 还有一个更实际的问题：这类要求经常散落在不同 Prompt 里。换一个任务或 Agent，规则就丢了，也很难复用和版本管理。`$theoretical-basis` 把证据核验、暂停条件和假设实验流程收进同一个 Skill，让不同科研任务可以沿用同一套门禁，同时保留清晰的 Git 变更记录。
 
 ### 快速示例（最小 Demo）
 
-输入：
+用户只需要正常提出开发任务，不必每次专门提醒 AI “先评估”：
 
 ```text
-使用 $theoretical-basis 评估：把训练模块里的固定阈值改成自适应阈值，
-目前没有论文或推导，只是觉得效果可能更好。
+上一轮实验里验证集指标下降了。请继续优化训练模块，
+把固定阈值改成自适应阈值，看看能不能把指标提回来。
 ```
 
-当检索后仍没有足够依据时，AI 应该这样处理：
+`$theoretical-basis` 应在改代码前自动介入。它不能根据这一次实验结果猜测自适应阈值有效，而要先确定需要核验稳定性、统计有效性和适用条件，再主动检索来源。如果两轮检索仍没有足够依据，结果应类似：
 
 ```text
 已暂停修改
@@ -44,7 +50,7 @@
 我会再询问你是否明确授权将它作为“未获支持的假设”进行受控实验。
 ```
 
-重点不在输出格式，而在行为：没有依据，也没有明确的假设授权，就不会生成或应用修改。
+重点不在输出格式，而在行为：AI 会主动为自己准备做的改动寻找依据。实验结果不会自动变成理论；没有依据，也没有明确的假设授权，就不会生成或应用修改。
 
 ### 安装
 
@@ -72,11 +78,17 @@ git -C ~/.codex/skills/theoretical-basis pull --ff-only
 
 ### 使用
 
+直接提出科研算法修改任务即可：
+
 ```text
-使用 $theoretical-basis 评估这个算法模块的修改。请先给出证据门禁结果；没有充分依据时暂停修改并询问我。
+根据最近几轮实验结果继续优化这个损失函数，并实现必要的代码修改。
 ```
 
-Skill 也可在任务符合 `SKILL.md` 描述中的触发条件时自动启用。
+当任务涉及算法行为或科研结论时，Skill 会要求 AI 在编辑前主动运行证据门禁。也可以显式调用：
+
+```text
+使用 $theoretical-basis 修改这个算法模块。请为你准备做出的每项实质改动主动寻找理论依据。
+```
 
 ### 验证
 
@@ -104,7 +116,9 @@ python scripts/validate_skill.py . --self-test-negative
 
 ### Purpose
 
-`$theoretical-basis` is for scientific exploration and algorithm development. It turns “find the basis before changing the code” into an explicit gate. When a proposed change may affect algorithm behavior or scientific conclusions, Codex must identify the supporting claim, check whether it applies, and state exactly what it justifies.
+`$theoretical-basis` is for scientific exploration and algorithm development. It does more than assess a proposal supplied by the user. It governs Codex's own changes: whenever Codex is about to design, tune, replace, or refactor a research algorithm, it must stop, actively look for applicable theoretical support, and pass the evidence gate before editing the code.
+
+This replaces a common loop—observe an experimental result, guess at the cause, and make another change—with a disciplined sequence: define the proposed change, identify the claim it requires, verify sources, make the smallest supported edit, and then test the prediction.
 
 The rules are straightforward:
 
@@ -113,24 +127,28 @@ The rules are straightforward:
 - proceed as an unsupported hypothesis only after the researcher explicitly authorizes it;
 - define the baseline, controls, metrics, failure threshold, and stopping rule before writing the smallest experimental change.
 
+An experimental result may test a preregistered prediction, but it does not become theory after the fact. Codex may not treat one metric increase as proof of a mechanism and use that guess to authorize the next modification.
+
 [SKILL.md](./SKILL.md) is the canonical runtime contract. Source ranking, risk thresholds, search records, and experiment requirements live in [evidence-protocol.md](./references/evidence-protocol.md). This README is limited to distribution and usage guidance.
 
 ### What problem does it solve?
 
-Research prompts often say little more than “improve this module.” They rarely define what evidence would justify the change or what the agent should do when no basis can be found. That encourages a bad sequence: edit first, then search for a plausible explanation. Papers, encyclopedias, and forum posts may all appear as citations even though they support very different kinds of claims.
+Research prompts often say little more than “improve this module.” They rarely define what evidence would justify the change or what the agent should do when no basis can be found. An agent can easily over-interpret the latest metric movement, guess at a mechanism, and keep tuning. That is post-hoc speculation, not theoretical support.
+
+Another failure mode is editing first and looking for citations afterward. Papers, encyclopedias, and forum posts may all appear as sources even though they support different kinds of claims or rely on assumptions that do not fit the current module.
 
 These rules also tend to be copied between prompts and lost between agents. `$theoretical-basis` packages the evidence gate, pause conditions, and hypothesis workflow as one reusable, version-controlled Skill.
 
 ### Quick example (minimal demo)
 
-Prompt:
+The user can give an ordinary development request without explicitly asking for an assessment:
 
 ```text
-Use $theoretical-basis to assess replacing the fixed training threshold with an
-adaptive threshold. I have no paper or derivation; I only think it may work better.
+The validation metric dropped in the last run. Continue improving the training module:
+replace the fixed threshold with an adaptive one and see whether the metric recovers.
 ```
 
-If the search still finds no adequate basis, the expected response is:
+`$theoretical-basis` should intervene before any edit. Codex must not infer from one result that an adaptive threshold is justified. It should identify the required stability, statistical-validity, and applicability claims and search for support. If two search passes still find no adequate basis, the expected response is:
 
 ```text
 Modification paused
@@ -142,7 +160,7 @@ Allowed next step: provide a relevant theory or source. If neither of us can fin
 I will separately ask whether you explicitly authorize a controlled unsupported-hypothesis experiment.
 ```
 
-The wording may vary. The behavior may not: without adequate support or explicit hypothesis authorization, Codex must not generate or apply the change.
+The wording may vary. The behavior may not: Codex actively checks its own intended changes. Experimental results do not automatically become theory, and without adequate support or explicit hypothesis authorization, Codex must not generate or apply the change.
 
 ### Installation
 
@@ -170,11 +188,17 @@ git -C ~/.codex/skills/theoretical-basis pull --ff-only
 
 ### Usage
 
+Submit the research change normally:
+
 ```text
-Use $theoretical-basis to assess this algorithm-module change. Report the evidence-gate decision first, and pause for my input when support is insufficient.
+Use the latest experiment results to continue improving this loss function and implement the necessary changes.
 ```
 
-Codex may also invoke the Skill automatically when a task matches the trigger description in `SKILL.md`.
+When the task may affect algorithm behavior or scientific conclusions, the Skill requires Codex to run the evidence gate proactively before editing. Explicit invocation is also supported:
+
+```text
+Use $theoretical-basis to modify this algorithm module. Actively find theoretical support for every substantive change you intend to make.
+```
 
 ### Validation
 
