@@ -7,6 +7,12 @@ description: Require traceable theoretical support before changing scientific-re
 
 Use an evidence gate before making behavior-affecting research or algorithm changes. Never invent a citation or describe an empirical convention as established theory.
 
+## Trigger proactively
+
+Apply this Skill whenever Codex itself intends to propose, plan, implement, tune, or revise a behavior-affecting research change. Do not wait for the researcher to ask for theoretical support or to repeat a reminder. Trigger again during planning or execution if a newly discovered implementation choice could alter scientific behavior, assumptions, evaluation, or claims.
+
+`$theoretical-basis` is the orchestration core and the sole owner of scope classification, evidence applicability, and PASS/PARTIAL/FAIL. Retrieval or planning Skills may support the workflow, but they cannot issue, upgrade, or bypass the gate decision.
+
 ## Classify scope and risk
 
 Classify the proposal before searching or editing:
@@ -45,6 +51,21 @@ When `$academic-search` is installed and available, use it as the preferred retr
 - Treat returned rankings, citation counts, abstracts, metadata, and PDF links as discovery results. Open and verify the underlying sources before using them for PASS.
 - Keep evidence classification, applicability analysis, contradiction handling, and PASS/PARTIAL/FAIL authority in `$theoretical-basis`. Never delegate the gate decision.
 - If `$academic-search` is unavailable or a source fails, use other available search tools and record the limitation. Do not weaken the evidence threshold.
+
+## Carry verified evidence into planning
+
+After a PASS or PARTIAL decision, create the **Evidence Handoff** defined in `references/evidence-protocol.md`. Treat it as an implementation contract, not a citation appendix. A PARTIAL handoff covers only the supported portion. A FAIL decision creates no implementation handoff and may produce only evidence-retrieval work, a blocker, or a user decision checkpoint unless the unsupported-hypothesis protocol is explicitly authorized.
+
+When `$spec-skill` is installed and the researcher wants implementation:
+
+- give verified sources and applicable passages to plan tasks as `read_first` inputs;
+- turn supported scope into bounded task actions and forbidden scope into explicit prohibitions;
+- turn assumptions and limitations into acceptance criteria;
+- turn evidence-derived predictions into tests and verification commands;
+- turn required scientific outcomes and safety boundaries into `must_haves`;
+- preserve every `$spec-skill` Ask-Plan-Execute confirmation checkpoint.
+
+`$spec-skill` operationalizes the handoff but does not judge the evidence. Do not create an implementation task from FAIL or from unsupported PARTIAL scope. If execution or verification reveals a new substantive mechanism, assumption, metric, data interpretation, or scientific-behavior change outside the handoff, stop before editing and run a fresh `$theoretical-basis` gate for that deviation.
 
 ## Use user-provided theory libraries
 

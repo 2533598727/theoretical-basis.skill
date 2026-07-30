@@ -10,6 +10,7 @@
 - [Search source matrix](#search-source-matrix)
 - [Custom theory libraries](#custom-theory-libraries)
 - [Academic-search integration](#academic-search-integration)
+- [Evidence Handoff and spec planning](#evidence-handoff-and-spec-planning)
 - [Search-design basis](#search-design-basis)
 - [Two-pass search sequence](#two-pass-search-sequence)
 - [Evidence record](#evidence-record)
@@ -116,6 +117,43 @@ Use an installed `$academic-search` Skill as a retrieval adapter, not as the evi
 The retrieval Skill's light-scan and deep-fetch stages remain inside the current evidence pass. Do not count them as permission for a third evidence pass. Citation count, venue ranking, relevance score, metadata completeness, and open-PDF availability help discovery and prioritization but never satisfy the evidence gate by themselves.
 
 If the integration is unavailable, rate-limited, blocked, or missing a required platform, fall back to available tools and record the gap. Do not claim full coverage or lower the risk-tier threshold.
+
+## Evidence Handoff and spec planning
+
+Create an Evidence Handoff only after `$theoretical-basis` has issued PASS or PARTIAL. `$theoretical-basis` remains the sole gate owner; retrieval rankings and planning structure cannot change the decision.
+
+Record these fields:
+
+```text
+Gate: PASS | PARTIAL
+Risk tier:
+Required claims:
+Verified sources and applicable passages:
+Supported scope:
+Forbidden scope:
+Assumptions:
+Limitations:
+Validation predictions:
+Unresolved risks:
+```
+
+For PARTIAL, state the supported and forbidden portions separately. For FAIL, do not emit this implementation handoff. FAIL may create only search work, a blocker, or a researcher checkpoint until the unsupported-hypothesis protocol has been explicitly authorized.
+
+When `$spec-skill` is available, map the handoff into its planning artifacts:
+
+| Evidence Handoff field | `$spec-skill` destination | Required effect |
+|---|---|---|
+| Verified sources and applicable passages | task `read_first` | Executor reads the actual basis before editing |
+| Supported scope | task `action` | Task names the smallest permitted behavior change |
+| Forbidden scope | task `action` and acceptance criteria | Plan explicitly excludes FAIL and unsupported PARTIAL work |
+| Assumptions and limitations | `acceptance_criteria` | Checks prove the implementation stays inside applicability conditions |
+| Validation predictions | tests and `verification` | Observed behavior is compared with the evidence-derived prediction |
+| Required claims and safety boundaries | `must_haves` | Goal-backward verification checks scientific outcomes and stopping rules |
+| Unresolved risks | checkpoint, blocker, or verification note | Risk stays visible and cannot silently become implementation scope |
+
+Keep the normal `$spec-skill` user confirmation between planning and execution. An Evidence Handoff authorizes planning within its boundaries; it does not authorize automatic execution.
+
+During execution and verification, compare each substantive implementation decision with the handoff. If the code would introduce a new mechanism, assumption, metric, data meaning, evaluation rule, or other scientific-behavior change, stop before making that deviation and return it to a fresh `$theoretical-basis` gate. A generic instruction to continue cannot expand the handoff.
 
 ## Search-design basis
 
