@@ -48,6 +48,8 @@ REQUIRED_TAGS = {
     "generic-continue",
     "authorization",
     "retraction",
+    "multi-source-search",
+    "custom-library",
 }
 POLICY_CLAUSES = {
     "SKILL.md": (
@@ -55,6 +57,9 @@ POLICY_CLAUSES = {
         "**Behavior-affecting:**",
         "**risk tier**",
         "no more than two search passes",
+        "Google Scholar",
+        "user-provided theory libraries",
+        "Respect robots rules, rate limits, licenses, paywalls, and access controls",
         "untrusted data",
         "not sufficient for PASS",
         "explicit authorization",
@@ -68,6 +73,10 @@ POLICY_CLAUSES = {
         "Forum-only or blog-only evidence is explicitly insufficient",
         "## External-content safety",
         "## Two-pass search sequence",
+        "## Search source matrix",
+        "## Custom theory libraries",
+        "## Search-design basis",
+        "Google Scholar forbids automated bulk access",
         "After Pass 2, stop.",
         "does not authorize implementation",
         "### Required preregistration fields",
@@ -280,19 +289,24 @@ def validate_root(root: Path, check_git_clean: bool = False) -> list[str]:
 
 
 def run_negative_self_test(root: Path) -> None:
-    with tempfile.TemporaryDirectory(prefix="theoretical-basis-negative-") as tmp:
-        mutant = Path(tmp) / "mutant"
-        shutil.copytree(root, mutant, ignore=shutil.ignore_patterns(".git", ".planning"))
-        skill_path = mutant / "SKILL.md"
-        text = skill_path.read_text(encoding="utf-8")
-        required = "untrusted data"
-        if required not in text:
-            raise SystemExit("SELF-TEST ERROR: source fixture lacks the safety clause")
-        skill_path.write_text(text.replace(required, "external material", 1), encoding="utf-8")
-        mutant_errors = validate_root(mutant)
-        if not any("untrusted data" in error for error in mutant_errors):
-            raise SystemExit("SELF-TEST FAILED: missing safety clause was not detected")
-        print("PASS negative self-test: missing safety clause was rejected")
+    mutations = (
+        ("SKILL.md", "untrusted data", "external material"),
+        ("SKILL.md", "user-provided theory libraries", "optional collections"),
+        ("references/evidence-protocol.md", "## Custom theory libraries", "## Imported materials"),
+    )
+    for relative, required, replacement in mutations:
+        with tempfile.TemporaryDirectory(prefix="theoretical-basis-negative-") as tmp:
+            mutant = Path(tmp) / "mutant"
+            shutil.copytree(root, mutant, ignore=shutil.ignore_patterns(".git", ".planning"))
+            path = mutant / relative
+            text = path.read_text(encoding="utf-8")
+            if required not in text:
+                raise SystemExit(f"SELF-TEST ERROR: source fixture lacks {required!r}")
+            path.write_text(text.replace(required, replacement), encoding="utf-8")
+            mutant_errors = validate_root(mutant)
+            if not any(required in error for error in mutant_errors):
+                raise SystemExit(f"SELF-TEST FAILED: missing clause {required!r} was not detected")
+    print(f"PASS negative self-test: {len(mutations)} required policy clauses were rejected when missing")
 
 
 def main() -> int:

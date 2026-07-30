@@ -14,12 +14,15 @@
 
 - 证据不够，就先不改；
 - 检索两轮仍找不到依据，转而询问研究者是否有论文、书籍或领域资料；
+- 每轮尽量覆盖互补来源，例如 Google Scholar、arXiv、AAAI、Semantic Scholar、OpenAlex、Crossref，以及领域数据库和会议论文库；
 - 双方都没有依据时，只有研究者明确同意，方案才能作为“待验证假设”继续；
 - 真要做假设实验，也要先写清基线、指标、对照、失败阈值和停止规则。
 
 实验结果可以支持或推翻一个事先写清的预测，但不能反过来充当理论依据。AI 不能因为某次指标上涨，就自行猜测机制成立并据此开始下一轮修改。
 
 完整运行规则以 [SKILL.md](./SKILL.md) 为准，来源等级、风险门槛、检索记录及实验协议见 [evidence-protocol.md](./references/evidence-protocol.md)。README 只提供安装和使用入口。
+
+用户还可以提供自己的理论库，例如本地论文目录、Zotero 导出、BibTeX/RIS/CSL JSON、DOI 或 arXiv ID 列表，以及已连接的知识库。Skill 会先记录资料库的范围、版本和权限，再把它作为第一轮检索来源；资料出现在自定义库中并不等于自动可信，原文和适用条件仍要核验。
 
 ### 解决什么痛点？
 
@@ -90,6 +93,13 @@ git -C ~/.codex/skills/theoretical-basis pull --ff-only
 使用 $theoretical-basis 修改这个算法模块。请为你准备做出的每项实质改动主动寻找理论依据。
 ```
 
+导入自定义理论库时，直接说明可访问的位置或格式：
+
+```text
+使用 $theoretical-basis 修改这个优化器。先检索公开学术来源，
+并把我提供的 Zotero 导出文件和 papers/ 目录作为自定义理论库。
+```
+
 ### 验证
 
 需要 Python 3.10+ 和 PyYAML：
@@ -99,7 +109,7 @@ python -m pip install PyYAML==6.0.2
 python scripts/validate_skill.py . --self-test-negative
 ```
 
-验证器检查 UTF-8、Skill 元数据、关键安全条款、旧名称、文档引用和 12 个行为场景；负向自测会确认缺失安全条款时能够失败。GitHub Actions 会在 push 和 pull request 时运行同一入口。
+验证器检查 UTF-8、Skill 元数据、关键安全条款、旧名称、文档引用和 14 个行为场景；负向自测会确认安全、广域检索或自定义理论库规则缺失时能够失败。GitHub Actions 会在 push 和 pull request 时运行同一入口。
 
 ### 贡献
 
@@ -124,12 +134,15 @@ The rules are straightforward:
 
 - pause when the evidence is insufficient;
 - after two unsuccessful search passes, ask the researcher for a paper, book, or domain source;
+- cover complementary sources where available, including Google Scholar, arXiv, AAAI, Semantic Scholar, OpenAlex, Crossref, and field-specific indexes or venue libraries;
 - proceed as an unsupported hypothesis only after the researcher explicitly authorizes it;
 - define the baseline, controls, metrics, failure threshold, and stopping rule before writing the smallest experimental change.
 
 An experimental result may test a preregistered prediction, but it does not become theory after the fact. Codex may not treat one metric increase as proof of a mechanism and use that guess to authorize the next modification.
 
 [SKILL.md](./SKILL.md) is the canonical runtime contract. Source ranking, risk thresholds, search records, and experiment requirements live in [evidence-protocol.md](./references/evidence-protocol.md). This README is limited to distribution and usage guidance.
+
+Researchers can also provide a custom theory library: a local paper directory, Zotero export, BibTeX/RIS/CSL JSON, DOI or arXiv-ID list, or a connected knowledge store. The Skill records its scope, snapshot, and access boundaries before using it in Pass 1. Presence in a custom library never makes a source automatically authoritative; the original claim and assumptions still require verification.
 
 ### What problem does it solve?
 
@@ -200,6 +213,13 @@ When the task may affect algorithm behavior or scientific conclusions, the Skill
 Use $theoretical-basis to modify this algorithm module. Actively find theoretical support for every substantive change you intend to make.
 ```
 
+To add a custom theory library, name an accessible location or export format:
+
+```text
+Use $theoretical-basis to modify this optimizer. Search broad public scholarly sources,
+and use my Zotero export and papers/ folder as a custom theory library.
+```
+
 ### Validation
 
 Python 3.10+ and PyYAML are required:
@@ -209,7 +229,7 @@ python -m pip install PyYAML==6.0.2
 python scripts/validate_skill.py . --self-test-negative
 ```
 
-The validator checks UTF-8, Skill metadata, safety clauses, stale names, documentation references, and 12 behavior scenarios. Its negative self-test proves that a missing safety clause is rejected. GitHub Actions runs the same entry point on pushes and pull requests.
+The validator checks UTF-8, Skill metadata, safety clauses, stale names, documentation references, and 14 behavior scenarios. Its negative self-test rejects missing safety, broad-search, or custom-library clauses. GitHub Actions runs the same entry point on pushes and pull requests.
 
 ### Contributing
 

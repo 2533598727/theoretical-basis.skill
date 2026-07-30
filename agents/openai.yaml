@@ -1,4 +1,4 @@
 interface:
   display_name: "Theoretical Basis / 理论依据"
-  short_description: "科研算法修改前核验理论依据，证据不足时暂停并请求确认"
-  default_prompt: "Use $theoretical-basis to assess this research algorithm change with risk-tiered evidence, and pause before any unsupported modification."
+  short_description: "科研算法修改前广泛检索并核验理论依据，证据不足时暂停"
+  default_prompt: "Use $theoretical-basis to proactively search broad scholarly sources and my custom theory library before making research algorithm changes."
