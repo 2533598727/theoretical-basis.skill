@@ -4,6 +4,7 @@
 
 - [Source ranking](#source-ranking)
 - [Basis types](#basis-types)
+- [Host invocation mapping](#host-invocation-mapping)
 - [Risk-proportional thresholds](#risk-proportional-thresholds)
 - [Acceptance rules](#acceptance-rules)
 - [External-content safety](#external-content-safety)
@@ -42,6 +43,21 @@ Assign every supporting item one basis type:
 - **Informal observation:** A forum report, blog claim, anecdote, or unverified practical experience.
 
 Evidence may combine several basis types. Report them separately. Empirical evidence can support an expected outcome without proving a general theoretical mechanism. Expert practice and informal observation can guide implementation or further search, but cannot alone establish theoretical PASS.
+
+## Host invocation mapping
+
+The capability names stay stable across hosts even when command syntax changes.
+
+| Capability | Codex | Claude Code personal/project Skill | Claude Code plugin |
+|---|---|---|---|
+| Evidence gate | `$theoretical-basis` | `/theoretical-basis` | `/theoretical-basis:theoretical-basis` |
+| Literature retrieval | `$academic-search` | `/academic-search` | Use the installed plugin namespace |
+| Code graph exploration | `$explore-codebase` | `/explore-codebase` | Use the installed plugin namespace |
+| Code graph build/update | `$build-graph` | `/build-graph` | Use the installed plugin namespace |
+| Specification planning | `$spec-skill` | `/spec-skill` | Use the installed plugin namespace |
+| Chinese report editing | `$humanizer-zh` | `/humanizer-zh` | Use the installed plugin namespace |
+
+Automatic invocation remains preferred for an ordinary behavior-affecting research request. The slash or dollar-prefixed form is an explicit entry point, not a prerequisite for applying the evidence gate. If an integration is installed under a different plugin namespace, discover that namespace from the host rather than treating the integration as unavailable.
 
 ## Risk-proportional thresholds
 

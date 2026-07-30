@@ -1,6 +1,6 @@
 ---
 name: theoretical-basis
-description: Require traceable theoretical support before changing scientific-research algorithms or behavior-affecting modules. Use when Codex designs, implements, tunes, replaces, refactors, or iterates an algorithm, model component, loss function, optimization method, data-processing step, evaluation method, or research-code module whose behavior or scientific claim may change. Proactively search broad scholarly indexes, preprint servers, venue libraries, citation graphs, books, authoritative sources, and user-provided theory libraries; pause unsupported changes and ask the user before treating them as hypotheses for experimental validation.
+description: Require traceable theoretical support before changing scientific-research algorithms or behavior-affecting modules. Use when an AI coding agent designs, implements, tunes, replaces, refactors, or iterates an algorithm, model component, loss function, optimization method, data-processing step, evaluation method, or research-code module whose behavior or scientific claim may change. Proactively search broad scholarly indexes, preprint servers, venue libraries, citation graphs, books, authoritative sources, and user-provided theory libraries; pause unsupported changes and ask the user before treating them as hypotheses for experimental validation.
 ---
 
 # Theoretical Basis
@@ -9,9 +9,19 @@ Use an evidence gate before making behavior-affecting research or algorithm chan
 
 ## Trigger proactively
 
-Apply this Skill whenever Codex itself intends to propose, plan, implement, tune, or revise a behavior-affecting research change. Do not wait for the researcher to ask for theoretical support or to repeat a reminder. Trigger again during planning or execution if a newly discovered implementation choice could alter scientific behavior, assumptions, evaluation, or claims.
+Apply this Skill whenever the agent itself intends to propose, plan, implement, tune, or revise a behavior-affecting research change. Do not wait for the researcher to ask for theoretical support or to repeat a reminder. Trigger again during planning or execution if a newly discovered implementation choice could alter scientific behavior, assumptions, evaluation, or claims.
 
 `$theoretical-basis` is the orchestration core and the sole owner of scope classification, evidence applicability, and PASS/PARTIAL/FAIL. Retrieval or planning Skills may support the workflow, but they cannot issue, upgrade, or bypass the gate decision.
+
+## Resolve Skill names by host
+
+Use the host application's native Skill invocation while preserving the capability names in this contract:
+
+- Codex uses `$theoretical-basis`, `$academic-search`, `$explore-codebase`, `$build-graph`, `$spec-skill`, and `$humanizer-zh`.
+- Claude Code personal or project Skills use `/theoretical-basis`, `/academic-search`, `/explore-codebase`, `/build-graph`, `/spec-skill`, and `/humanizer-zh`.
+- Claude Code plugin installations namespace the command. This repository exposes `/theoretical-basis:theoretical-basis`; other plugin Skills may have their own namespace prefixes.
+
+Natural-language requests may trigger the Skill automatically on both hosts. Do not wait for an explicit `$` or `/` command when the intended change matches the frontmatter description. Treat references below to a `$skill-name` as the named capability, then invoke the installed equivalent for the current host.
 
 ## Classify scope and risk
 

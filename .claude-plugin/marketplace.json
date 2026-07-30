@@ -1,0 +1,31 @@
+{
+  "name": "theoretical-basis-skills",
+  "description": "Claude Code plugins for evidence-gated scientific and algorithm development.",
+  "owner": {
+    "name": "2533598727",
+    "url": "https://github.com/2533598727"
+  },
+  "plugins": [
+    {
+      "name": "theoretical-basis",
+      "source": "./",
+      "description": "Proactively require traceable theoretical support before behavior-affecting scientific and algorithm changes.",
+      "author": {
+        "name": "2533598727",
+        "url": "https://github.com/2533598727"
+      },
+      "homepage": "https://github.com/2533598727/theoretical-basis.skill",
+      "repository": "https://github.com/2533598727/theoretical-basis.skill",
+      "license": "MIT",
+      "keywords": [
+        "research",
+        "theoretical-basis",
+        "evidence-gate",
+        "algorithm",
+        "claude-code"
+      ],
+      "category": "development",
+      "strict": true
+    }
+  ]
+}
