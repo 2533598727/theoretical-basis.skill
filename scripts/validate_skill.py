@@ -51,6 +51,9 @@ REQUIRED_TAGS = {
     "multi-source-search",
     "custom-library",
     "search-integration",
+    "proactive-trigger",
+    "spec-handoff",
+    "execution-regate",
 }
 POLICY_CLAUSES = {
     "SKILL.md": (
@@ -63,6 +66,10 @@ POLICY_CLAUSES = {
         "Respect robots rules, rate limits, licenses, paywalls, and access controls",
         "## Delegate retrieval to academic-search",
         "Never delegate the gate decision",
+        "Do not wait for the researcher",
+        "sole owner of scope classification",
+        "Do not create an implementation task from FAIL or from unsupported PARTIAL scope",
+        "run a fresh `$theoretical-basis` gate",
         "untrusted data",
         "not sufficient for PASS",
         "explicit authorization",
@@ -80,6 +87,8 @@ POLICY_CLAUSES = {
         "## Custom theory libraries",
         "## Search-design basis",
         "## Academic-search integration",
+        "## Evidence Handoff and spec planning",
+        "normal `$spec-skill` user confirmation",
         "retrieval adapter, not as the evidence judge",
         "Google Scholar forbids automated bulk access",
         "After Pass 2, stop.",
@@ -197,8 +206,8 @@ def validate_cases(root: Path, errors: list[str]) -> None:
         errors.append("evals/cases.yaml: version must equal 1")
         return
     cases = data.get("cases")
-    if not isinstance(cases, list) or len(cases) < 10:
-        errors.append("evals/cases.yaml: at least ten cases are required")
+    if not isinstance(cases, list) or len(cases) < 20:
+        errors.append("evals/cases.yaml: at least twenty cases are required")
         return
 
     ids: list[str] = []
@@ -262,6 +271,27 @@ def validate_cases(root: Path, errors: list[str]) -> None:
     elif generic.get("forbidden_actions") == explicit.get("forbidden_actions"):
         errors.append("evals/cases.yaml: generic and explicit authorization actions must differ")
 
+    integration_cases = {
+        "proactive_algorithm_change_without_reminder": ("FAIL", "proactive-trigger"),
+        "pass_evidence_to_spec_handoff": ("PASS", "spec-handoff"),
+        "partial_scope_to_spec_plan": ("PARTIAL", "spec-handoff"),
+        "fail_cannot_enter_spec_plan": ("FAIL", "spec-handoff"),
+        "execution_deviation_requires_regate": ("FAIL", "execution-regate"),
+    }
+    for case_id, (expected_gate, required_tag) in integration_cases.items():
+        case = by_id.get(case_id)
+        if not case:
+            errors.append(f"evals/cases.yaml: required integration case {case_id!r} is missing")
+            continue
+        if case.get("expected_gate") != expected_gate:
+            errors.append(
+                f"evals/cases.yaml: {case_id} must expect gate {expected_gate}"
+            )
+        if required_tag not in case.get("tags", []):
+            errors.append(
+                f"evals/cases.yaml: {case_id} must include tag {required_tag!r}"
+            )
+
 
 def validate_git_clean(root: Path, errors: list[str]) -> None:
     result = subprocess.run(
@@ -298,6 +328,11 @@ def run_negative_self_test(root: Path) -> None:
         ("SKILL.md", "untrusted data", "external material"),
         ("SKILL.md", "user-provided theory libraries", "optional collections"),
         ("SKILL.md", "## Delegate retrieval to academic-search", "## Use optional retrieval tools"),
+        ("SKILL.md", "Do not wait for the researcher", "Wait for an explicit request"),
+        ("SKILL.md", "sole owner of scope classification", "one participant in classification"),
+        ("SKILL.md", "Do not create an implementation task from FAIL or from unsupported PARTIAL scope", "Planning may include any gate result"),
+        ("SKILL.md", "run a fresh `$theoretical-basis` gate", "continue under the existing plan"),
+        ("references/evidence-protocol.md", "## Evidence Handoff and spec planning", "## Planning notes"),
         ("references/evidence-protocol.md", "## Custom theory libraries", "## Imported materials"),
     )
     for relative, required, replacement in mutations:
