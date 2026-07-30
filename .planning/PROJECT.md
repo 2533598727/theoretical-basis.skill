@@ -23,6 +23,7 @@ The Skill must never implement a behavior-affecting research change without evid
 - ✓ The current workflow pauses unsupported changes and requests user input before hypothesis-based experimentation.
 - ✓ The public repository contains the Skill, bilingual README, interface metadata, and evidence protocol.
 - ✓ Scope, risk, basis, bounded search, source safety, and hypothesis preregistration contract — Phase 1.
+- ✓ Twelve behavior scenarios, deterministic validation, independent forward tests, and read-only CI — Phase 2.
 
 ### Active
 

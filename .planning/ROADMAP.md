@@ -13,7 +13,7 @@ The optimization proceeds from policy contract to behavior verification to publi
 ## Phases
 
 - [x] **Phase 1: Evidence Contract** - Make scope, search, gate, source safety, and hypothesis experimentation deterministic.
-- [ ] **Phase 2: Behavioral Verification** - Add repeatable scenario evals, semantic validation, and CI enforcement.
+- [x] **Phase 2: Behavioral Verification** - Add repeatable scenario evals, semantic validation, and CI enforcement.
 - [ ] **Phase 3: Distribution and Release** - Align bilingual docs, license the repository, synchronize installation, and publish a verified release.
 
 ## Phase Details
@@ -47,7 +47,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 02-01: Add scenario corpus, validator, forward tests, and CI.
+- [x] 02-01: Add scenario corpus, validator, forward tests, and CI.
 
 ### Phase 3: Distribution and Release
 **Goal**: The public repository is concise, licensed, installable, synchronized, and verified remotely.
@@ -70,5 +70,5 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Evidence Contract | 1/1 | Complete | 2026-07-30 |
-| 2. Behavioral Verification | 0/1 | In progress | - |
-| 3. Distribution and Release | 0/1 | Not started | - |
+| 2. Behavioral Verification | 1/1 | Complete | 2026-07-30 |
+| 3. Distribution and Release | 0/1 | In progress — license checkpoint | - |
