@@ -1,4 +1,4 @@
 interface:
-  display_name: "Theoretical Basis Skill"
-  short_description: "修改科研算法前先检索并核验理论依据，缺乏依据时暂停并询问用户"
-  default_prompt: "Use $theoretical-basis to assess this proposed research algorithm change, find theoretical support, and stop for my input if the evidence gate fails."
+  display_name: "Theoretical Basis / 理论依据"
+  short_description: "科研算法修改前核验理论依据，证据不足时暂停并请求确认"
+  default_prompt: "Use $theoretical-basis to assess this research algorithm change with risk-tiered evidence, and pause before any unsupported modification."
