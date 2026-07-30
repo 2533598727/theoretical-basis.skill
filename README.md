@@ -27,7 +27,7 @@
 
 你也可以把自己的资料库交给它：本地论文目录、Zotero 导出、BibTeX、RIS、CSL JSON、DOI 或 arXiv ID 列表都可以。Skill 会记录资料库的范围、版本和权限，私有文件默认留在本地。自己的收藏也不是“免检区”，原文、假设和适用条件照样要核对。
 
-如果本地装有 [`$academic-search`](https://github.com/ustc-ai4science/academic-search)，`$theoretical-basis` 会把扩展关键词、选择平台、拉取元数据、追踪引用和去重交给它。搜到什么只是检索结果；来源够不够强、假设是否适用、最后能不能修改，仍由 `$theoretical-basis` 判断。
+如果本地还装了 [`$academic-search`](https://github.com/ustc-ai4science/academic-search)，两个 Skill 会接力工作。`$academic-search` 负责扩展关键词、挑选平台、追踪引用和整理重复结果；`$theoretical-basis` 拿到文献后，再逐篇核对原文、假设和适用范围。找论文和判断证据分开处理。高引用、顶会论文或能下载到 PDF，都不能直接换来 PASS。
 
 ### 解决什么痛点？
 
@@ -105,6 +105,8 @@ git -C ~/.codex/skills/theoretical-basis pull --ff-only
 并把我提供的 Zotero 导出文件和 papers/ 目录作为自定义理论库。
 ```
 
+两个 Skill 都安装后，不必每次分别点名。只要 `$theoretical-basis` 需要扩大检索范围，就会优先把找论文的工作交给 `$academic-search`，自己保留证据门禁的最终判断。
+
 ### 验证
 
 需要 Python 3.10+ 和 PyYAML：
@@ -153,7 +155,7 @@ The first pass looks for primary papers, textbooks, standards, and original meth
 
 Researchers can add their own library as well: a local paper folder, Zotero export, BibTeX, RIS, CSL JSON, DOI list, or arXiv-ID list. Private files stay local unless the researcher explicitly says otherwise. A paper does not become authoritative merely because it is in a curated collection; the claim and assumptions still need checking.
 
-When [`$academic-search`](https://github.com/ustc-ai4science/academic-search) is installed, `$theoretical-basis` can delegate query expansion, platform routing, metadata retrieval, citation tracking, and deduplication to it. Retrieval results remain leads: `$theoretical-basis` still verifies claims and assumptions and retains sole authority for PASS/PARTIAL/FAIL.
+When [`$academic-search`](https://github.com/ustc-ai4science/academic-search) is installed, the two Skills work in sequence. `$academic-search` expands queries, chooses platforms, follows citations, and merges duplicate records. `$theoretical-basis` then reads the underlying sources and checks their assumptions and applicability. Retrieval and evidence judgment remain separate. Citation count, venue rank, and PDF availability never produce an automatic PASS.
 
 ### What problem does it solve?
 
@@ -230,6 +232,8 @@ To add a custom theory library, name an accessible location or export format:
 Use $theoretical-basis to modify this optimizer. Search broad public scholarly sources,
 and use my Zotero export and papers/ folder as a custom theory library.
 ```
+
+With both Skills installed, the user does not need to invoke them separately every time. `$theoretical-basis` delegates literature retrieval to `$academic-search` when broader coverage is needed and keeps the final evidence-gate decision.
 
 ### Validation
 
