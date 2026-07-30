@@ -86,27 +86,68 @@ FAIL 不会生成实现任务，PARTIAL 也只能规划证据支持的部分。�
 
 ### 安装
 
+#### Claude Code：插件安装
+
+在 Claude Code 中执行：
+
+```text
+/plugin marketplace add 2533598727/theoretical-basis.skill
+/plugin install theoretical-basis@theoretical-basis-skills
+/reload-plugins
+```
+
+插件安装后的显式命令是：
+
+```text
+/theoretical-basis:theoretical-basis
+```
+
+Claude Code 也会根据普通科研修改请求自动触发它，不要求每次输入命令。
+
+#### Claude Code：个人 Skill 安装
+
+macOS / Linux：
+
+```bash
+mkdir -p ~/.claude/skills
+git clone https://github.com/2533598727/theoretical-basis.skill.git ~/.claude/skills/theoretical-basis
+```
+
+Windows PowerShell：
+
+```powershell
+New-Item -ItemType Directory -Force "$HOME\.claude\skills" | Out-Null
+git clone https://github.com/2533598727/theoretical-basis.skill.git "$HOME\.claude\skills\theoretical-basis"
+```
+
+个人安装后的显式命令是 `/theoretical-basis`。如果 `~/.claude/skills` 是本次会话中新建的顶层目录，请重启一次 Claude Code；已经存在时，Claude Code 可以实时发现变更。
+
+#### Codex
+
 macOS / Linux：
 
 ```bash
 mkdir -p ~/.codex/skills
-git clone https://github.com/2533598727/-theoretical-basis.skill.git ~/.codex/skills/theoretical-basis
+git clone https://github.com/2533598727/theoretical-basis.skill.git ~/.codex/skills/theoretical-basis
 ```
 
 Windows PowerShell：
 
 ```powershell
 New-Item -ItemType Directory -Force "$HOME\.codex\skills" | Out-Null
-git clone https://github.com/2533598727/-theoretical-basis.skill.git "$HOME\.codex\skills\theoretical-basis"
+git clone https://github.com/2533598727/theoretical-basis.skill.git "$HOME\.codex\skills\theoretical-basis"
 ```
 
 安装后重新启动 Codex 或开启新任务，使 Skill 列表重新加载。
 
-更新已有安装：
+更新 Git 克隆安装：
 
 ```bash
 git -C ~/.codex/skills/theoretical-basis pull --ff-only
+# Claude Code 个人 Skill：git -C ~/.claude/skills/theoretical-basis pull --ff-only
 ```
+
+Claude Code 插件安装使用 `/plugin update theoretical-basis@theoretical-basis-skills` 更新。
 
 ### 使用
 
@@ -116,7 +157,7 @@ git -C ~/.codex/skills/theoretical-basis pull --ff-only
 根据最近几轮实验结果继续优化这个损失函数，并实现必要的代码修改。
 ```
 
-当任务涉及算法行为或科研结论时，Skill 会要求 AI 在编辑前主动运行证据门禁。也可以显式调用：
+当任务涉及算法行为或科研结论时，Skill 会要求 AI 在编辑前主动运行证据门禁。Codex 可以显式使用 `$theoretical-basis`；Claude Code 个人安装使用 `/theoretical-basis`，插件安装使用 `/theoretical-basis:theoretical-basis`。
 
 ```text
 使用 $theoretical-basis 修改这个算法模块。请为你准备做出的每项实质改动主动寻找理论依据。
@@ -138,9 +179,10 @@ git -C ~/.codex/skills/theoretical-basis pull --ff-only
 ```bash
 python -m pip install PyYAML==6.0.2
 python scripts/validate_skill.py . --self-test-negative
+claude plugin validate . --strict
 ```
 
-验证器检查 UTF-8、Skill 元数据、关键安全条款、旧名称、文档引用和 22 个行为场景；13 个负向自测会故意删掉核心规则，确认主动触发、证据交接、代码图谱边界、汇报保真、执行重新门禁和广域检索等约束缺失时一定报错。GitHub Actions 会在 push 和 pull request 时运行同一入口。
+验证器检查 UTF-8、Skill 元数据、Claude Code 插件清单、关键安全条款、文档引用和 23 个行为场景；14 个负向自测会故意删掉核心规则，确认主动触发、宿主调用映射、证据交接、代码图谱边界、汇报保真和执行重新门禁等约束缺失时一定报错。GitHub Actions 还会运行 Claude Code 官方插件校验器。
 
 ### 贡献
 
@@ -157,7 +199,7 @@ python scripts/validate_skill.py . --self-test-negative
 
 ### Purpose
 
-`$theoretical-basis` is for scientific exploration and algorithm development. It governs how Codex changes research code. Before designing, tuning, replacing, or refactoring an algorithm, Codex must stop, look for applicable theoretical support, and pass the evidence gate.
+`theoretical-basis` is for scientific exploration and algorithm development in Codex and Claude Code. Before designing, tuning, replacing, or refactoring an algorithm, the agent must stop, look for applicable theoretical support, and pass the evidence gate.
 
 The Skill exists to break a familiar loop: observe a metric change, guess at the cause, and immediately try another edit. Instead, Codex defines the intended change, identifies the claim it depends on, checks the literature, and makes only the smallest supported edit. Experiments come afterward to test the prediction, not to manufacture a theory after the fact.
 
@@ -238,27 +280,62 @@ The wording may vary. The behavior may not: Codex actively checks its own intend
 
 ### Installation
 
+#### Claude Code plugin
+
+Run these commands inside Claude Code:
+
+```text
+/plugin marketplace add 2533598727/theoretical-basis.skill
+/plugin install theoretical-basis@theoretical-basis-skills
+/reload-plugins
+```
+
+The explicit plugin command is `/theoretical-basis:theoretical-basis`. Claude Code may also invoke the Skill automatically from an ordinary research-change request.
+
+#### Claude Code personal Skill
+
+macOS / Linux:
+
+```bash
+mkdir -p ~/.claude/skills
+git clone https://github.com/2533598727/theoretical-basis.skill.git ~/.claude/skills/theoretical-basis
+```
+
+Windows PowerShell:
+
+```powershell
+New-Item -ItemType Directory -Force "$HOME\.claude\skills" | Out-Null
+git clone https://github.com/2533598727/theoretical-basis.skill.git "$HOME\.claude\skills\theoretical-basis"
+```
+
+The explicit personal-Skill command is `/theoretical-basis`. Restart Claude Code if this installation creates the top-level `~/.claude/skills` directory during the current session; otherwise Skill changes are detected live.
+
+#### Codex
+
 macOS / Linux:
 
 ```bash
 mkdir -p ~/.codex/skills
-git clone https://github.com/2533598727/-theoretical-basis.skill.git ~/.codex/skills/theoretical-basis
+git clone https://github.com/2533598727/theoretical-basis.skill.git ~/.codex/skills/theoretical-basis
 ```
 
 Windows PowerShell:
 
 ```powershell
 New-Item -ItemType Directory -Force "$HOME\.codex\skills" | Out-Null
-git clone https://github.com/2533598727/-theoretical-basis.skill.git "$HOME\.codex\skills\theoretical-basis"
+git clone https://github.com/2533598727/theoretical-basis.skill.git "$HOME\.codex\skills\theoretical-basis"
 ```
 
 Restart Codex or open a new task after installation so the Skill list reloads.
 
-Update an existing Git installation:
+Update a Git clone:
 
 ```bash
 git -C ~/.codex/skills/theoretical-basis pull --ff-only
+# Claude Code personal Skill: git -C ~/.claude/skills/theoretical-basis pull --ff-only
 ```
+
+For a Claude Code plugin installation, run `/plugin update theoretical-basis@theoretical-basis-skills`.
 
 ### Usage
 
@@ -268,7 +345,7 @@ Submit the research change normally:
 Use the latest experiment results to continue improving this loss function and implement the necessary changes.
 ```
 
-When the task may affect algorithm behavior or scientific conclusions, the Skill requires Codex to run the evidence gate proactively before editing. Explicit invocation is also supported:
+When the task may affect algorithm behavior or scientific conclusions, the Skill runs the evidence gate proactively before editing. Codex can invoke `$theoretical-basis`; a Claude Code personal installation uses `/theoretical-basis`; the plugin uses `/theoretical-basis:theoretical-basis`.
 
 ```text
 Use $theoretical-basis to modify this algorithm module. Actively find theoretical support for every substantive change you intend to make.
@@ -290,9 +367,10 @@ Python 3.10+ and PyYAML are required:
 ```bash
 python -m pip install PyYAML==6.0.2
 python scripts/validate_skill.py . --self-test-negative
+claude plugin validate . --strict
 ```
 
-The validator checks UTF-8, Skill metadata, safety clauses, stale names, documentation references, and 22 behavior scenarios. Thirteen negative mutations deliberately remove core clauses so passive triggering, missing handoffs, graph-as-evidence mistakes, lossy report rewriting, execution bypasses, and incomplete search are rejected. GitHub Actions runs the same entry point on pushes and pull requests.
+The validator checks UTF-8, Skill metadata, Claude Code manifests, safety clauses, documentation references, and 23 behavior scenarios. Fourteen negative mutations reject passive triggering, broken host-command mapping, missing handoffs, graph-as-evidence mistakes, lossy report rewriting, and execution bypasses. GitHub Actions also runs Claude Code's official plugin validator.
 
 ### Contributing
 
@@ -309,6 +387,9 @@ The validator checks UTF-8, Skill metadata, safety clauses, stale names, documen
 
 ```text
 .
+├── .claude-plugin/
+│   ├── plugin.json
+│   └── marketplace.json
 ├── SKILL.md
 ├── README.md
 ├── LICENSE
