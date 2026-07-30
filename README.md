@@ -6,31 +6,34 @@
 
 ### 作用
 
-`$theoretical-basis` 用在科研探索和算法开发中。它不只是帮你评估一个已经写好的方案，更重要的是约束 AI 自己的修改过程：当 AI 准备设计、调参、替换或重构算法模块时，它要主动停下来，先查这个改动有没有可追溯、可适用的理论依据，再决定能不能动代码。
+`$theoretical-basis` 是给科研探索和算法开发用的，重点约束 AI 怎么动手。准备设计、调参、替换或重构算法模块时，先停一下，查清楚这个改动有没有可追溯、真正适用的理论依据，再决定要不要改代码。
 
-这会把常见的“看实验结果猜原因，然后继续改”换成更稳妥的顺序：先说清准备改什么、需要哪方面的依据，检索并核验来源，通过门禁后再做最小修改，最后用实验检查预期是否成立。
+我写这个 Skill，是因为 AI 很容易陷进一种循环：看见指标变了，猜一个原因，马上再改一版。结果跑得越多，解释也越多，却不一定更接近真实机制。这个 Skill 把顺序倒过来：先讲清楚准备改什么、需要哪方面的依据；依据站得住脚，才做最小修改；实验留到最后，用来检查预期，而不是替猜测找理由。
 
-规则很直接：
+几条底线：
 
-- 证据不够，就先不改；
-- 检索两轮仍找不到依据，转而询问研究者是否有论文、书籍或领域资料；
-- 每轮尽量覆盖互补来源，例如 Google Scholar、arXiv、AAAI、Semantic Scholar、OpenAlex、Crossref，以及领域数据库和会议论文库；
-- 双方都没有依据时，只有研究者明确同意，方案才能作为“待验证假设”继续；
-- 真要做假设实验，也要先写清基线、指标、对照、失败阈值和停止规则。
+- 没有足够依据，先不改；
+- 一个搜索入口没结果，不代表理论不存在；
+- 实验结果不是理论，指标上涨也不能自动证明某个机制成立；
+- 实在找不到依据，必须由研究者明确同意，才能把方案当作“待验证假设”继续。
 
-实验结果可以支持或推翻一个事先写清的预测，但不能反过来充当理论依据。AI 不能因为某次指标上涨，就自行猜测机制成立并据此开始下一轮修改。
+真要验证假设，也得先写好基线、指标、对照、失败阈值和停止规则。不能看到结果以后再改成功标准。
 
 完整运行规则以 [SKILL.md](./SKILL.md) 为准，来源等级、风险门槛、检索记录及实验协议见 [evidence-protocol.md](./references/evidence-protocol.md)。README 只提供安装和使用入口。
 
-用户还可以提供自己的理论库，例如本地论文目录、Zotero 导出、BibTeX/RIS/CSL JSON、DOI 或 arXiv ID 列表，以及已连接的知识库。Skill 会先记录资料库的范围、版本和权限，再把它作为第一轮检索来源；资料出现在自定义库中并不等于自动可信，原文和适用条件仍要核验。
+### 它会去哪里找？
+
+它不会只在普通网页里搜一遍就下结论。第一轮优先找原始论文、教材、标准和方法文档，并按领域选择 Google Scholar、arXiv、AAAI、Semantic Scholar、OpenAlex、Crossref、会议论文库或专业数据库。第二轮沿着引用关系往前后追，顺便找勘误、撤稿、失败复现和相反结论。
+
+你也可以把自己的资料库交给它：本地论文目录、Zotero 导出、BibTeX、RIS、CSL JSON、DOI 或 arXiv ID 列表都可以。Skill 会记录资料库的范围、版本和权限，私有文件默认留在本地。自己的收藏也不是“免检区”，原文、假设和适用条件照样要核对。
 
 ### 解决什么痛点？
 
-很多科研 Prompt 只写一句“把这个模块优化一下”，却没有说明什么证据足以支持修改，也没规定找不到依据时该怎么办。AI 很容易盯着上一轮实验的涨跌猜原因，接着改参数、换结构，再为结果补一个听起来合理的解释。这样得到的是事后猜测，不是理论依据。
+很多科研 Prompt 只有一句“把这个模块优化一下”。什么证据才算够，找不到依据时怎么办，都没说。AI 于是盯着上一轮实验的涨跌猜原因，接着改参数、换结构，再补一个听起来合理的解释。这是事后猜测，不是理论依据。
 
-另一个常见问题是 AI 先改代码，再倒过来找引用。论文、百科和论坛帖子混在一起，看似有来源，却说不清各自支持什么结论，也没有检查来源里的假设是否适用于当前模块。
+还有一种情况更隐蔽：先把代码改完，再倒过来找引用。论文、百科和论坛帖子混在一起，看似有出处，却说不清每个来源到底支持什么，也没检查论文里的假设能不能套在当前模块上。
 
-还有一个更实际的问题：这类要求经常散落在不同 Prompt 里。换一个任务或 Agent，规则就丢了，也很难复用和版本管理。`$theoretical-basis` 把证据核验、暂停条件和假设实验流程收进同一个 Skill，让不同科研任务可以沿用同一套门禁，同时保留清晰的 Git 变更记录。
+这些要求如果全写在 Prompt 里，换个任务或 Agent 就容易丢。`$theoretical-basis` 把检索、核验、暂停和假设实验收进一个可以复用、可以版本管理的 Skill。以后改规则，看 Git 记录就知道改了什么。
 
 ### 快速示例（最小 Demo）
 
@@ -126,31 +129,35 @@ python scripts/validate_skill.py . --self-test-negative
 
 ### Purpose
 
-`$theoretical-basis` is for scientific exploration and algorithm development. It does more than assess a proposal supplied by the user. It governs Codex's own changes: whenever Codex is about to design, tune, replace, or refactor a research algorithm, it must stop, actively look for applicable theoretical support, and pass the evidence gate before editing the code.
+`$theoretical-basis` is for scientific exploration and algorithm development. It governs how Codex changes research code. Before designing, tuning, replacing, or refactoring an algorithm, Codex must stop, look for applicable theoretical support, and pass the evidence gate.
 
-This replaces a common loop—observe an experimental result, guess at the cause, and make another change—with a disciplined sequence: define the proposed change, identify the claim it requires, verify sources, make the smallest supported edit, and then test the prediction.
+The Skill exists to break a familiar loop: observe a metric change, guess at the cause, and immediately try another edit. Instead, Codex defines the intended change, identifies the claim it depends on, checks the literature, and makes only the smallest supported edit. Experiments come afterward to test the prediction, not to manufacture a theory after the fact.
 
-The rules are straightforward:
+The basic rules:
 
 - pause when the evidence is insufficient;
-- after two unsuccessful search passes, ask the researcher for a paper, book, or domain source;
-- cover complementary sources where available, including Google Scholar, arXiv, AAAI, Semantic Scholar, OpenAlex, Crossref, and field-specific indexes or venue libraries;
+- do not treat one empty search as proof that no theory exists;
+- do not turn an experimental improvement into proof of a mechanism;
 - proceed as an unsupported hypothesis only after the researcher explicitly authorizes it;
-- define the baseline, controls, metrics, failure threshold, and stopping rule before writing the smallest experimental change.
+- preregister the baseline, controls, metric, failure threshold, and stopping rule before testing that hypothesis.
 
-An experimental result may test a preregistered prediction, but it does not become theory after the fact. Codex may not treat one metric increase as proof of a mechanism and use that guess to authorize the next modification.
+Success criteria stay fixed once results are visible.
 
 [SKILL.md](./SKILL.md) is the canonical runtime contract. Source ranking, risk thresholds, search records, and experiment requirements live in [evidence-protocol.md](./references/evidence-protocol.md). This README is limited to distribution and usage guidance.
 
-Researchers can also provide a custom theory library: a local paper directory, Zotero export, BibTeX/RIS/CSL JSON, DOI or arXiv-ID list, or a connected knowledge store. The Skill records its scope, snapshot, and access boundaries before using it in Pass 1. Presence in a custom library never makes a source automatically authoritative; the original claim and assumptions still require verification.
+### Where does it search?
+
+The first pass looks for primary papers, textbooks, standards, and original method documentation. Depending on the field, it can use Google Scholar, arXiv, AAAI, Semantic Scholar, OpenAlex, Crossref, venue libraries, and specialist databases. The second pass follows citations and looks for corrections, retractions, failed replications, and conflicting findings.
+
+Researchers can add their own library as well: a local paper folder, Zotero export, BibTeX, RIS, CSL JSON, DOI list, or arXiv-ID list. Private files stay local unless the researcher explicitly says otherwise. A paper does not become authoritative merely because it is in a curated collection; the claim and assumptions still need checking.
 
 ### What problem does it solve?
 
-Research prompts often say little more than “improve this module.” They rarely define what evidence would justify the change or what the agent should do when no basis can be found. An agent can easily over-interpret the latest metric movement, guess at a mechanism, and keep tuning. That is post-hoc speculation, not theoretical support.
+Research prompts often say little more than “improve this module.” They rarely define what evidence would justify a change or what the agent should do when no basis can be found. The agent can then over-interpret the latest metric movement, guess at a mechanism, and keep tuning. That is post-hoc speculation, not theoretical support.
 
 Another failure mode is editing first and looking for citations afterward. Papers, encyclopedias, and forum posts may all appear as sources even though they support different kinds of claims or rely on assumptions that do not fit the current module.
 
-These rules also tend to be copied between prompts and lost between agents. `$theoretical-basis` packages the evidence gate, pause conditions, and hypothesis workflow as one reusable, version-controlled Skill.
+These rules also tend to be copied between prompts and lost between agents. `$theoretical-basis` keeps the search, evidence gate, pause conditions, and hypothesis workflow in one reusable, version-controlled place.
 
 ### Quick example (minimal demo)
 
