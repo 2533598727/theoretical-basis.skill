@@ -29,6 +29,14 @@
 
 如果本地还装了 [`$academic-search`](https://github.com/ustc-ai4science/academic-search)，两个 Skill 会接力工作。`$academic-search` 负责扩展关键词、挑选平台、追踪引用和整理重复结果；`$theoretical-basis` 拿到文献后，再逐篇核对原文、假设和适用范围。找论文和判断证据分开处理。高引用、顶会论文或能下载到 PDF，都不能直接换来 PASS。
 
+### 找到依据以后，怎么落到代码里？
+
+如果还安装了 `$spec-skill`，三者的分工很清楚：`$theoretical-basis` 是主动介入的核心，负责判断这次改动到底能不能做；`$academic-search` 帮它把文献找全；证据通过后，`$spec-skill` 再把允许范围、限制条件和预期结果写进实施计划。
+
+这不是把参考文献附在计划末尾就算完成。PASS 或 PARTIAL 会生成一份 Evidence Handoff：哪些来源支持哪条主张、允许改到哪里、哪些部分不能动、适用条件是什么、实验应该看到什么。随后，这些内容会进入计划里的 `read_first`、任务边界、验收条件、`must_haves` 和验证命令。执行前仍要由用户确认计划。
+
+FAIL 不会生成实现任务，PARTIAL 也只能规划证据支持的部分。如果写代码时临时冒出新的算法机制、指标或数据解释，AI 要先停下来，为这项偏离重新找依据，不能借着已经批准的计划顺手改掉。
+
 ### 解决什么痛点？
 
 很多科研 Prompt 只有一句“把这个模块优化一下”。什么证据才算够，找不到依据时怎么办，都没说。AI 于是盯着上一轮实验的涨跌猜原因，接着改参数、换结构，再补一个听起来合理的解释。这是事后猜测，不是理论依据。
@@ -105,7 +113,7 @@ git -C ~/.codex/skills/theoretical-basis pull --ff-only
 并把我提供的 Zotero 导出文件和 papers/ 目录作为自定义理论库。
 ```
 
-两个 Skill 都安装后，不必每次分别点名。只要 `$theoretical-basis` 需要扩大检索范围，就会优先把找论文的工作交给 `$academic-search`，自己保留证据门禁的最终判断。
+相关 Skill 都安装后，不必每次分别点名。`$theoretical-basis` 会主动介入：需要扩大检索范围时，把找论文的工作交给 `$academic-search`；证据通过并需要开发计划时，再让 `$spec-skill` 把依据落实成任务、测试和停止条件。最终的 PASS、PARTIAL 或 FAIL 始终由 `$theoretical-basis` 判断。
 
 ### 验证
 
@@ -116,7 +124,7 @@ python -m pip install PyYAML==6.0.2
 python scripts/validate_skill.py . --self-test-negative
 ```
 
-验证器检查 UTF-8、Skill 元数据、关键安全条款、旧名称、文档引用和 15 个行为场景；负向自测会确认安全、广域检索、自定义理论库或检索联动规则缺失时能够失败。GitHub Actions 会在 push 和 pull request 时运行同一入口。
+验证器检查 UTF-8、Skill 元数据、关键安全条款、旧名称、文档引用和 20 个行为场景；9 个负向自测会故意删掉核心规则，确认主动触发、证据交接、执行重新门禁、安全、广域检索和自定义理论库等约束缺失时一定报错。GitHub Actions 会在 push 和 pull request 时运行同一入口。
 
 ### 贡献
 
@@ -156,6 +164,14 @@ The first pass looks for primary papers, textbooks, standards, and original meth
 Researchers can add their own library as well: a local paper folder, Zotero export, BibTeX, RIS, CSL JSON, DOI list, or arXiv-ID list. Private files stay local unless the researcher explicitly says otherwise. A paper does not become authoritative merely because it is in a curated collection; the claim and assumptions still need checking.
 
 When [`$academic-search`](https://github.com/ustc-ai4science/academic-search) is installed, the two Skills work in sequence. `$academic-search` expands queries, chooses platforms, follows citations, and merges duplicate records. `$theoretical-basis` then reads the underlying sources and checks their assumptions and applicability. Retrieval and evidence judgment remain separate. Citation count, venue rank, and PDF availability never produce an automatic PASS.
+
+### How does evidence reach implementation?
+
+With `$spec-skill` installed, the three Skills have separate jobs. `$theoretical-basis` is the proactive core and decides whether the proposed change is supported. `$academic-search` broadens retrieval. After the gate passes, `$spec-skill` turns the supported scope, constraints, and predictions into an implementation plan.
+
+The result is more than a bibliography. PASS or PARTIAL produces an Evidence Handoff that records which source supports each claim, what may change, what must remain untouched, which assumptions apply, and what validation should observe. Those details become `read_first` inputs, bounded task actions, acceptance criteria, `must_haves`, and verification commands. The normal user confirmation is still required before execution.
+
+FAIL creates no implementation task, and PARTIAL plans only the supported portion. If execution introduces a new mechanism, metric, or interpretation outside the handoff, Codex stops and sends that deviation through a fresh evidence gate instead of hiding it inside the approved plan.
 
 ### What problem does it solve?
 
@@ -233,7 +249,7 @@ Use $theoretical-basis to modify this optimizer. Search broad public scholarly s
 and use my Zotero export and papers/ folder as a custom theory library.
 ```
 
-With both Skills installed, the user does not need to invoke them separately every time. `$theoretical-basis` delegates literature retrieval to `$academic-search` when broader coverage is needed and keeps the final evidence-gate decision.
+With the related Skills installed, the user does not need to invoke each one separately. `$theoretical-basis` intervenes proactively, delegates broader retrieval to `$academic-search`, and asks `$spec-skill` to carry verified evidence into tasks and tests. `$theoretical-basis` always retains the final PASS, PARTIAL, or FAIL decision.
 
 ### Validation
 
@@ -244,7 +260,7 @@ python -m pip install PyYAML==6.0.2
 python scripts/validate_skill.py . --self-test-negative
 ```
 
-The validator checks UTF-8, Skill metadata, safety clauses, stale names, documentation references, and 15 behavior scenarios. Its negative self-test rejects missing safety, broad-search, custom-library, or retrieval-integration clauses. GitHub Actions runs the same entry point on pushes and pull requests.
+The validator checks UTF-8, Skill metadata, safety clauses, stale names, documentation references, and 20 behavior scenarios. Nine negative mutations deliberately remove core clauses so passive triggering, missing handoffs, execution bypasses, unsafe source handling, incomplete search, and custom-library regressions are rejected. GitHub Actions runs the same entry point on pushes and pull requests.
 
 ### Contributing
 
