@@ -37,6 +37,10 @@
 
 FAIL 不会生成实现任务，PARTIAL 也只能规划证据支持的部分。如果写代码时临时冒出新的算法机制、指标或数据解释，AI 要先停下来，为这项偏离重新找依据，不能借着已经批准的计划顺手改掉。
 
+任务落在现有代码仓库时，`$theoretical-basis` 还可以联动 code-review-graph。它先用 `$explore-codebase` 找到真正受影响的函数、调用链、依赖模块、执行路径和测试；图谱没有建立或明显过期时，再由 `$build-graph` 更新。这样，论文里的结论会对应到具体实现，而不是停留在“注意力模块”“训练流程”这类模糊名称上。代码图谱只能说明代码怎么连，不能冒充理论依据，也不能把 FAIL 变成 PASS。
+
+汇报阶段可以交给 `$humanizer-zh` 收尾。顺序不能反：先把来源、主张、风险、假设、限制和门禁结果写成完整证据账本，再润色中文说明。润色后还要逐项核对，不能为了读起来顺滑而删掉 DOI、符号名、冲突证据、PARTIAL/FAIL 或禁止修改的范围。
+
 ### 解决什么痛点？
 
 很多科研 Prompt 只有一句“把这个模块优化一下”。什么证据才算够，找不到依据时怎么办，都没说。AI 于是盯着上一轮实验的涨跌猜原因，接着改参数、换结构，再补一个听起来合理的解释。这是事后猜测，不是理论依据。
@@ -113,7 +117,7 @@ git -C ~/.codex/skills/theoretical-basis pull --ff-only
 并把我提供的 Zotero 导出文件和 papers/ 目录作为自定义理论库。
 ```
 
-相关 Skill 都安装后，不必每次分别点名。`$theoretical-basis` 会主动介入：需要扩大检索范围时，把找论文的工作交给 `$academic-search`；证据通过并需要开发计划时，再让 `$spec-skill` 把依据落实成任务、测试和停止条件。最终的 PASS、PARTIAL 或 FAIL 始终由 `$theoretical-basis` 判断。
+相关 Skill 都安装后，不必每次分别点名。`$theoretical-basis` 会主动介入：先用 code-review-graph 看清代码，再把文献检索交给 `$academic-search`；证据通过后，让 `$spec-skill` 把依据落实成任务和测试；最后由 `$humanizer-zh` 整理中文汇报。最终的 PASS、PARTIAL 或 FAIL 始终由 `$theoretical-basis` 判断。
 
 ### 验证
 
@@ -124,7 +128,7 @@ python -m pip install PyYAML==6.0.2
 python scripts/validate_skill.py . --self-test-negative
 ```
 
-验证器检查 UTF-8、Skill 元数据、关键安全条款、旧名称、文档引用和 20 个行为场景；9 个负向自测会故意删掉核心规则，确认主动触发、证据交接、执行重新门禁、安全、广域检索和自定义理论库等约束缺失时一定报错。GitHub Actions 会在 push 和 pull request 时运行同一入口。
+验证器检查 UTF-8、Skill 元数据、关键安全条款、旧名称、文档引用和 22 个行为场景；13 个负向自测会故意删掉核心规则，确认主动触发、证据交接、代码图谱边界、汇报保真、执行重新门禁和广域检索等约束缺失时一定报错。GitHub Actions 会在 push 和 pull request 时运行同一入口。
 
 ### 贡献
 
@@ -172,6 +176,10 @@ With `$spec-skill` installed, the three Skills have separate jobs. `$theoretical
 The result is more than a bibliography. PASS or PARTIAL produces an Evidence Handoff that records which source supports each claim, what may change, what must remain untouched, which assumptions apply, and what validation should observe. Those details become `read_first` inputs, bounded task actions, acceptance criteria, `must_haves`, and verification commands. The normal user confirmation is still required before execution.
 
 FAIL creates no implementation task, and PARTIAL plans only the supported portion. If execution introduces a new mechanism, metric, or interpretation outside the handoff, Codex stops and sends that deviation through a fresh evidence gate instead of hiding it inside the approved plan.
+
+For work in an existing repository, `$theoretical-basis` can also use code-review-graph. `$explore-codebase` locates the actual symbols, callers, dependencies, execution flows, and tests; `$build-graph` builds or refreshes the graph when needed. This connects a paper's claim to the implementation that would change instead of reasoning from a vague module label. The graph explains code structure. It is not theoretical evidence and cannot turn FAIL into PASS.
+
+`$humanizer-zh` can polish the final Chinese report, but only after the evidence ledger is complete. Sources, claims, risk, assumptions, limitations, conflicts, gate status, symbol names, and forbidden scope are frozen first. The rewritten report is checked against that ledger so smoother prose does not erase a DOI, soften PARTIAL or FAIL, or add an unsupported claim.
 
 ### What problem does it solve?
 
@@ -249,7 +257,7 @@ Use $theoretical-basis to modify this optimizer. Search broad public scholarly s
 and use my Zotero export and papers/ folder as a custom theory library.
 ```
 
-With the related Skills installed, the user does not need to invoke each one separately. `$theoretical-basis` intervenes proactively, delegates broader retrieval to `$academic-search`, and asks `$spec-skill` to carry verified evidence into tasks and tests. `$theoretical-basis` always retains the final PASS, PARTIAL, or FAIL decision.
+With the related Skills installed, the user does not need to invoke each one separately. `$theoretical-basis` first grounds the proposal with code-review-graph, delegates literature retrieval to `$academic-search`, carries verified evidence into tasks through `$spec-skill`, and uses `$humanizer-zh` to polish Chinese reporting. `$theoretical-basis` always retains the final PASS, PARTIAL, or FAIL decision.
 
 ### Validation
 
@@ -260,7 +268,7 @@ python -m pip install PyYAML==6.0.2
 python scripts/validate_skill.py . --self-test-negative
 ```
 
-The validator checks UTF-8, Skill metadata, safety clauses, stale names, documentation references, and 20 behavior scenarios. Nine negative mutations deliberately remove core clauses so passive triggering, missing handoffs, execution bypasses, unsafe source handling, incomplete search, and custom-library regressions are rejected. GitHub Actions runs the same entry point on pushes and pull requests.
+The validator checks UTF-8, Skill metadata, safety clauses, stale names, documentation references, and 22 behavior scenarios. Thirteen negative mutations deliberately remove core clauses so passive triggering, missing handoffs, graph-as-evidence mistakes, lossy report rewriting, execution bypasses, and incomplete search are rejected. GitHub Actions runs the same entry point on pushes and pull requests.
 
 ### Contributing
 
