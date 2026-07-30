@@ -29,9 +29,9 @@
 
 - [x] **EVAL-01**: Maintainer can run at least ten behavior scenarios covering PASS, PARTIAL, FAIL, forum-only, conflicts, inapplicability, generic continuation, explicit authorization, mechanical change, and hostile-source content. (Use case: UC-005; Concepts: Evaluation Case)
 - [x] **EVAL-02**: Automated validation checks Skill metadata, required policy clauses, eval schema, stale names, documentation links, UTF-8, and repository cleanliness in CI. (Use case: UC-005; Concepts: Release Artifact)
-- [ ] **DOCS-01**: Maintainer has concise bilingual documentation whose policy summary cannot silently diverge from the runtime contract. (Use case: UC-006; Concepts: Release Artifact)
-- [ ] **DIST-01**: Repository includes a user-approved open-source license and accurate cross-platform installation instructions. (Use case: UC-006; Concepts: Release Artifact)
-- [ ] **REL-01**: Release process validates, commits atomically, synchronizes the installed Skill, verifies hashes, pushes `main`, and confirms remote commit identity. (Use case: UC-006; Concepts: Release Artifact)
+- [x] **DOCS-01**: Maintainer has concise bilingual documentation whose policy summary cannot silently diverge from the runtime contract. (Use case: UC-006; Concepts: Release Artifact)
+- [x] **DIST-01**: Repository includes a user-approved open-source license and accurate cross-platform installation instructions. (Use case: UC-006; Concepts: Release Artifact)
+- [x] **REL-01**: Release process validates, commits atomically, synchronizes the installed Skill, verifies hashes, pushes `main`, and confirms remote commit identity. (Use case: UC-006; Concepts: Release Artifact)
 
 ## v2 Requirements
 
@@ -60,9 +60,9 @@
 | EXPT-01 | Researcher, Codex Agent | UC-004 | Experiment Protocol | Phase 1 | Complete |
 | EVAL-01 | Skill Maintainer | UC-005 | Evaluation Case | Phase 2 | Complete |
 | EVAL-02 | Skill Maintainer | UC-005 | Release Artifact | Phase 2 | Complete |
-| DOCS-01 | Skill Maintainer | UC-006 | Release Artifact | Phase 3 | Pending |
-| DIST-01 | Skill Maintainer | UC-006 | Release Artifact | Phase 3 | Pending |
-| REL-01 | Skill Maintainer | UC-006 | Release Artifact | Phase 3 | Pending |
+| DOCS-01 | Skill Maintainer | UC-006 | Release Artifact | Phase 3 | Complete |
+| DIST-01 | Skill Maintainer | UC-006 | Release Artifact | Phase 3 | Complete |
+| REL-01 | Skill Maintainer | UC-006 | Release Artifact | Phase 3 | Complete |
 
 ## Derived Access Notes
 
@@ -81,4 +81,4 @@
 
 ---
 *Requirements defined: 2026-07-30*
-*Last updated: 2026-07-30 after Plan approval*
+*Last updated: 2026-07-30 after verified v1 release*

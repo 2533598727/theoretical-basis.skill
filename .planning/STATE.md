@@ -5,23 +5,23 @@
 See: `.planning/PROJECT.md` (updated 2026-07-30)
 
 **Core value:** Never implement an unsupported behavior-affecting research change without adequate evidence or explicit authorization for a falsifiable hypothesis experiment.
-**Current focus:** Phase 3 — Distribution and Release
+**Current focus:** v1 complete — all three phases verified and released
 
 ## Current Position
 
 Phase: 3 of 3 (Distribution and Release)
 Plan: 1 of 1 in current phase
-Status: Blocked at planned license decision checkpoint
-Last activity: 2026-07-30 — Phase 2 evals, validator, forward tests, and CI completed
+Status: Complete
+Last activity: 2026-07-30 — MIT release validated, installed, pushed, and remotely verified
 
-Progress: [██████░░░░] 67%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 2
-- Average duration: 11 min
-- Total execution time: 0.37 hours
+- Total plans completed: 3
+- Average duration: 13 min
+- Total execution time: 0.65 hours
 
 ## Accumulated Context
 
@@ -34,6 +34,9 @@ Progress: [██████░░░░] 67%
 - Search stops after two documented passes; generic continuation cannot authorize a hypothesis.
 - Twelve scenario cases plus independent forward tests define the behavior gate.
 - One validator entry point is shared by local verification and read-only CI.
+- The public repository uses MIT with `Copyright (c) 2026 2533598727`.
+- README is bilingual distribution guidance; runtime policy remains canonical in `SKILL.md` and the evidence protocol.
+- Only the three required runtime files are synchronized into the installed Skill, with SHA-256 equality checked before release.
 
 ### Pending Todos
 
@@ -41,8 +44,7 @@ None outside the roadmap.
 
 ### Blockers/Concerns
 
-- Open-source license choice is not yet user-confirmed; Phase 3 defaults to MIT only if approved in the execution plan.
-- Phase 3 is paused until the user selects MIT or Apache-2.0.
+None for v1. GitHub redirects the requested remote to `2533598727/theoretical-basis.skill`; push and remote-SHA verification succeeded through the configured remote.
 
 ### Deferred Items
 
@@ -54,5 +56,5 @@ None outside the roadmap.
 ## Session Continuity
 
 Last session: 2026-07-30
-Stopped at: Phase 3 license decision checkpoint
+Stopped at: v1 release complete
 Resume file: None

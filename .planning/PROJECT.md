@@ -24,14 +24,11 @@ The Skill must never implement a behavior-affecting research change without evid
 - ✓ The public repository contains the Skill, bilingual README, interface metadata, and evidence protocol.
 - ✓ Scope, risk, basis, bounded search, source safety, and hypothesis preregistration contract — Phase 1.
 - ✓ Twelve behavior scenarios, deterministic validation, independent forward tests, and read-only CI — Phase 2.
+- ✓ Concise bilingual documentation, MIT licensing, generated metadata, synchronized installation, and remotely verified release — Phase 3.
 
 ### Active
 
-- [ ] Define deterministic scope, evidence-risk tiers, basis types, and gate thresholds.
-- [ ] Bound evidence search and harden all external-source handling.
-- [ ] Strengthen preregistered experimental validation for unsupported hypotheses.
-- [ ] Add repeatable behavioral evaluation cases and automated validation.
-- [ ] Add CI, licensing, documentation consistency, release verification, and installed-copy synchronization.
+None for v1. Cross-model scoring and marketplace packaging remain deferred to v2.
 
 ### Out of Scope
 
@@ -59,10 +56,11 @@ The Skill must never implement a behavior-affecting research change without evid
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Optimize policy and repository engineering together | User explicitly requested the full scope | — Pending |
+| Optimize policy and repository engineering together | User explicitly requested the full scope | ✓ Good |
 | Use three sequential phases | Policy must stabilize before evals; evals must pass before release | ✓ Good |
-| Keep the Skill at repository root | Preserves current installation and discovery behavior | — Pending |
-| Treat researcher and maintainer as distinct roles | Their operations and acceptance signals differ even if one person fills both roles | — Pending |
+| Keep the Skill at repository root | Preserves current installation and discovery behavior | ✓ Good |
+| Treat researcher and maintainer as distinct roles | Their operations and acceptance signals differ even if one person fills both roles | ✓ Good |
+| License the public repository under MIT | Simple permissive reuse with attribution matches the user's selection | ✓ Good |
 
 ---
-*Last updated: 2026-07-30 after Phase 1 completion*
+*Last updated: 2026-07-30 after verified v1 release*
