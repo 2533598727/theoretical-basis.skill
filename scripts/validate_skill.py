@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import shutil
 import subprocess
@@ -33,6 +34,8 @@ REQUIRED_FILES = (
     "agents/openai.yaml",
     "references/evidence-protocol.md",
     "evals/cases.yaml",
+    ".claude-plugin/plugin.json",
+    ".claude-plugin/marketplace.json",
 )
 CASE_FIELDS = {
     "id",
@@ -63,6 +66,7 @@ REQUIRED_TAGS = {
     "execution-regate",
     "code-graph-integration",
     "humanized-report",
+    "claude-code",
 }
 POLICY_CLAUSES = {
     "SKILL.md": (
@@ -89,9 +93,12 @@ POLICY_CLAUSES = {
         "## Preregister an unsupported-hypothesis experiment",
         "do not emit or apply the unsupported patch",
         "references/evidence-protocol.md",
+        "## Resolve Skill names by host",
+        "/theoretical-basis:theoretical-basis",
     ),
     "references/evidence-protocol.md": (
         "## Basis types",
+        "## Host invocation mapping",
         "## Risk-proportional thresholds",
         "Forum-only or blog-only evidence is explicitly insufficient",
         "## External-content safety",
@@ -138,6 +145,17 @@ def load_yaml(path: Path, errors: list[str]) -> Any:
         return None
 
 
+def load_json(path: Path, errors: list[str]) -> Any:
+    text = read_utf8(path, errors)
+    if not text:
+        return None
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError as exc:
+        errors.append(f"{path}: invalid JSON ({exc})")
+        return None
+
+
 def validate_frontmatter(root: Path, errors: list[str]) -> None:
     skill_path = root / "SKILL.md"
     text = read_utf8(skill_path, errors)
@@ -180,6 +198,52 @@ def validate_interface(root: Path, errors: list[str]) -> None:
         errors.append(f"agents/openai.yaml: default_prompt must mention ${SKILL_NAME}")
 
 
+def validate_claude_plugin(root: Path, errors: list[str]) -> None:
+    repository = "https://github.com/2533598727/theoretical-basis.skill"
+    plugin = load_json(root / ".claude-plugin/plugin.json", errors)
+    if not isinstance(plugin, dict):
+        errors.append(".claude-plugin/plugin.json: object is required")
+    else:
+        if plugin.get("name") != SKILL_NAME:
+            errors.append(f".claude-plugin/plugin.json: name must be {SKILL_NAME!r}")
+        version = plugin.get("version")
+        if not isinstance(version, str) or not re.fullmatch(r"\d+\.\d+\.\d+", version):
+            errors.append(".claude-plugin/plugin.json: semantic version is required")
+        if plugin.get("repository") != repository:
+            errors.append(".claude-plugin/plugin.json: repository URL is incorrect")
+        if plugin.get("license") != "MIT":
+            errors.append(".claude-plugin/plugin.json: license must be MIT")
+        if plugin.get("agents") != []:
+            errors.append(
+                ".claude-plugin/plugin.json: agents must be empty so Codex agents/openai.yaml is not loaded as a Claude agent"
+            )
+
+    marketplace = load_json(root / ".claude-plugin/marketplace.json", errors)
+    if not isinstance(marketplace, dict):
+        errors.append(".claude-plugin/marketplace.json: object is required")
+        return
+    if marketplace.get("name") != "theoretical-basis-skills":
+        errors.append(
+            ".claude-plugin/marketplace.json: name must be 'theoretical-basis-skills'"
+        )
+    plugins = marketplace.get("plugins")
+    if not isinstance(plugins, list) or len(plugins) != 1:
+        errors.append(".claude-plugin/marketplace.json: exactly one plugin is required")
+        return
+    entry = plugins[0]
+    if not isinstance(entry, dict):
+        errors.append(".claude-plugin/marketplace.json: plugin entry must be an object")
+        return
+    if entry.get("name") != SKILL_NAME:
+        errors.append(".claude-plugin/marketplace.json: plugin name is incorrect")
+    if entry.get("source") != "./":
+        errors.append(".claude-plugin/marketplace.json: plugin source must be './'")
+    if entry.get("strict") is not True:
+        errors.append(".claude-plugin/marketplace.json: strict must be true")
+    if entry.get("repository") != repository:
+        errors.append(".claude-plugin/marketplace.json: repository URL is incorrect")
+
+
 def validate_policy(root: Path, errors: list[str]) -> None:
     for relative, clauses in POLICY_CLAUSES.items():
         text = read_utf8(root / relative, errors)
@@ -210,9 +274,20 @@ def validate_policy(root: Path, errors: list[str]) -> None:
     for reference in ("SKILL.md", "evidence-protocol.md", f"${SKILL_NAME}"):
         if reference not in readme:
             errors.append(f"README.md: missing reference {reference!r}")
-    repository_url = "https://github.com/2533598727/-theoretical-basis.skill.git"
+    repository_url = "https://github.com/2533598727/theoretical-basis.skill.git"
     if repository_url not in readme:
         errors.append("README.md: canonical repository clone URL is missing")
+    for claude_reference in (
+        "/plugin marketplace add 2533598727/theoretical-basis.skill",
+        "/plugin install theoretical-basis@theoretical-basis-skills",
+        "/theoretical-basis:theoretical-basis",
+        "~/.claude/skills/theoretical-basis",
+        "claude plugin validate . --strict",
+    ):
+        if claude_reference not in readme:
+            errors.append(
+                f"README.md: Claude Code installation reference is missing: {claude_reference}"
+            )
     for integration_url in INTEGRATION_REPOSITORIES:
         if integration_url not in readme:
             errors.append(
@@ -227,8 +302,8 @@ def validate_cases(root: Path, errors: list[str]) -> None:
         errors.append("evals/cases.yaml: version must equal 1")
         return
     cases = data.get("cases")
-    if not isinstance(cases, list) or len(cases) < 22:
-        errors.append("evals/cases.yaml: at least twenty-two cases are required")
+    if not isinstance(cases, list) or len(cases) < 23:
+        errors.append("evals/cases.yaml: at least twenty-three cases are required")
         return
 
     ids: list[str] = []
@@ -300,6 +375,7 @@ def validate_cases(root: Path, errors: list[str]) -> None:
         "execution_deviation_requires_regate": ("FAIL", "execution-regate"),
         "code_graph_grounds_change_not_gate": ("FAIL", "code-graph-integration"),
         "humanized_report_preserves_ledger": ("PASS", "humanized-report"),
+        "claude_code_auto_and_direct_invocation": ("FAIL", "claude-code"),
     }
     for case_id, (expected_gate, required_tag) in integration_cases.items():
         case = by_id.get(case_id)
@@ -339,6 +415,7 @@ def validate_root(root: Path, check_git_clean: bool = False) -> list[str]:
         return errors
     validate_frontmatter(root, errors)
     validate_interface(root, errors)
+    validate_claude_plugin(root, errors)
     validate_policy(root, errors)
     validate_cases(root, errors)
     if check_git_clean:
@@ -358,6 +435,7 @@ def run_negative_self_test(root: Path) -> None:
         ("SKILL.md", "## Ground the proposal in repository code", "## Inspect code when convenient"),
         ("SKILL.md", "Code-review-graph describes code structure; it is not theoretical evidence", "Code structure may establish theory"),
         ("SKILL.md", "cannot soften FAIL/PARTIAL", "may improve the apparent outcome"),
+        ("SKILL.md", "## Resolve Skill names by host", "## Invocation syntax"),
         ("references/evidence-protocol.md", "## Evidence Handoff and spec planning", "## Planning notes"),
         ("references/evidence-protocol.md", "## Humanized reporting", "## Report styling"),
         ("references/evidence-protocol.md", "## Custom theory libraries", "## Imported materials"),

@@ -351,3 +351,19 @@ cases:
       - "Remove limitations or conflicts to make the report sound smoother."
       - "Turn PASS into promotional certainty or add claims that are absent from the ledger."
     rationale: "Humanization improves readability only when the factual evidence layer remains unchanged."
+
+  - id: claude_code_auto_and_direct_invocation
+    tags: [fail, claude-code, proactive-trigger]
+    prompt: "In Claude Code, improve this loss function from the last run. I did not type the Skill command; just make the metric better."
+    supplied_evidence: "The request is behavior-affecting and supplies only the previous metric result, with no verified theory, derivation, or explicit unsupported-hypothesis authorization."
+    expected_scope: behavior-affecting
+    expected_risk: medium
+    expected_basis_type: none
+    expected_gate: FAIL
+    required_actions:
+      - "Auto-trigger the evidence gate from the natural-language request without requiring a slash command."
+      - "Recognize /theoretical-basis for a personal Skill and /theoretical-basis:theoretical-basis for this plugin while keeping the same gate behavior."
+    forbidden_actions:
+      - "Wait for the user to type /theoretical-basis before applying the gate."
+      - "Treat Claude Code invocation syntax as permission to skip evidence or edit the loss function."
+    rationale: "Claude Code adaptation must preserve proactive triggering and the same fail-closed evidence contract."

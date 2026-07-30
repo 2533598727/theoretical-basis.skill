@@ -24,3 +24,14 @@ jobs:
 
       - name: Validate Skill contract and eval corpus
         run: python scripts/validate_skill.py . --check-git-clean --self-test-negative
+
+      - name: Set up Node.js for Claude Code validation
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install Claude Code validator
+        run: npm install --global @anthropic-ai/claude-code@2.1.220
+
+      - name: Validate Claude Code plugin and marketplace
+        run: claude plugin validate . --strict
