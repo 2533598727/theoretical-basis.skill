@@ -5,23 +5,23 @@
 See: `.planning/PROJECT.md` (updated 2026-07-30)
 
 **Core value:** Never implement an unsupported behavior-affecting research change without adequate evidence or explicit authorization for a falsifiable hypothesis experiment.
-**Current focus:** Phase 1 — Evidence Contract
+**Current focus:** Phase 2 — Behavioral Verification
 
 ## Current Position
 
-Phase: 1 of 3 (Evidence Contract)
+Phase: 2 of 3 (Behavioral Verification)
 Plan: 1 of 1 in current phase
-Status: Ready to execute after user confirmation
-Last activity: 2026-07-30 — Full optimization scope confirmed and executable plans created
+Status: In progress
+Last activity: 2026-07-30 — Phase 1 policy contract completed and verified
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [███░░░░░░░] 33%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 0
-- Average duration: N/A
-- Total execution time: 0 hours
+- Total plans completed: 1
+- Average duration: 10 min
+- Total execution time: 0.17 hours
 
 ## Accumulated Context
 
@@ -30,6 +30,8 @@ Progress: [░░░░░░░░░░] 0%
 - Optimize runtime policy and repository engineering together.
 - Preserve root-level Skill structure and `$theoretical-basis` name.
 - Execute policy, eval, and release phases sequentially.
+- High-risk PASS requires primary evidence plus independent corroboration.
+- Search stops after two documented passes; generic continuation cannot authorize a hypothesis.
 
 ### Pending Todos
 
@@ -50,5 +52,5 @@ None outside the roadmap.
 ## Session Continuity
 
 Last session: 2026-07-30
-Stopped at: Plans completed; awaiting execution approval
+Stopped at: Phase 1 completed; beginning Phase 2 scenario-first verification
 Resume file: None

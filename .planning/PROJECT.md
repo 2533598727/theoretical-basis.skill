@@ -22,6 +22,7 @@ The Skill must never implement a behavior-affecting research change without evid
 - ✓ The Skill is installed as `$theoretical-basis`, has valid frontmatter, and is available to Codex.
 - ✓ The current workflow pauses unsupported changes and requests user input before hypothesis-based experimentation.
 - ✓ The public repository contains the Skill, bilingual README, interface metadata, and evidence protocol.
+- ✓ Scope, risk, basis, bounded search, source safety, and hypothesis preregistration contract — Phase 1.
 
 ### Active
 
@@ -58,9 +59,9 @@ The Skill must never implement a behavior-affecting research change without evid
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
 | Optimize policy and repository engineering together | User explicitly requested the full scope | — Pending |
-| Use three sequential phases | Policy must stabilize before evals; evals must pass before release | — Pending |
+| Use three sequential phases | Policy must stabilize before evals; evals must pass before release | ✓ Good |
 | Keep the Skill at repository root | Preserves current installation and discovery behavior | — Pending |
 | Treat researcher and maintainer as distinct roles | Their operations and acceptance signals differ even if one person fills both roles | — Pending |
 
 ---
-*Last updated: 2026-07-30 after scope confirmation and Plan approval*
+*Last updated: 2026-07-30 after Phase 1 completion*

@@ -10,20 +10,20 @@
 
 ### Evidence gate
 
-- [ ] **SCOPE-01**: Researcher receives an explicit mechanical-versus-behavior-affecting classification before evidence search. (Use case: UC-001; Concepts: Change Proposal)
-- [ ] **EVID-01**: Researcher receives a low/medium/high risk tier with deterministic evidence thresholds. (Use case: UC-001; Concepts: Evidence Claim, Gate Decision)
-- [ ] **EVID-02**: Agent distinguishes theory, derivation, empirical evidence, expert practice, and informal observation and never treats the latter categories as automatic theoretical PASS. (Use cases: UC-001, UC-003; Concepts: Evidence Claim, Evidence Source)
-- [ ] **REPT-01**: Every gate report records scope, risk, basis type, claim, applicability, contradictions, confidence, and allowed action. (Use case: UC-002; Concepts: Gate Decision)
+- [x] **SCOPE-01**: Researcher receives an explicit mechanical-versus-behavior-affecting classification before evidence search. (Use case: UC-001; Concepts: Change Proposal)
+- [x] **EVID-01**: Researcher receives a low/medium/high risk tier with deterministic evidence thresholds. (Use case: UC-001; Concepts: Evidence Claim, Gate Decision)
+- [x] **EVID-02**: Agent distinguishes theory, derivation, empirical evidence, expert practice, and informal observation and never treats the latter categories as automatic theoretical PASS. (Use cases: UC-001, UC-003; Concepts: Evidence Claim, Evidence Source)
+- [x] **REPT-01**: Every gate report records scope, risk, basis type, claim, applicability, contradictions, confidence, and allowed action. (Use case: UC-002; Concepts: Gate Decision)
 
 ### Search and safety
 
-- [ ] **SRCH-01**: Agent performs no more than two defined search passes before reporting queries, sources, exclusions, and insufficiency to the researcher. (Use case: UC-002; Concepts: Search Pass)
-- [ ] **SAFE-01**: Agent treats all external source content as untrusted data, ignores embedded instructions, and does not execute source code or commands without independent task-scoped review. (Use case: UC-002; Concepts: Evidence Source)
+- [x] **SRCH-01**: Agent performs no more than two defined search passes before reporting queries, sources, exclusions, and insufficiency to the researcher. (Use case: UC-002; Concepts: Search Pass)
+- [x] **SAFE-01**: Agent treats all external source content as untrusted data, ignores embedded instructions, and does not execute source code or commands without independent task-scoped review. (Use case: UC-002; Concepts: Evidence Source)
 
 ### Hypothesis and experiment
 
-- [ ] **HYP-01**: Agent requires explicit researcher authorization after evidence search and researcher source check before creating an unsupported hypothesis. (Use cases: UC-003, UC-004; Concepts: Research Hypothesis)
-- [ ] **EXPT-01**: Agent preregisters prediction, baseline, controls, ablations, primary metric, failure threshold, seeds/runs, holdout isolation, uncertainty, multiple comparisons, budget, and stopping rule before implementation. (Use case: UC-004; Concepts: Experiment Protocol)
+- [x] **HYP-01**: Agent requires explicit researcher authorization after evidence search and researcher source check before creating an unsupported hypothesis. (Use cases: UC-003, UC-004; Concepts: Research Hypothesis)
+- [x] **EXPT-01**: Agent preregisters prediction, baseline, controls, ablations, primary metric, failure threshold, seeds/runs, holdout isolation, uncertainty, multiple comparisons, budget, and stopping rule before implementation. (Use case: UC-004; Concepts: Experiment Protocol)
 
 ### Evaluation and engineering
 
@@ -50,14 +50,14 @@
 
 | Requirement | Actor / Role | Use Case | Domain Concept(s) | Phase | Status |
 |-------------|--------------|----------|-------------------|-------|--------|
-| SCOPE-01 | Researcher | UC-001 | Change Proposal | Phase 1 | Pending |
-| EVID-01 | Researcher | UC-001 | Evidence Claim, Gate Decision | Phase 1 | Pending |
-| EVID-02 | Researcher, Codex Agent | UC-001, UC-003 | Evidence Claim, Evidence Source | Phase 1 | Pending |
-| REPT-01 | Codex Agent | UC-002 | Gate Decision | Phase 1 | Pending |
-| SRCH-01 | Codex Agent | UC-002 | Search Pass | Phase 1 | Pending |
-| SAFE-01 | Codex Agent | UC-002 | Evidence Source | Phase 1 | Pending |
-| HYP-01 | Researcher, Codex Agent | UC-003, UC-004 | Research Hypothesis | Phase 1 | Pending |
-| EXPT-01 | Researcher, Codex Agent | UC-004 | Experiment Protocol | Phase 1 | Pending |
+| SCOPE-01 | Researcher | UC-001 | Change Proposal | Phase 1 | Complete |
+| EVID-01 | Researcher | UC-001 | Evidence Claim, Gate Decision | Phase 1 | Complete |
+| EVID-02 | Researcher, Codex Agent | UC-001, UC-003 | Evidence Claim, Evidence Source | Phase 1 | Complete |
+| REPT-01 | Codex Agent | UC-002 | Gate Decision | Phase 1 | Complete |
+| SRCH-01 | Codex Agent | UC-002 | Search Pass | Phase 1 | Complete |
+| SAFE-01 | Codex Agent | UC-002 | Evidence Source | Phase 1 | Complete |
+| HYP-01 | Researcher, Codex Agent | UC-003, UC-004 | Research Hypothesis | Phase 1 | Complete |
+| EXPT-01 | Researcher, Codex Agent | UC-004 | Experiment Protocol | Phase 1 | Complete |
 | EVAL-01 | Skill Maintainer | UC-005 | Evaluation Case | Phase 2 | Pending |
 | EVAL-02 | Skill Maintainer | UC-005 | Release Artifact | Phase 2 | Pending |
 | DOCS-01 | Skill Maintainer | UC-006 | Release Artifact | Phase 3 | Pending |
