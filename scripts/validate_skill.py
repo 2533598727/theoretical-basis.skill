@@ -20,6 +20,13 @@ except ImportError as exc:  # pragma: no cover - exercised by environment setup
 
 SKILL_NAME = "theoretical-basis"
 STALE_NAMES = ("ground-algorithm-changes",)
+INTEGRATION_REPOSITORIES = (
+    "https://github.com/2533598727/theoretical-basis.skill",
+    "https://github.com/tirth8205/code-review-graph",
+    "https://github.com/ustc-ai4science/academic-search",
+    "https://github.com/lgwanai/spec-skill",
+    "https://github.com/op7418/Humanizer-zh",
+)
 REQUIRED_FILES = (
     "SKILL.md",
     "README.md",
@@ -206,6 +213,11 @@ def validate_policy(root: Path, errors: list[str]) -> None:
     repository_url = "https://github.com/2533598727/-theoretical-basis.skill.git"
     if repository_url not in readme:
         errors.append("README.md: canonical repository clone URL is missing")
+    for integration_url in INTEGRATION_REPOSITORIES:
+        if integration_url not in readme:
+            errors.append(
+                f"README.md: integration repository URL is missing: {integration_url}"
+            )
 
 
 def validate_cases(root: Path, errors: list[str]) -> None:

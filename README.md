@@ -41,6 +41,18 @@ FAIL 不会生成实现任务，PARTIAL 也只能规划证据支持的部分。�
 
 汇报阶段可以交给 `$humanizer-zh` 收尾。顺序不能反：先把来源、主张、风险、假设、限制和门禁结果写成完整证据账本，再润色中文说明。润色后还要逐项核对，不能为了读起来顺滑而删掉 DOI、符号名、冲突证据、PARTIAL/FAIL 或禁止修改的范围。
 
+### 联动列表
+
+| 层级 | Skill / 组件 | 负责什么 | 仓库 |
+|---|---|---|---|
+| 核心门禁 | `$theoretical-basis` | 主动发现需要理论依据的改动，核验来源并决定 PASS、PARTIAL 或 FAIL | [2533598727/theoretical-basis.skill](https://github.com/2533598727/theoretical-basis.skill) |
+| 代码检索 | code-review-graph：`$explore-codebase`、`$build-graph` | 定位符号、调用链、依赖、执行路径和测试；图谱缺失或过期时更新 | [tirth8205/code-review-graph](https://github.com/tirth8205/code-review-graph) |
+| 学术检索 | `$academic-search` | 扩展检索词，搜索论文、引用关系和开放获取状态 | [ustc-ai4science/academic-search](https://github.com/ustc-ai4science/academic-search) |
+| 规划落实 | `$spec-skill` | 把通过的依据写进任务边界、验收条件、测试和执行门禁 | [lgwanai/spec-skill](https://github.com/lgwanai/spec-skill) |
+| 中文汇报 | `$humanizer-zh` | 在证据账本冻结后润色中文表达，不改来源、限制和门禁结论 | [op7418/Humanizer-zh](https://github.com/op7418/Humanizer-zh) |
+
+这些项目是协作关系，不是平级裁决者。只有 `$theoretical-basis` 能给出证据门禁结论；其他项目分别提供代码上下文、文献检索、规划执行和文字整理。
+
 ### 解决什么痛点？
 
 很多科研 Prompt 只有一句“把这个模块优化一下”。什么证据才算够，找不到依据时怎么办，都没说。AI 于是盯着上一轮实验的涨跌猜原因，接着改参数、换结构，再补一个听起来合理的解释。这是事后猜测，不是理论依据。
@@ -180,6 +192,18 @@ FAIL creates no implementation task, and PARTIAL plans only the supported portio
 For work in an existing repository, `$theoretical-basis` can also use code-review-graph. `$explore-codebase` locates the actual symbols, callers, dependencies, execution flows, and tests; `$build-graph` builds or refreshes the graph when needed. This connects a paper's claim to the implementation that would change instead of reasoning from a vague module label. The graph explains code structure. It is not theoretical evidence and cannot turn FAIL into PASS.
 
 `$humanizer-zh` can polish the final Chinese report, but only after the evidence ledger is complete. Sources, claims, risk, assumptions, limitations, conflicts, gate status, symbol names, and forbidden scope are frozen first. The rewritten report is checked against that ledger so smoother prose does not erase a DOI, soften PARTIAL or FAIL, or add an unsupported claim.
+
+### Integration list
+
+| Layer | Skill / component | Responsibility | Repository |
+|---|---|---|---|
+| Core gate | `$theoretical-basis` | Proactively detects evidence needs, verifies sources, and decides PASS, PARTIAL, or FAIL | [2533598727/theoretical-basis.skill](https://github.com/2533598727/theoretical-basis.skill) |
+| Code retrieval | code-review-graph: `$explore-codebase`, `$build-graph` | Locates symbols, callers, dependencies, flows, and tests; builds or refreshes the graph when needed | [tirth8205/code-review-graph](https://github.com/tirth8205/code-review-graph) |
+| Literature retrieval | `$academic-search` | Expands queries and retrieves papers, citation relations, and access status | [ustc-ai4science/academic-search](https://github.com/ustc-ai4science/academic-search) |
+| Planning | `$spec-skill` | Carries verified evidence into task boundaries, acceptance criteria, tests, and execution gates | [lgwanai/spec-skill](https://github.com/lgwanai/spec-skill) |
+| Chinese reporting | `$humanizer-zh` | Polishes Chinese prose after the ledger is frozen without changing evidence or gate status | [op7418/Humanizer-zh](https://github.com/op7418/Humanizer-zh) |
+
+These integrations do not share gate authority. `$theoretical-basis` owns the evidence decision; the other projects provide code context, literature retrieval, planning, and presentation.
 
 ### What problem does it solve?
 
