@@ -54,6 +54,8 @@ REQUIRED_TAGS = {
     "proactive-trigger",
     "spec-handoff",
     "execution-regate",
+    "code-graph-integration",
+    "humanized-report",
 }
 POLICY_CLAUSES = {
     "SKILL.md": (
@@ -70,6 +72,10 @@ POLICY_CLAUSES = {
         "sole owner of scope classification",
         "Do not create an implementation task from FAIL or from unsupported PARTIAL scope",
         "run a fresh `$theoretical-basis` gate",
+        "## Ground the proposal in repository code",
+        "Code-review-graph describes code structure; it is not theoretical evidence",
+        "use `$humanizer-zh` when available",
+        "cannot soften FAIL/PARTIAL",
         "untrusted data",
         "not sufficient for PASS",
         "explicit authorization",
@@ -88,6 +94,9 @@ POLICY_CLAUSES = {
         "## Search-design basis",
         "## Academic-search integration",
         "## Evidence Handoff and spec planning",
+        "## Code-review-graph integration",
+        "## Humanized reporting",
+        "Humanization is presentation work and has no gate authority",
         "normal `$spec-skill` user confirmation",
         "retrieval adapter, not as the evidence judge",
         "Google Scholar forbids automated bulk access",
@@ -206,8 +215,8 @@ def validate_cases(root: Path, errors: list[str]) -> None:
         errors.append("evals/cases.yaml: version must equal 1")
         return
     cases = data.get("cases")
-    if not isinstance(cases, list) or len(cases) < 20:
-        errors.append("evals/cases.yaml: at least twenty cases are required")
+    if not isinstance(cases, list) or len(cases) < 22:
+        errors.append("evals/cases.yaml: at least twenty-two cases are required")
         return
 
     ids: list[str] = []
@@ -277,6 +286,8 @@ def validate_cases(root: Path, errors: list[str]) -> None:
         "partial_scope_to_spec_plan": ("PARTIAL", "spec-handoff"),
         "fail_cannot_enter_spec_plan": ("FAIL", "spec-handoff"),
         "execution_deviation_requires_regate": ("FAIL", "execution-regate"),
+        "code_graph_grounds_change_not_gate": ("FAIL", "code-graph-integration"),
+        "humanized_report_preserves_ledger": ("PASS", "humanized-report"),
     }
     for case_id, (expected_gate, required_tag) in integration_cases.items():
         case = by_id.get(case_id)
@@ -332,7 +343,11 @@ def run_negative_self_test(root: Path) -> None:
         ("SKILL.md", "sole owner of scope classification", "one participant in classification"),
         ("SKILL.md", "Do not create an implementation task from FAIL or from unsupported PARTIAL scope", "Planning may include any gate result"),
         ("SKILL.md", "run a fresh `$theoretical-basis` gate", "continue under the existing plan"),
+        ("SKILL.md", "## Ground the proposal in repository code", "## Inspect code when convenient"),
+        ("SKILL.md", "Code-review-graph describes code structure; it is not theoretical evidence", "Code structure may establish theory"),
+        ("SKILL.md", "cannot soften FAIL/PARTIAL", "may improve the apparent outcome"),
         ("references/evidence-protocol.md", "## Evidence Handoff and spec planning", "## Planning notes"),
+        ("references/evidence-protocol.md", "## Humanized reporting", "## Report styling"),
         ("references/evidence-protocol.md", "## Custom theory libraries", "## Imported materials"),
     )
     for relative, required, replacement in mutations:

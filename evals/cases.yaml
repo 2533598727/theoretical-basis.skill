@@ -319,3 +319,35 @@ cases:
       - "Treat proximity to approved code as evidence for the threshold change."
       - "Use execution autonomy or the existing plan confirmation to expand the handoff."
     rationale: "A new substantive execution choice is a new proposal and must be re-gated."
+
+  - id: code_graph_grounds_change_not_gate
+    tags: [fail, code-graph-integration, search-integration]
+    prompt: "Optimize the repository's attention normalization. Find the real implementation and its impact, then decide whether to change it."
+    supplied_evidence: "A current code-review graph can locate the normalization symbol, callers, execution flow, dependent modules, and tests, but no scholarly source or checked derivation supports changing its mechanism."
+    expected_scope: behavior-affecting
+    expected_risk: medium
+    expected_basis_type: none
+    expected_gate: FAIL
+    required_actions:
+      - "Use explore-codebase to ground the proposal in exact symbols, dependencies, flows, invariants, and tests before formulating evidence claims."
+      - "Treat graph results as code provenance only and keep the behavior change paused pending theoretical support."
+    forbidden_actions:
+      - "Treat a caller graph, impact path, or test coverage as theoretical evidence."
+      - "Issue PASS because the affected code surface is well understood."
+    rationale: "Code-review-graph improves change specificity and impact coverage without replacing scholarly evidence."
+
+  - id: humanized_report_preserves_ledger
+    tags: [pass, humanized-report, medium-risk]
+    prompt: "把这次 PASS 的理论依据汇报写得自然一点，不要像机器生成的清单。"
+    supplied_evidence: "The evidence ledger is complete and directly verified, including exact module symbols, DOI-linked claims, theory classification, medium risk, assumptions, limitations, confidence, PASS status, supported scope, forbidden scope, and validation predictions."
+    expected_scope: behavior-affecting
+    expected_risk: medium
+    expected_basis_type: theory
+    expected_gate: PASS
+    required_actions:
+      - "Freeze the ledger, then use humanizer-zh only on the surrounding Chinese prose."
+      - "Compare the rewrite with every ledger field and preserve identifiers, caveats, gate status, and allowed and forbidden actions."
+    forbidden_actions:
+      - "Remove limitations or conflicts to make the report sound smoother."
+      - "Turn PASS into promotional certainty or add claims that are absent from the ledger."
+    rationale: "Humanization improves readability only when the factual evidence layer remains unchanged."
