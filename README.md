@@ -1,6 +1,20 @@
-# Theoretical Basis Skill / 理论依据 Skill
+<div align="center">
 
-[中文](#中文) · [English](#english)
+# Theoretical Basis / 理论依据
+
+让 AI 在修改科研算法前，主动寻找可追溯、真正适用的理论依据。<br>
+Make AI seek traceable, applicable theoretical support before changing research algorithms.
+
+[![Version](https://img.shields.io/badge/version-1.2.0-0969da?style=flat-square)](./.claude-plugin/plugin.json)
+[![License](https://img.shields.io/github/license/2533598727/theoretical-basis.skill?style=flat-square)](./LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/2533598727/theoretical-basis.skill?style=flat-square&logo=github)](https://github.com/2533598727/theoretical-basis.skill/stargazers)
+[![Validate Skill](https://img.shields.io/github/actions/workflow/status/2533598727/theoretical-basis.skill/validate.yml?branch=main&style=flat-square&label=validation)](https://github.com/2533598727/theoretical-basis.skill/actions/workflows/validate.yml)
+[![Codex Skill](https://img.shields.io/badge/Codex-Skill-111827?style=flat-square)](https://developers.openai.com/codex/skills)
+[![Claude Code](https://img.shields.io/badge/Claude_Code-Plugin-D97757?style=flat-square)](https://code.claude.com/docs/en/plugins)
+
+[中文](#中文) · [English](#english) · [安装](#安装) · [Installation](#installation) · [快速示例](#快速示例最小-demo) · [GitHub](https://github.com/2533598727/theoretical-basis.skill)
+
+</div>
 
 ## 中文
 
