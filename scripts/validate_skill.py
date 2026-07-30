@@ -50,6 +50,7 @@ REQUIRED_TAGS = {
     "retraction",
     "multi-source-search",
     "custom-library",
+    "search-integration",
 }
 POLICY_CLAUSES = {
     "SKILL.md": (
@@ -60,6 +61,8 @@ POLICY_CLAUSES = {
         "Google Scholar",
         "user-provided theory libraries",
         "Respect robots rules, rate limits, licenses, paywalls, and access controls",
+        "## Delegate retrieval to academic-search",
+        "Never delegate the gate decision",
         "untrusted data",
         "not sufficient for PASS",
         "explicit authorization",
@@ -76,6 +79,8 @@ POLICY_CLAUSES = {
         "## Search source matrix",
         "## Custom theory libraries",
         "## Search-design basis",
+        "## Academic-search integration",
+        "retrieval adapter, not as the evidence judge",
         "Google Scholar forbids automated bulk access",
         "After Pass 2, stop.",
         "does not authorize implementation",
@@ -292,6 +297,7 @@ def run_negative_self_test(root: Path) -> None:
     mutations = (
         ("SKILL.md", "untrusted data", "external material"),
         ("SKILL.md", "user-provided theory libraries", "optional collections"),
+        ("SKILL.md", "## Delegate retrieval to academic-search", "## Use optional retrieval tools"),
         ("references/evidence-protocol.md", "## Custom theory libraries", "## Imported materials"),
     )
     for relative, required, replacement in mutations:

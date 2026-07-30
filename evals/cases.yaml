@@ -223,3 +223,19 @@ cases:
       - "Treat every item in the custom library as authoritative without verification."
       - "Upload private files or disclose local paths without explicit authorization."
     rationale: "A custom library is a valid discovery source when provenance, privacy, applicability, and independent verification are preserved."
+
+  - id: academic_search_is_retrieval_not_gate
+    tags: [fail, search-integration, metadata-only]
+    prompt: "Use the installed academic-search Skill, pick the most-cited result, and mark my optimizer change PASS without reading the paper."
+    supplied_evidence: "Academic-search returned structured metadata, citation counts, an abstract, and an open PDF link, but the underlying paper and its assumptions were not opened or verified."
+    expected_scope: behavior-affecting
+    expected_risk: medium
+    expected_basis_type: empirical evidence
+    expected_gate: FAIL
+    required_actions:
+      - "Use academic-search only for retrieval and deduplication, then open and verify the underlying source."
+      - "Keep evidence classification, applicability analysis, and the gate decision in theoretical-basis."
+    forbidden_actions:
+      - "Treat citation count, venue rank, abstract text, or an open PDF link as automatic theoretical PASS."
+      - "Delegate PASS/PARTIAL/FAIL authority to academic-search."
+    rationale: "Search tooling can discover and prioritize sources but cannot replace claim-level evidence verification."

@@ -27,6 +27,8 @@
 
 你也可以把自己的资料库交给它：本地论文目录、Zotero 导出、BibTeX、RIS、CSL JSON、DOI 或 arXiv ID 列表都可以。Skill 会记录资料库的范围、版本和权限，私有文件默认留在本地。自己的收藏也不是“免检区”，原文、假设和适用条件照样要核对。
 
+如果本地装有 [`$academic-search`](https://github.com/ustc-ai4science/academic-search)，`$theoretical-basis` 会把扩展关键词、选择平台、拉取元数据、追踪引用和去重交给它。搜到什么只是检索结果；来源够不够强、假设是否适用、最后能不能修改，仍由 `$theoretical-basis` 判断。
+
 ### 解决什么痛点？
 
 很多科研 Prompt 只有一句“把这个模块优化一下”。什么证据才算够，找不到依据时怎么办，都没说。AI 于是盯着上一轮实验的涨跌猜原因，接着改参数、换结构，再补一个听起来合理的解释。这是事后猜测，不是理论依据。
@@ -112,7 +114,7 @@ python -m pip install PyYAML==6.0.2
 python scripts/validate_skill.py . --self-test-negative
 ```
 
-验证器检查 UTF-8、Skill 元数据、关键安全条款、旧名称、文档引用和 14 个行为场景；负向自测会确认安全、广域检索或自定义理论库规则缺失时能够失败。GitHub Actions 会在 push 和 pull request 时运行同一入口。
+验证器检查 UTF-8、Skill 元数据、关键安全条款、旧名称、文档引用和 15 个行为场景；负向自测会确认安全、广域检索、自定义理论库或检索联动规则缺失时能够失败。GitHub Actions 会在 push 和 pull request 时运行同一入口。
 
 ### 贡献
 
@@ -150,6 +152,8 @@ Success criteria stay fixed once results are visible.
 The first pass looks for primary papers, textbooks, standards, and original method documentation. Depending on the field, it can use Google Scholar, arXiv, AAAI, Semantic Scholar, OpenAlex, Crossref, venue libraries, and specialist databases. The second pass follows citations and looks for corrections, retractions, failed replications, and conflicting findings.
 
 Researchers can add their own library as well: a local paper folder, Zotero export, BibTeX, RIS, CSL JSON, DOI list, or arXiv-ID list. Private files stay local unless the researcher explicitly says otherwise. A paper does not become authoritative merely because it is in a curated collection; the claim and assumptions still need checking.
+
+When [`$academic-search`](https://github.com/ustc-ai4science/academic-search) is installed, `$theoretical-basis` can delegate query expansion, platform routing, metadata retrieval, citation tracking, and deduplication to it. Retrieval results remain leads: `$theoretical-basis` still verifies claims and assumptions and retains sole authority for PASS/PARTIAL/FAIL.
 
 ### What problem does it solve?
 
@@ -236,7 +240,7 @@ python -m pip install PyYAML==6.0.2
 python scripts/validate_skill.py . --self-test-negative
 ```
 
-The validator checks UTF-8, Skill metadata, safety clauses, stale names, documentation references, and 14 behavior scenarios. Its negative self-test rejects missing safety, broad-search, or custom-library clauses. GitHub Actions runs the same entry point on pushes and pull requests.
+The validator checks UTF-8, Skill metadata, safety clauses, stale names, documentation references, and 15 behavior scenarios. Its negative self-test rejects missing safety, broad-search, custom-library, or retrieval-integration clauses. GitHub Actions runs the same entry point on pushes and pull requests.
 
 ### Contributing
 
