@@ -117,8 +117,31 @@ After Codex's search and the user's own-source check both fail:
 
 1. Keep the modification paused.
 2. Ask whether to formulate an unsupported research hypothesis.
-3. If authorized, state the hypothesis, mechanism, assumptions, and falsifiable prediction.
-4. Specify baseline, controls, ablations, metrics, failure threshold, sample or run count, uncertainty treatment, and compute budget as appropriate.
-5. Ask for confirmation if the experiment changes research direction, costs substantial resources, or introduces a new success criterion.
-6. Implement only the minimum change needed to test the hypothesis.
-7. Report negative and null results alongside positive results.
+3. Require explicit authorization that acknowledges the proposal is an **unsupported hypothesis**. A generic “continue,” “try it,” instruction to work autonomously, or request to finish does not authorize implementation.
+4. State the hypothesis, proposed mechanism, assumptions, and falsifiable prediction.
+5. Preregister every field below before implementation.
+6. Ask for additional confirmation if the experiment changes research direction, uses new data, costs substantial resources, or introduces a new evaluation criterion.
+7. Implement only the minimum change needed to test the authorized hypothesis.
+8. Report negative and null results alongside positive results.
+
+### Required preregistration fields
+
+- **Hypothesis:** The unsupported proposition being tested.
+- **Mechanism:** Why the proposed change could cause the predicted outcome.
+- **Assumptions:** Conditions that must hold for the prediction to apply.
+- **Falsifiable prediction:** Observable outcome that would support or contradict the hypothesis.
+- **Baseline:** Current method or strongest relevant comparator.
+- **Controls:** Variables and procedures held constant.
+- **Ablations:** Components removed or isolated to test the proposed mechanism.
+- **Primary metric:** The single primary outcome, its direction, and measurement procedure.
+- **Failure threshold:** Result that rejects or fails to support the hypothesis.
+- **Sample/run count:** Number of observations or repeated runs, with rationale.
+- **Random-seed policy:** Fixed or sampled seeds and how seed sensitivity is reported.
+- **Holdout isolation:** Separation of development/validation data from the untouched final test set.
+- **Uncertainty method:** Confidence intervals, variance estimates, statistical tests, or another justified method.
+- **Multiple-comparison handling:** Correction or interpretation rule when testing more than one outcome.
+- **Compute/data budget:** Maximum resource and data use authorized for the experiment.
+- **Stopping rule:** Conditions for early stop, completion, or abandonment.
+- **Interpretation:** Rules for positive, negative, and null results.
+
+Freeze these fields before observing experimental results. If a field must change, label the revision, explain why, and treat the revised protocol as a new experiment rather than silently moving the success criterion.
