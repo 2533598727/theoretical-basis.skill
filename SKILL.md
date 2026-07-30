@@ -7,14 +7,29 @@ description: Require traceable theoretical support before changing scientific-re
 
 Use an evidence gate before making behavior-affecting research or algorithm changes. Never invent a citation or describe an empirical convention as established theory.
 
+## Classify scope and risk
+
+Classify the proposal before searching or editing:
+
+- **Mechanical:** Formatting, comments, file moves, renames, or a refactor whose scientific behavior is demonstrably unchanged. Verify preservation with relevant tests, invariants, interface checks, or output comparison. If preservation is uncertain, classify the proposal as behavior-affecting.
+- **Behavior-affecting:** Any change that can alter outputs, optimization dynamics, data meaning, evaluation, conclusions, or scientific claims. Apply the full evidence gate.
+
+Assign a **risk tier** to every behavior-affecting proposal:
+
+- **Low:** Localized, reversible, and not central to a scientific claim.
+- **Medium:** Materially changes outputs, training behavior, evaluation, or multiple dependent modules.
+- **High:** Affects a core paper claim, data validity, safety, identifiability, irreversible processing, or a decision whose failure would invalidate results.
+
+Classify each supporting basis as **theory**, **derivation**, **empirical evidence**, **expert practice**, or **informal observation**. Do not use empirical success, expert practice, or informal observation as an automatic substitute for theoretical support.
+
 ## Apply the evidence gate
 
 1. State the proposed change precisely: affected module, changed mechanism, intended benefit, assumptions, and likely side effects.
 2. Identify the theoretical dimension that must support it, such as convergence, stability, optimization geometry, statistical validity, information preservation, computational complexity, robustness, identifiability, or domain mechanism.
 3. Search for evidence before editing. Browse the web when sources are not already supplied, and prefer primary or authoritative sources.
-4. Map every substantive change to at least one source and the exact claim it supports. Read `references/evidence-protocol.md` for source ranking, acceptance rules, and the evidence record format.
+4. Map every substantive change to sources and the exact claim each source supports. Read `references/evidence-protocol.md` for source ranking, risk-proportional thresholds, acceptance rules, and the evidence record format.
 5. Decide whether the gate passes:
-   - **Pass:** The source directly or by a clearly explained derivation supports the mechanism under compatible assumptions. Proceed with the smallest justified change.
+   - **Pass:** The evidence meets the threshold for the assigned risk tier and supports the mechanism under compatible assumptions. Proceed with the smallest justified change.
    - **Partial:** Evidence supports only part of the change. Implement only the supported portion and pause the rest.
    - **Fail:** No adequate basis exists. Do not modify the unsupported behavior.
 6. After a failed gate, broaden the search using synonyms, adjacent fields, survey citations, cited-by trails, textbooks, authoritative institutions, encyclopedias, and clearly labeled forum discussions.
@@ -39,11 +54,14 @@ Define validation before judging success. Use suitable baselines, ablations, con
 Return a concise evidence ledger containing:
 
 - module and proposed change;
+- scope class and behavior-preservation evidence;
+- risk tier and rationale;
 - theoretical dimension and claim;
-- source, source type, and link or stable bibliographic identifier;
+- source, basis type, and link or stable bibliographic identifier;
 - applicability assumptions and limitations;
+- conflicting evidence and confidence;
 - gate result: pass, partial, or fail;
-- code or design changes actually made;
+- exact allowed action and code or design changes actually made;
 - validation plan and observed result;
 - unresolved risks and next decision required from the user.
 
