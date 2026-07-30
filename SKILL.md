@@ -52,6 +52,17 @@ When `$academic-search` is installed and available, use it as the preferred retr
 - Keep evidence classification, applicability analysis, contradiction handling, and PASS/PARTIAL/FAIL authority in `$theoretical-basis`. Never delegate the gate decision.
 - If `$academic-search` is unavailable or a source fails, use other available search tools and record the limitation. Do not weaken the evidence threshold.
 
+## Ground the proposal in repository code
+
+When the task targets an existing repository, inspect the real code before finalizing the proposed change or required claims. Use `$explore-codebase` as the preferred code-review-graph retrieval layer when it is installed:
+
+- begin with its minimal task context, then locate the affected symbols, files, callers, callees, imports, execution flows, and relevant tests;
+- use the graph to identify behavior boundaries, dependent modules, existing invariants, and the smallest plausible change surface;
+- if the graph is missing or materially stale, use `$build-graph` to build or incrementally update it, then repeat the focused query;
+- if code-review-graph is unavailable, fall back to repository text search and static inspection and report the limitation.
+
+Code-review-graph describes code structure; it is not theoretical evidence and cannot satisfy or upgrade PASS. Keep code provenance separate from scholarly-source provenance. Use the code context to make evidence claims specific to the implemented mechanism and to carry exact symbols, dependencies, and tests into the Evidence Handoff.
+
 ## Carry verified evidence into planning
 
 After a PASS or PARTIAL decision, create the **Evidence Handoff** defined in `references/evidence-protocol.md`. Treat it as an implementation contract, not a citation appendix. A PARTIAL handoff covers only the supported portion. A FAIL decision creates no implementation handoff and may produce only evidence-retrieval work, a blocker, or a user decision checkpoint unless the unsupported-hypothesis protocol is explicitly authorized.
@@ -135,5 +146,7 @@ Return a concise evidence ledger containing:
 - exact allowed action and code or design changes actually made;
 - hypothesis authorization state, preregistered validation plan, and observed result;
 - unresolved risks and next decision required from the user.
+
+For a Chinese-facing report, finish and freeze the evidence ledger first, then use `$humanizer-zh` when available to make the surrounding prose direct and natural. Preserve exact symbol names, source links and identifiers, attributed claims, basis types, risk tier, assumptions, limitations, conflicts, confidence, gate status, allowed and forbidden actions, search limitations, and hypothesis-authorization state. Compare the rewritten report with the ledger before sending it. `$humanizer-zh` may improve wording but cannot soften FAIL/PARTIAL, invent evidence, or change the gate decision. If it is unavailable, write the report plainly without weakening any field.
 
 When the gate fails, lead with **“已暂停修改”** and do not emit or apply the unsupported patch.

@@ -10,7 +10,9 @@
 - [Search source matrix](#search-source-matrix)
 - [Custom theory libraries](#custom-theory-libraries)
 - [Academic-search integration](#academic-search-integration)
+- [Code-review-graph integration](#code-review-graph-integration)
 - [Evidence Handoff and spec planning](#evidence-handoff-and-spec-planning)
+- [Humanized reporting](#humanized-reporting)
 - [Search-design basis](#search-design-basis)
 - [Two-pass search sequence](#two-pass-search-sequence)
 - [Evidence record](#evidence-record)
@@ -118,6 +120,18 @@ The retrieval Skill's light-scan and deep-fetch stages remain inside the current
 
 If the integration is unavailable, rate-limited, blocked, or missing a required platform, fall back to available tools and record the gap. Do not claim full coverage or lower the risk-tier threshold.
 
+## Code-review-graph integration
+
+Use code-review-graph to establish what the current repository actually implements before mapping literature to a proposed change.
+
+1. Use `$explore-codebase` to obtain minimal task context and locate the affected symbols, ownership boundaries, callers, callees, imports, flows, tests, and dependent modules.
+2. If graph status shows no usable graph or the graph is materially stale, use `$build-graph` for a full or incremental update, then re-run the focused exploration.
+3. Record the code snapshot or revision, graph status, exact symbols and files, relevant relationships, existing invariants, test coverage, and unresolved code ambiguity.
+4. Formulate evidence claims against the mechanism found in code, not against a guessed module description.
+5. Put exact code symbols, dependencies, and tests into the Evidence Handoff and resulting plan.
+
+Graph relationships establish code provenance and impact, not scientific validity. They cannot count as theory, derivation, or empirical support and cannot issue PASS/PARTIAL/FAIL. If graph tooling is unavailable, use repository text search and static inspection, say what could not be traced, and lower confidence in impact coverage rather than lowering the evidence threshold.
+
 ## Evidence Handoff and spec planning
 
 Create an Evidence Handoff only after `$theoretical-basis` has issued PASS or PARTIAL. `$theoretical-basis` remains the sole gate owner; retrieval rankings and planning structure cannot change the decision.
@@ -151,9 +165,25 @@ When `$spec-skill` is available, map the handoff into its planning artifacts:
 | Required claims and safety boundaries | `must_haves` | Goal-backward verification checks scientific outcomes and stopping rules |
 | Unresolved risks | checkpoint, blocker, or verification note | Risk stays visible and cannot silently become implementation scope |
 
+When repository code is in scope, also carry the code-context record into `read_first`, task files, dependency notes, invariant tests, and key links. A source-backed claim that is not connected to the actual symbol or execution path is incomplete planning evidence.
+
 Keep the normal `$spec-skill` user confirmation between planning and execution. An Evidence Handoff authorizes planning within its boundaries; it does not authorize automatic execution.
 
 During execution and verification, compare each substantive implementation decision with the handoff. If the code would introduce a new mechanism, assumption, metric, data meaning, evaluation rule, or other scientific-behavior change, stop before making that deviation and return it to a fresh `$theoretical-basis` gate. A generic instruction to continue cannot expand the handoff.
+
+## Humanized reporting
+
+Treat the evidence ledger as the immutable factual layer. After it is complete, `$humanizer-zh` may rewrite the surrounding Chinese explanation for clarity and natural rhythm.
+
+The rewrite must preserve:
+
+- module paths and symbol names;
+- source links, DOI/ISBN/arXiv IDs, and attributed claims;
+- basis classifications, risk tier, confidence, and gate status;
+- assumptions, limitations, conflicts, unavailable sources, and search coverage;
+- supported and forbidden scope, allowed action, and hypothesis-authorization state.
+
+Compare the final prose against the ledger field by field. Reject a rewrite that removes a caveat, turns PARTIAL or FAIL into encouraging language, makes attribution vague, changes an identifier, or adds a claim. Humanization is presentation work and has no gate authority.
 
 ## Search-design basis
 
