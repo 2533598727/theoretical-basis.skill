@@ -33,6 +33,15 @@
 - [x] **DIST-01**: Repository includes a user-approved open-source license and accurate cross-platform installation instructions. (Use case: UC-006; Concepts: Release Artifact)
 - [x] **REL-01**: Release process validates, commits atomically, synchronizes the installed Skill, verifies hashes, pushes `main`, and confirms remote commit identity. (Use case: UC-006; Concepts: Release Artifact)
 
+## v1.1 Requirements
+
+### Proactive evidence-to-plan workflow
+
+- [ ] **AUTO-01**: Agent proactively triggers `$theoretical-basis` whenever it intends a behavior-affecting research change, without waiting for the researcher to request theoretical support. (Use case: UC-007; Concepts: Change Proposal, Gate Decision)
+- [ ] **HAND-01**: PASS/PARTIAL produces a structured evidence handoff with claims, sources, supported and forbidden scope, assumptions, limitations, and validation predictions; FAIL produces no implementation handoff. (Use case: UC-007; Concepts: Gate Decision, Evidence Handoff)
+- [ ] **PLAN-01**: When `$spec-skill` is available, the handoff is represented in read_first inputs, bounded task actions, acceptance criteria, must_haves, and verification commands while preserving the user's plan confirmation checkpoint. (Use case: UC-007; Concepts: Evidence Handoff, Planning Artifact)
+- [ ] **EXEC-01**: Execution and verification stop and return to the evidence gate when implementation introduces a new substantive change or exceeds the supported evidence scope. (Use case: UC-007; Concepts: Planning Artifact, Change Proposal)
+
 ## v2 Requirements
 
 - **EVAL-03**: Automate model-backed eval scoring across multiple Codex model families.
@@ -63,6 +72,10 @@
 | DOCS-01 | Skill Maintainer | UC-006 | Release Artifact | Phase 3 | Complete |
 | DIST-01 | Skill Maintainer | UC-006 | Release Artifact | Phase 3 | Complete |
 | REL-01 | Skill Maintainer | UC-006 | Release Artifact | Phase 3 | Complete |
+| AUTO-01 | Codex Agent, Researcher | UC-007 | Change Proposal, Gate Decision | Phase 4 | Pending |
+| HAND-01 | Codex Agent | UC-007 | Gate Decision, Evidence Handoff | Phase 4 | Pending |
+| PLAN-01 | Codex Agent, Researcher | UC-007 | Evidence Handoff, Planning Artifact | Phase 4 | Pending |
+| EXEC-01 | Codex Agent | UC-007 | Planning Artifact, Change Proposal | Phase 4 | Pending |
 
 ## Derived Access Notes
 
@@ -73,12 +86,16 @@
 | denied | Implement a FAIL decision | Codex Agent | UC-001 | EVID-01 |
 | allowed | Publish after checks pass | Skill Maintainer | UC-005, UC-006 | EVAL-02, REL-01 |
 | denied | Publish with failed required checks | Skill Maintainer / Codex Agent | Release invariant | REL-01 |
+| allowed | Create implementation planning constraints from PASS/PARTIAL | Codex Agent | UC-007 | HAND-01, PLAN-01 |
+| denied | Create implementation tasks from FAIL or unsupported PARTIAL scope | Codex Agent | Core invariant and UC-007 | HAND-01, PLAN-01 |
+| denied | Continue executing a new substantive deviation without a fresh gate | Codex Agent | UC-007 | EXEC-01 |
 
 **Coverage:**
 - v1 requirements: 13 total
-- Mapped to phases: 13
+- v1.1 requirements: 4 total
+- Mapped to phases: 17
 - Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-07-30*
-*Last updated: 2026-07-30 after verified v1 release*
+*Last updated: 2026-07-30 after Phase 4 plan creation*

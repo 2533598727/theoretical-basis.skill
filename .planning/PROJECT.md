@@ -28,7 +28,9 @@ The Skill must never implement a behavior-affecting research change without evid
 
 ### Active
 
-None for v1. Cross-model scoring and marketplace packaging remain deferred to v2.
+- [ ] Make Theoretical Basis proactively trigger for AI-intended research changes without repeated user reminders.
+- [ ] Carry PASS/PARTIAL evidence into spec-skill planning constraints, tests, execution checks, and verification records.
+- [ ] Prevent FAIL, unsupported PARTIAL scope, and new execution deviations from becoming implementation work.
 
 ### Out of Scope
 
@@ -61,6 +63,8 @@ None for v1. Cross-model scoring and marketplace packaging remain deferred to v2
 | Keep the Skill at repository root | Preserves current installation and discovery behavior | ✓ Good |
 | Treat researcher and maintainer as distinct roles | Their operations and acceptance signals differ even if one person fills both roles | ✓ Good |
 | License the public repository under MIT | Simple permissive reuse with attribution matches the user's selection | ✓ Good |
+| Keep Theoretical Basis as the orchestration core | Search and planning integrations must not replace evidence judgment | — Planned |
+| Treat evidence as an implementation constraint | Citations are useful only when they shape scope, tests, and verification | — Planned |
 
 ---
-*Last updated: 2026-07-30 after verified v1 release*
+*Last updated: 2026-07-30 after Phase 4 plan creation*

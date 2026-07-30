@@ -15,6 +15,7 @@ The optimization proceeds from policy contract to behavior verification to publi
 - [x] **Phase 1: Evidence Contract** - Make scope, search, gate, source safety, and hypothesis experimentation deterministic.
 - [x] **Phase 2: Behavioral Verification** - Add repeatable scenario evals, semantic validation, and CI enforcement.
 - [x] **Phase 3: Distribution and Release** - Align bilingual docs, license the repository, synchronize installation, and publish a verified release.
+- [ ] **Phase 4: Evidence-to-Plan Enforcement** - Keep Theoretical Basis proactive and carry verified evidence into spec planning, execution, and verification.
 
 ## Phase Details
 
@@ -65,6 +66,23 @@ Plans:
 Plans:
 - [x] 03-01: Finalize documentation, license, metadata, synchronization, and release.
 
+### Phase 4: Evidence-to-Plan Enforcement
+**Goal**: Theoretical Basis proactively gates AI-authored research changes and makes verified evidence constrain the resulting spec plan and execution.
+**Depends on**: Phase 1, Phase 2, installed `$academic-search`, available `$spec-skill`
+**Requirements**: [AUTO-01, HAND-01, PLAN-01, EXEC-01]
+**Use Cases**: [UC-007]
+**Domain Concepts**: [Change Proposal, Gate Decision, Evidence Handoff, Planning Artifact, Evaluation Case]
+**Success Criteria**:
+  1. Codex triggers the evidence gate for its own intended research changes without a user reminder.
+  2. PASS/PARTIAL evidence produces a structured handoff that materially shapes read_first, action scope, acceptance criteria, must_haves, and verification.
+  3. FAIL and unsupported PARTIAL scope cannot appear as implementation tasks.
+  4. New substantive execution deviations stop and return to Theoretical Basis before code changes continue.
+  5. Behavioral evaluation covers proactive triggering, PASS/PARTIAL/FAIL planning outcomes, and execution re-gating.
+**Plans**: 1 plan
+
+Plans:
+- [ ] 04-01: Add proactive evidence handoff and spec-skill enforcement.
+
 ## Progress
 
 | Phase | Plans Complete | Status | Completed |
@@ -72,3 +90,4 @@ Plans:
 | 1. Evidence Contract | 1/1 | Complete | 2026-07-30 |
 | 2. Behavioral Verification | 1/1 | Complete | 2026-07-30 |
 | 3. Distribution and Release | 1/1 | Complete | 2026-07-30 |
+| 4. Evidence-to-Plan Enforcement | 0/1 | Planned — awaiting execution approval | - |

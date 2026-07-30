@@ -21,6 +21,8 @@ The Skill governs a research change from proposal through evidence search, gate 
 | Experiment Protocol | A preregistered test of a hypothesis | Baseline, controls, metrics, seeds, thresholds, budget | Post-hoc success criteria |
 | Evaluation Case | A repeatable scenario testing Skill behavior | Prompt, evidence state, expected gate/action | A structural-only YAML check |
 | Release Artifact | The verified repository and installed Skill copy | Skill files, docs, CI, license, commit | Unverified local drafts |
+| Evidence Handoff | A gate result translated into planning constraints | Claims, sources, supported scope, assumptions, forbidden scope, validation predictions | A bibliography copied into a plan without implementation consequences |
+| Planning Artifact | A spec-skill plan that operationalizes verified evidence | read_first, action bounds, acceptance criteria, must_haves, verification | An implementation plan that bypasses or expands beyond the gate |
 
 ## Progressive Concept Decomposition
 
@@ -75,6 +77,9 @@ The Skill governs a research change from proposal through evidence search, gate 
 | Gate Decision FAIL | may become, after authorization | Research Hypothesis | 0:1 | Explicit researcher permission required |
 | Research Hypothesis | is tested by | Experiment Protocol | 1:1+ | Minimal implementation only |
 | Evaluation Case | verifies | Gate Decision behavior | N:M | Includes adversarial and edge cases |
+| Gate Decision PASS/PARTIAL | produces | Evidence Handoff | 0:1 | Only supported scope can enter implementation planning |
+| Evidence Handoff | constrains | Planning Artifact | 1:N | Evidence must affect tasks, tests, and verification |
+| Planning Artifact deviation | returns to | Change Proposal | 0:N | New substantive behavior requires a fresh evidence gate |
 
 ## Vocabulary Decisions
 
@@ -84,6 +89,7 @@ The Skill governs a research change from proposal through evidence search, gate 
 | Evidence | A broader category including theory, empirical findings, and expert practice | Automatically equivalent to theoretical support | Confirmed |
 | Unsupported hypothesis | Explicitly labeled proposal with no adequate basis | Quiet permission to implement speculative behavior | Confirmed |
 | Mechanical change | Change shown not to affect scientific behavior or claims | Any refactor asserted to be harmless without verification | Confirmed |
+| Evidence handoff | Operational planning contract derived from a verified gate | A citation appendix with no effect on implementation | Confirmed |
 
 ## Open Domain Questions
 
