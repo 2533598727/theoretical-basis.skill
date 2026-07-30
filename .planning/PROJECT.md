@@ -25,12 +25,11 @@ The Skill must never implement a behavior-affecting research change without evid
 - ✓ Scope, risk, basis, bounded search, source safety, and hypothesis preregistration contract — Phase 1.
 - ✓ Twelve behavior scenarios, deterministic validation, independent forward tests, and read-only CI — Phase 2.
 - ✓ Concise bilingual documentation, MIT licensing, generated metadata, synchronized installation, and remotely verified release — Phase 3.
+- ✓ Proactive evidence triggering, structured Evidence Handoff, spec planning constraints, execution re-gating, and 20 behavior scenarios — Phase 4.
 
 ### Active
 
-- [ ] Make Theoretical Basis proactively trigger for AI-intended research changes without repeated user reminders.
-- [ ] Carry PASS/PARTIAL evidence into spec-skill planning constraints, tests, execution checks, and verification records.
-- [ ] Prevent FAIL, unsupported PARTIAL scope, and new execution deviations from becoming implementation work.
+None for v1.1. Cross-model scoring and marketplace packaging remain deferred to v2.
 
 ### Out of Scope
 
@@ -63,8 +62,8 @@ The Skill must never implement a behavior-affecting research change without evid
 | Keep the Skill at repository root | Preserves current installation and discovery behavior | ✓ Good |
 | Treat researcher and maintainer as distinct roles | Their operations and acceptance signals differ even if one person fills both roles | ✓ Good |
 | License the public repository under MIT | Simple permissive reuse with attribution matches the user's selection | ✓ Good |
-| Keep Theoretical Basis as the orchestration core | Search and planning integrations must not replace evidence judgment | — Planned |
-| Treat evidence as an implementation constraint | Citations are useful only when they shape scope, tests, and verification | — Planned |
+| Keep Theoretical Basis as the orchestration core | Search and planning integrations must not replace evidence judgment | ✓ Good |
+| Treat evidence as an implementation constraint | Citations are useful only when they shape scope, tests, and verification | ✓ Good |
 
 ---
-*Last updated: 2026-07-30 after Phase 4 plan creation*
+*Last updated: 2026-07-30 after verified v1.1 release*

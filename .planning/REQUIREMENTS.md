@@ -37,10 +37,10 @@
 
 ### Proactive evidence-to-plan workflow
 
-- [ ] **AUTO-01**: Agent proactively triggers `$theoretical-basis` whenever it intends a behavior-affecting research change, without waiting for the researcher to request theoretical support. (Use case: UC-007; Concepts: Change Proposal, Gate Decision)
-- [ ] **HAND-01**: PASS/PARTIAL produces a structured evidence handoff with claims, sources, supported and forbidden scope, assumptions, limitations, and validation predictions; FAIL produces no implementation handoff. (Use case: UC-007; Concepts: Gate Decision, Evidence Handoff)
-- [ ] **PLAN-01**: When `$spec-skill` is available, the handoff is represented in read_first inputs, bounded task actions, acceptance criteria, must_haves, and verification commands while preserving the user's plan confirmation checkpoint. (Use case: UC-007; Concepts: Evidence Handoff, Planning Artifact)
-- [ ] **EXEC-01**: Execution and verification stop and return to the evidence gate when implementation introduces a new substantive change or exceeds the supported evidence scope. (Use case: UC-007; Concepts: Planning Artifact, Change Proposal)
+- [x] **AUTO-01**: Agent proactively triggers `$theoretical-basis` whenever it intends a behavior-affecting research change, without waiting for the researcher to request theoretical support. (Use case: UC-007; Concepts: Change Proposal, Gate Decision)
+- [x] **HAND-01**: PASS/PARTIAL produces a structured evidence handoff with claims, sources, supported and forbidden scope, assumptions, limitations, and validation predictions; FAIL produces no implementation handoff. (Use case: UC-007; Concepts: Gate Decision, Evidence Handoff)
+- [x] **PLAN-01**: When `$spec-skill` is available, the handoff is represented in read_first inputs, bounded task actions, acceptance criteria, must_haves, and verification commands while preserving the user's plan confirmation checkpoint. (Use case: UC-007; Concepts: Evidence Handoff, Planning Artifact)
+- [x] **EXEC-01**: Execution and verification stop and return to the evidence gate when implementation introduces a new substantive change or exceeds the supported evidence scope. (Use case: UC-007; Concepts: Planning Artifact, Change Proposal)
 
 ## v2 Requirements
 
@@ -72,10 +72,10 @@
 | DOCS-01 | Skill Maintainer | UC-006 | Release Artifact | Phase 3 | Complete |
 | DIST-01 | Skill Maintainer | UC-006 | Release Artifact | Phase 3 | Complete |
 | REL-01 | Skill Maintainer | UC-006 | Release Artifact | Phase 3 | Complete |
-| AUTO-01 | Codex Agent, Researcher | UC-007 | Change Proposal, Gate Decision | Phase 4 | Pending |
-| HAND-01 | Codex Agent | UC-007 | Gate Decision, Evidence Handoff | Phase 4 | Pending |
-| PLAN-01 | Codex Agent, Researcher | UC-007 | Evidence Handoff, Planning Artifact | Phase 4 | Pending |
-| EXEC-01 | Codex Agent | UC-007 | Planning Artifact, Change Proposal | Phase 4 | Pending |
+| AUTO-01 | Codex Agent, Researcher | UC-007 | Change Proposal, Gate Decision | Phase 4 | Complete |
+| HAND-01 | Codex Agent | UC-007 | Gate Decision, Evidence Handoff | Phase 4 | Complete |
+| PLAN-01 | Codex Agent, Researcher | UC-007 | Evidence Handoff, Planning Artifact | Phase 4 | Complete |
+| EXEC-01 | Codex Agent | UC-007 | Planning Artifact, Change Proposal | Phase 4 | Complete |
 
 ## Derived Access Notes
 
@@ -98,4 +98,4 @@
 
 ---
 *Requirements defined: 2026-07-30*
-*Last updated: 2026-07-30 after Phase 4 plan creation*
+*Last updated: 2026-07-30 after verified Phase 4 execution*

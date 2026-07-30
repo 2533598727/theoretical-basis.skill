@@ -5,23 +5,23 @@
 See: `.planning/PROJECT.md` (updated 2026-07-30)
 
 **Core value:** Never implement an unsupported behavior-affecting research change without adequate evidence or explicit authorization for a falsifiable hypothesis experiment.
-**Current focus:** Phase 4 — Evidence-to-Plan Enforcement
+**Current focus:** v1.1 complete — proactive evidence-to-plan workflow released
 
 ## Current Position
 
 Phase: 4 of 4 (Evidence-to-Plan Enforcement)
 Plan: 1 of 1 in current phase
-Status: Plan drafted; awaiting execution approval
-Last activity: 2026-07-30 — proactive Theoretical Basis core and spec-skill handoff plan created
+Status: Complete
+Last activity: 2026-07-30 — proactive gate, Evidence Handoff, eval coverage, installed runtime, and remote release verified
 
-Progress: [████████░░] 75%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 3
-- Average duration: 13 min
-- Total execution time: 0.65 hours
+- Total plans completed: 4
+- Average duration: 15 min
+- Total execution time: 0.98 hours
 
 ## Accumulated Context
 
@@ -40,14 +40,16 @@ Progress: [████████░░] 75%
 - `$theoretical-basis` remains the proactive core; users do not need to repeatedly request theory searches.
 - `$academic-search` is the retrieval layer and `$spec-skill` is the planning/execution layer; neither may issue or bypass the evidence gate.
 - Verified evidence must become planning constraints and tests, not a detached citation report.
+- PASS/PARTIAL produces a bounded Evidence Handoff; FAIL produces no implementation handoff.
+- New substantive execution deviations return to the evidence gate before editing continues.
 
 ### Pending Todos
 
-- Execute and verify Phase 4 after explicit plan approval.
+None outside the roadmap.
 
 ### Blockers/Concerns
 
-No implementation blocker. Execution remains intentionally paused at the spec-skill plan approval checkpoint.
+None. The redirected GitHub repository accepted the release and remote `main` was verified.
 
 ### Deferred Items
 
@@ -59,5 +61,5 @@ No implementation blocker. Execution remains intentionally paused at the spec-sk
 ## Session Continuity
 
 Last session: 2026-07-30
-Stopped at: Phase 4 plan approval checkpoint
+Stopped at: v1.1 release complete
 Resume file: None

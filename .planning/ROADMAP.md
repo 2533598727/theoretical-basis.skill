@@ -15,7 +15,7 @@ The optimization proceeds from policy contract to behavior verification to publi
 - [x] **Phase 1: Evidence Contract** - Make scope, search, gate, source safety, and hypothesis experimentation deterministic.
 - [x] **Phase 2: Behavioral Verification** - Add repeatable scenario evals, semantic validation, and CI enforcement.
 - [x] **Phase 3: Distribution and Release** - Align bilingual docs, license the repository, synchronize installation, and publish a verified release.
-- [ ] **Phase 4: Evidence-to-Plan Enforcement** - Keep Theoretical Basis proactive and carry verified evidence into spec planning, execution, and verification.
+- [x] **Phase 4: Evidence-to-Plan Enforcement** - Keep Theoretical Basis proactive and carry verified evidence into spec planning, execution, and verification.
 
 ## Phase Details
 
@@ -81,7 +81,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 04-01: Add proactive evidence handoff and spec-skill enforcement.
+- [x] 04-01: Add proactive evidence handoff and spec-skill enforcement.
 
 ## Progress
 
@@ -90,4 +90,4 @@ Plans:
 | 1. Evidence Contract | 1/1 | Complete | 2026-07-30 |
 | 2. Behavioral Verification | 1/1 | Complete | 2026-07-30 |
 | 3. Distribution and Release | 1/1 | Complete | 2026-07-30 |
-| 4. Evidence-to-Plan Enforcement | 0/1 | Planned — awaiting execution approval | - |
+| 4. Evidence-to-Plan Enforcement | 1/1 | Complete | 2026-07-30 |
