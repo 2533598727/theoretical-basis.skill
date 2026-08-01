@@ -30,6 +30,7 @@
 | UC-005 | Skill Maintainer | Evaluation Case, Release Artifact | Validate Skill behavior | Required and adversarial scenarios pass reproducibly | EVAL-01, EVAL-02 |
 | UC-006 | Skill Maintainer | Release Artifact | Publish and install a verified release | Repository and installed copy match after checks | DOCS-01, DIST-01, REL-01 |
 | UC-007 | Codex Agent, Researcher | Evidence Handoff, Planning Artifact, Gate Decision | Proactively carry verified theory into spec planning and execution | Supported evidence becomes task scope and tests; unsupported work remains absent | AUTO-01, HAND-01, PLAN-01, EXEC-01 |
+| UC-008 | Codex Agent, Researcher, Skill Maintainer | Decision-Relevant Ambiguity, Implementation Candidate, Change Trace, Verification Criterion, Gate Decision | Turn a supported research change into a simple, traceable, pre-verified implementation | Agent clarifies only material ambiguity, chooses the minimum supported design, edits surgically, and verifies against fixed criteria | ASMP-01, MIN-01, SURG-01, GOAL-01, BOUND-01, EVAL-04, REL-02 |
 
 ## Derived Access Rules
 
@@ -45,6 +46,11 @@
 | allowed | Evidence Handoff | Create planning constraints from PASS/PARTIAL | Codex Agent | UC-007 |
 | denied | Planning Artifact | Add implementation work from FAIL or unsupported PARTIAL scope | Codex Agent | UC-007 and core invariant |
 | denied | Planning Artifact | Execute a new substantive deviation without re-running the evidence gate | Codex Agent | UC-007 |
+| allowed | Decision-Relevant Ambiguity | Ask a targeted clarification that changes gate or behavior | Codex Agent | UC-008 |
+| denied | Decision-Relevant Ambiguity | Use generic questioning to block clear work | Codex Agent | UC-008 |
+| allowed | Implementation Candidate | Select the least complex candidate within supported scope | Codex Agent | UC-008 |
+| denied | Change Trace | Include unrelated cleanup or speculative functionality | Codex Agent | UC-008 |
+| denied | Gate Decision | Delegate authority to Karpathy Guidelines or another engineering guide | Codex Agent | UC-008 and core invariant |
 
 ## Use Case Details
 
@@ -107,6 +113,22 @@
 
 **Acceptance signal:** A user can request ordinary algorithm work without repeating “find theory”; supported evidence is visible in the plan and FAIL never becomes an implementation task.
 
+### UC-008: Implement supported research work with engineering discipline
+
+**Actors:** Codex Agent, Researcher, Skill Maintainer
+**Domain concepts:** Decision-Relevant Ambiguity, Implementation Candidate, Change Trace, Verification Criterion, Gate Decision
+**Goal:** Prevent a valid evidence decision from turning into an ambiguous, over-engineered, broad, or post-hoc implementation.
+
+**Main flow:**
+1. Agent identifies whether any unresolved interpretation can change required evidence, gate result, allowed scope, or behavior.
+2. Agent asks one or more targeted questions only for those material ambiguities; otherwise it records reasonable assumptions and continues.
+3. After PASS/PARTIAL, Agent compares viable candidates and chooses the least complex one that satisfies supported scope and necessary wiring.
+4. Agent maps each intended change to the researcher request, Evidence Handoff, or necessary integration and excludes unrelated cleanup.
+5. Agent fixes evidence-derived success and failure criteria before editing, implements the bounded change, and runs failure-capable verification.
+6. Skill Maintainer confirms behavior cases, negative mutations, version metadata, installed copies, and remote release identity.
+
+**Acceptance signal:** The final diff is evidence-supported, minimal by concept rather than raw line count, fully traceable, and judged against criteria fixed before results.
+
 ## Out-of-Scope Actors / Use Cases
 
 | Actor / Use Case | Reason |
@@ -120,4 +142,4 @@ None blocking planning.
 
 ---
 *Use cases defined: 2026-07-30*
-*Last updated: 2026-07-30 after Plan approval*
+*Last updated: 2026-08-01 during Phase 5 planning*

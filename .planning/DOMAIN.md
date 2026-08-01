@@ -23,6 +23,10 @@ The Skill governs a research change from proposal through evidence search, gate 
 | Release Artifact | The verified repository and installed Skill copy | Skill files, docs, CI, license, commit | Unverified local drafts |
 | Evidence Handoff | A gate result translated into planning constraints | Claims, sources, supported scope, assumptions, forbidden scope, validation predictions | A bibliography copied into a plan without implementation consequences |
 | Planning Artifact | A spec-skill plan that operationalizes verified evidence | read_first, action bounds, acceptance criteria, must_haves, verification | An implementation plan that bypasses or expands beyond the gate |
+| Decision-Relevant Ambiguity | An unresolved interpretation that could change evidence claims, gate result, allowed scope, or implemented behavior | Specific ambiguity, competing interpretations, targeted question or recorded assumption | A reason to ask generic questions about already clear work |
+| Implementation Candidate | A concrete design that fits the supported Evidence Handoff | Required mechanism, complexity, change surface, necessary wiring | Speculative flexibility or functionality outside supported scope |
+| Change Trace | A mapping from each modified line or coherent hunk to its authorization | Researcher request, Evidence Handoff field, necessary integration, newly orphaned cleanup | Opportunistic refactoring or pre-existing dead-code cleanup |
+| Verification Criterion | A success or failure condition fixed before implementation | Evidence prediction, invariant, regression, failure-capable check | A criterion rewritten after observing results |
 
 ## Progressive Concept Decomposition
 
@@ -80,6 +84,10 @@ The Skill governs a research change from proposal through evidence search, gate 
 | Gate Decision PASS/PARTIAL | produces | Evidence Handoff | 0:1 | Only supported scope can enter implementation planning |
 | Evidence Handoff | constrains | Planning Artifact | 1:N | Evidence must affect tasks, tests, and verification |
 | Planning Artifact deviation | returns to | Change Proposal | 0:N | New substantive behavior requires a fresh evidence gate |
+| Decision-Relevant Ambiguity | constrains or pauses | Change Proposal | 0:N | Ask only when competing interpretations change the gate or behavior |
+| Evidence Handoff | bounds | Implementation Candidate | 1:N | Choose the least complex candidate that satisfies supported scope |
+| Implementation Candidate | produces | Change Trace | 1:N | Every changed hunk must identify why it is necessary |
+| Evidence Handoff | predicts | Verification Criterion | 1:N | Criteria are fixed before editing and compared with observed results |
 
 ## Vocabulary Decisions
 
@@ -90,6 +98,9 @@ The Skill governs a research change from proposal through evidence search, gate 
 | Unsupported hypothesis | Explicitly labeled proposal with no adequate basis | Quiet permission to implement speculative behavior | Confirmed |
 | Mechanical change | Change shown not to affect scientific behavior or claims | Any refactor asserted to be harmless without verification | Confirmed |
 | Evidence handoff | Operational planning contract derived from a verified gate | A citation appendix with no effect on implementation | Confirmed |
+| Targeted clarification | A question limited to a decision-relevant ambiguity | A ritual request for confirmation on every task | Confirmed |
+| Minimal supported implementation | The least complex candidate satisfying the verified scope and required wiring | The fewest lines regardless of correctness, safety, or evidence assumptions | Confirmed |
+| Surgical change | A change whose lines trace to authorized scope or necessary wiring | Avoiding required tests, documentation, or newly orphaned cleanup | Confirmed |
 
 ## Open Domain Questions
 
@@ -97,4 +108,4 @@ None blocking planning. Exact wording can be refined during implementation witho
 
 ---
 *Domain model defined: 2026-07-30*
-*Last updated: 2026-07-30 after Plan approval*
+*Last updated: 2026-08-01 during Phase 5 planning*

@@ -42,6 +42,18 @@
 - [x] **PLAN-01**: When `$spec-skill` is available, the handoff is represented in read_first inputs, bounded task actions, acceptance criteria, must_haves, and verification commands while preserving the user's plan confirmation checkpoint. (Use case: UC-007; Concepts: Evidence Handoff, Planning Artifact)
 - [x] **EXEC-01**: Execution and verification stop and return to the evidence gate when implementation introduces a new substantive change or exceeds the supported evidence scope. (Use case: UC-007; Concepts: Planning Artifact, Change Proposal)
 
+## v1.3 Requirements
+
+### Evidence-grounded engineering discipline
+
+- [ ] **ASMP-01**: Agent identifies assumptions and asks a targeted clarification only when an ambiguity can change required evidence, gate outcome, supported scope, or implementation behavior; unambiguous low-risk work proceeds without ceremonial questioning. (Use case: UC-008; Concepts: Decision-Relevant Ambiguity, Change Proposal)
+- [ ] **MIN-01**: After PASS/PARTIAL, Agent selects the least complex implementation that fully satisfies supported scope and does not add speculative abstractions, configurability, or features. (Use case: UC-008; Concepts: Implementation Candidate, Evidence Handoff)
+- [ ] **SURG-01**: Every modified line traces to the researcher request, Evidence Handoff, or necessary integration; unrelated cleanup is reported but not edited, and only code orphaned by the current change is removed. (Use case: UC-008; Concepts: Change Trace, Planning Artifact)
+- [ ] **GOAL-01**: Agent defines evidence-derived success and failure criteria before implementation, uses checks capable of failing when behavior is wrong, and does not move criteria after observing results. (Use case: UC-008; Concepts: Verification Criterion, Evidence Handoff)
+- [ ] **BOUND-01**: Karpathy Guidelines is treated as attributed engineering inspiration and cannot issue, upgrade, replace, or bypass Theoretical Basis PASS/PARTIAL/FAIL. (Use case: UC-008; Concepts: Gate Decision, Evidence Source)
+- [ ] **EVAL-04**: Evaluation and negative mutation coverage enforce targeted clarification, minimum supported design, surgical change traceability, fixed verification criteria, and gate-ownership boundaries. (Use case: UC-005, UC-008; Concepts: Evaluation Case, Release Artifact)
+- [ ] **REL-02**: v1.3.0 release updates plugin and README version metadata, synchronizes Codex and Claude personal Skill copies, passes host validators, pushes through the configured proxy, and verifies remote identity. (Use cases: UC-006, UC-008; Concepts: Release Artifact)
+
 ## v2 Requirements
 
 - **EVAL-03**: Automate model-backed eval scoring across multiple Codex model families.
@@ -76,6 +88,13 @@
 | HAND-01 | Codex Agent | UC-007 | Gate Decision, Evidence Handoff | Phase 4 | Complete |
 | PLAN-01 | Codex Agent, Researcher | UC-007 | Evidence Handoff, Planning Artifact | Phase 4 | Complete |
 | EXEC-01 | Codex Agent | UC-007 | Planning Artifact, Change Proposal | Phase 4 | Complete |
+| ASMP-01 | Codex Agent, Researcher | UC-008 | Decision-Relevant Ambiguity, Change Proposal | Phase 5 | Planned |
+| MIN-01 | Codex Agent | UC-008 | Implementation Candidate, Evidence Handoff | Phase 5 | Planned |
+| SURG-01 | Codex Agent, Skill Maintainer | UC-008 | Change Trace, Planning Artifact | Phase 5 | Planned |
+| GOAL-01 | Codex Agent, Researcher | UC-008 | Verification Criterion, Evidence Handoff | Phase 5 | Planned |
+| BOUND-01 | Codex Agent | UC-008 | Gate Decision, Evidence Source | Phase 5 | Planned |
+| EVAL-04 | Skill Maintainer | UC-005, UC-008 | Evaluation Case, Release Artifact | Phase 5 | Planned |
+| REL-02 | Skill Maintainer | UC-006, UC-008 | Release Artifact | Phase 5 | Planned |
 
 ## Derived Access Notes
 
@@ -89,13 +108,19 @@
 | allowed | Create implementation planning constraints from PASS/PARTIAL | Codex Agent | UC-007 | HAND-01, PLAN-01 |
 | denied | Create implementation tasks from FAIL or unsupported PARTIAL scope | Codex Agent | Core invariant and UC-007 | HAND-01, PLAN-01 |
 | denied | Continue executing a new substantive deviation without a fresh gate | Codex Agent | UC-007 | EXEC-01 |
+| allowed | Ask a targeted question when ambiguity changes evidence or implementation behavior | Codex Agent | UC-008 | ASMP-01 |
+| denied | Block a clear low-risk task with ceremonial or unrelated questions | Codex Agent | UC-008 | ASMP-01 |
+| allowed | Choose the least complex candidate inside PASS/PARTIAL scope | Codex Agent | UC-008 | MIN-01 |
+| denied | Add speculative abstractions, configurability, features, or unrelated cleanup | Codex Agent | UC-008 | MIN-01, SURG-01 |
+| denied | Let external engineering guidelines issue or bypass a gate decision | Codex Agent | Core invariant and UC-008 | BOUND-01 |
 
 **Coverage:**
 - v1 requirements: 13 total
 - v1.1 requirements: 4 total
-- Mapped to phases: 17
+- v1.3 requirements: 7 total
+- Mapped to phases: 24
 - Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-07-30*
-*Last updated: 2026-07-30 after verified Phase 4 execution*
+*Last updated: 2026-08-01 during Phase 5 planning*

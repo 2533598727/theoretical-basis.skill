@@ -26,10 +26,11 @@ The Skill must never implement a behavior-affecting research change without evid
 - ✓ Twelve behavior scenarios, deterministic validation, independent forward tests, and read-only CI — Phase 2.
 - ✓ Concise bilingual documentation, MIT licensing, generated metadata, synchronized installation, and remotely verified release — Phase 3.
 - ✓ Proactive evidence triggering, structured Evidence Handoff, spec planning constraints, execution re-gating, and 20 behavior scenarios — Phase 4.
+- ✓ Claude Code plugin compatibility, host-native invocation mapping, 23 behavior scenarios, and bilingual installation guidance — v1.2 maintenance release.
 
 ### Active
 
-None for v1.1. Cross-model scoring and marketplace packaging remain deferred to v2.
+- Phase 5: integrate evidence-compatible engineering discipline inspired by `multica-ai/andrej-karpathy-skills` without sharing or weakening gate authority.
 
 ### Out of Scope
 
@@ -40,7 +41,7 @@ None for v1.1. Cross-model scoring and marketplace packaging remain deferred to 
 
 ## Context
 
-- Existing repository: `https://github.com/2533598727/-theoretical-basis.skill`
+- Existing repository: `https://github.com/2533598727/theoretical-basis.skill`
 - Existing runtime path: `~/.codex/skills/theoretical-basis`
 - Review found ambiguity in PASS thresholds, unbounded search, missing hostile-source rules, incomplete experiment preregistration, and no behavior-level evaluation.
 - Current files are valid UTF-8 and the installed copy matches the repository commit.
@@ -64,6 +65,8 @@ None for v1.1. Cross-model scoring and marketplace packaging remain deferred to 
 | License the public repository under MIT | Simple permissive reuse with attribution matches the user's selection | ✓ Good |
 | Keep Theoretical Basis as the orchestration core | Search and planning integrations must not replace evidence judgment | ✓ Good |
 | Treat evidence as an implementation constraint | Citations are useful only when they shape scope, tests, and verification | ✓ Good |
+| Internalize compatible Karpathy-style engineering rules instead of adding a runtime dependency | Assumption handling, minimal design, surgical diffs, and fixed verification criteria should remain subordinate to the evidence gate | Planned |
+| Target v1.3.0 for the behavior-contract change | The runtime policy and evaluation corpus change while the Skill name and host contracts stay compatible | Planned |
 
 ---
-*Last updated: 2026-07-30 after verified v1.1 release*
+*Last updated: 2026-08-01 during Phase 5 planning*

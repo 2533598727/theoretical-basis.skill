@@ -16,6 +16,7 @@ The optimization proceeds from policy contract to behavior verification to publi
 - [x] **Phase 2: Behavioral Verification** - Add repeatable scenario evals, semantic validation, and CI enforcement.
 - [x] **Phase 3: Distribution and Release** - Align bilingual docs, license the repository, synchronize installation, and publish a verified release.
 - [x] **Phase 4: Evidence-to-Plan Enforcement** - Keep Theoretical Basis proactive and carry verified evidence into spec planning, execution, and verification.
+- [ ] **Phase 5: Evidence-Grounded Engineering Discipline** - Add targeted clarification, minimum supported design, surgical diffs, and fixed verification criteria without weakening gate ownership.
 
 ## Phase Details
 
@@ -83,6 +84,24 @@ Plans:
 Plans:
 - [x] 04-01: Add proactive evidence handoff and spec-skill enforcement.
 
+### Phase 5: Evidence-Grounded Engineering Discipline
+**Goal**: Make every supported implementation explicit about decision-relevant ambiguity, choose the least complex supported design, keep diffs traceable to authorized scope, and freeze verification criteria before execution.
+**Depends on**: Phase 4, verified `multica-ai/andrej-karpathy-skills` snapshot, directly checked clarification and code-review sources
+**Requirements**: [ASMP-01, MIN-01, SURG-01, GOAL-01, BOUND-01, EVAL-04, REL-02]
+**Use Cases**: [UC-008]
+**Domain Concepts**: [Decision-Relevant Ambiguity, Implementation Candidate, Change Trace, Verification Criterion, Evidence Handoff, Gate Decision]
+**Success Criteria**:
+  1. The Agent asks a targeted question only when an ambiguity can change evidence claims, gate outcome, allowed scope, or implementation behavior; otherwise it records the assumption and proceeds.
+  2. PASS/PARTIAL selects the least complex implementation that satisfies the supported scope and refuses speculative abstraction, configurability, or unrelated functionality.
+  3. Every changed line traces to the researcher request, Evidence Handoff, or necessary integration; unrelated cleanup remains unmodified and only newly orphaned code is removed.
+  4. Evidence-derived success and failure criteria are defined before editing, verified with checks capable of detecting broken behavior, and are not moved after results appear.
+  5. Karpathy Guidelines remains attributed engineering inspiration, never a source of theoretical PASS or a replacement for Theoretical Basis gate authority.
+  6. Behavior cases, negative mutations, host validators, installed runtime hashes, and remote commit identity all pass for v1.3.0.
+**Plans**: 1 plan
+
+Plans:
+- [ ] 05-01: Integrate evidence-grounded engineering discipline, evaluation, documentation, and release.
+
 ## Progress
 
 | Phase | Plans Complete | Status | Completed |
@@ -91,3 +110,4 @@ Plans:
 | 2. Behavioral Verification | 1/1 | Complete | 2026-07-30 |
 | 3. Distribution and Release | 1/1 | Complete | 2026-07-30 |
 | 4. Evidence-to-Plan Enforcement | 1/1 | Complete | 2026-07-30 |
+| 5. Evidence-Grounded Engineering Discipline | 0/1 | Planned | — |
