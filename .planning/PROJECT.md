@@ -27,6 +27,7 @@ The Skill must never implement a behavior-affecting research change without evid
 - ✓ Concise bilingual documentation, MIT licensing, generated metadata, synchronized installation, and remotely verified release — Phase 3.
 - ✓ Proactive evidence triggering, structured Evidence Handoff, spec planning constraints, execution re-gating, and 20 behavior scenarios — Phase 4.
 - ✓ Claude Code plugin compatibility, host-native invocation mapping, 23 behavior scenarios, and bilingual installation guidance — v1.2 maintenance release.
+- ✓ Targeted clarification, minimum supported design, surgical change traces, fixed verification, 29 behavior scenarios, and 19 fail-closed mutations — v1.3 release.
 
 ### Active
 

@@ -16,7 +16,7 @@ The optimization proceeds from policy contract to behavior verification to publi
 - [x] **Phase 2: Behavioral Verification** - Add repeatable scenario evals, semantic validation, and CI enforcement.
 - [x] **Phase 3: Distribution and Release** - Align bilingual docs, license the repository, synchronize installation, and publish a verified release.
 - [x] **Phase 4: Evidence-to-Plan Enforcement** - Keep Theoretical Basis proactive and carry verified evidence into spec planning, execution, and verification.
-- [ ] **Phase 5: Evidence-Grounded Engineering Discipline** - Add targeted clarification, minimum supported design, surgical diffs, and fixed verification criteria without weakening gate ownership.
+- [x] **Phase 5: Evidence-Grounded Engineering Discipline** - Add targeted clarification, minimum supported design, surgical diffs, and fixed verification criteria without weakening gate ownership.
 
 ## Phase Details
 
@@ -100,7 +100,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 05-01: Integrate evidence-grounded engineering discipline, evaluation, documentation, and release.
+- [x] 05-01: Integrate evidence-grounded engineering discipline, evaluation, documentation, and release.
 
 ## Progress
 
@@ -110,4 +110,4 @@ Plans:
 | 2. Behavioral Verification | 1/1 | Complete | 2026-07-30 |
 | 3. Distribution and Release | 1/1 | Complete | 2026-07-30 |
 | 4. Evidence-to-Plan Enforcement | 1/1 | Complete | 2026-07-30 |
-| 5. Evidence-Grounded Engineering Discipline | 0/1 | Planned | — |
+| 5. Evidence-Grounded Engineering Discipline | 1/1 | Complete | 2026-08-01 |

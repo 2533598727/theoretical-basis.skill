@@ -46,13 +46,13 @@
 
 ### Evidence-grounded engineering discipline
 
-- [ ] **ASMP-01**: Agent identifies assumptions and asks a targeted clarification only when an ambiguity can change required evidence, gate outcome, supported scope, or implementation behavior; unambiguous low-risk work proceeds without ceremonial questioning. (Use case: UC-008; Concepts: Decision-Relevant Ambiguity, Change Proposal)
-- [ ] **MIN-01**: After PASS/PARTIAL, Agent selects the least complex implementation that fully satisfies supported scope and does not add speculative abstractions, configurability, or features. (Use case: UC-008; Concepts: Implementation Candidate, Evidence Handoff)
-- [ ] **SURG-01**: Every modified line traces to the researcher request, Evidence Handoff, or necessary integration; unrelated cleanup is reported but not edited, and only code orphaned by the current change is removed. (Use case: UC-008; Concepts: Change Trace, Planning Artifact)
-- [ ] **GOAL-01**: Agent defines evidence-derived success and failure criteria before implementation, uses checks capable of failing when behavior is wrong, and does not move criteria after observing results. (Use case: UC-008; Concepts: Verification Criterion, Evidence Handoff)
-- [ ] **BOUND-01**: Karpathy Guidelines is treated as attributed engineering inspiration and cannot issue, upgrade, replace, or bypass Theoretical Basis PASS/PARTIAL/FAIL. (Use case: UC-008; Concepts: Gate Decision, Evidence Source)
-- [ ] **EVAL-04**: Evaluation and negative mutation coverage enforce targeted clarification, minimum supported design, surgical change traceability, fixed verification criteria, and gate-ownership boundaries. (Use case: UC-005, UC-008; Concepts: Evaluation Case, Release Artifact)
-- [ ] **REL-02**: v1.3.0 release updates plugin and README version metadata, synchronizes Codex and Claude personal Skill copies, passes host validators, pushes through the configured proxy, and verifies remote identity. (Use cases: UC-006, UC-008; Concepts: Release Artifact)
+- [x] **ASMP-01**: Agent identifies assumptions and asks a targeted clarification only when an ambiguity can change required evidence, gate outcome, supported scope, or implementation behavior; unambiguous low-risk work proceeds without ceremonial questioning. (Use case: UC-008; Concepts: Decision-Relevant Ambiguity, Change Proposal)
+- [x] **MIN-01**: After PASS/PARTIAL, Agent selects the least complex implementation that fully satisfies supported scope and does not add speculative abstractions, configurability, or features. (Use case: UC-008; Concepts: Implementation Candidate, Evidence Handoff)
+- [x] **SURG-01**: Every modified line traces to the researcher request, Evidence Handoff, or necessary integration; unrelated cleanup is reported but not edited, and only code orphaned by the current change is removed. (Use case: UC-008; Concepts: Change Trace, Planning Artifact)
+- [x] **GOAL-01**: Agent defines evidence-derived success and failure criteria before implementation, uses checks capable of failing when behavior is wrong, and does not move criteria after observing results. (Use case: UC-008; Concepts: Verification Criterion, Evidence Handoff)
+- [x] **BOUND-01**: Karpathy Guidelines is treated as attributed engineering inspiration and cannot issue, upgrade, replace, or bypass Theoretical Basis PASS/PARTIAL/FAIL. (Use case: UC-008; Concepts: Gate Decision, Evidence Source)
+- [x] **EVAL-04**: Evaluation and negative mutation coverage enforce targeted clarification, minimum supported design, surgical change traceability, fixed verification criteria, and gate-ownership boundaries. (Use case: UC-005, UC-008; Concepts: Evaluation Case, Release Artifact)
+- [x] **REL-02**: v1.3.0 release updates plugin and README version metadata, synchronizes Codex and Claude personal Skill copies, passes host validators, pushes through the configured proxy, and verifies remote identity. (Use cases: UC-006, UC-008; Concepts: Release Artifact)
 
 ## v2 Requirements
 
@@ -88,13 +88,13 @@
 | HAND-01 | Codex Agent | UC-007 | Gate Decision, Evidence Handoff | Phase 4 | Complete |
 | PLAN-01 | Codex Agent, Researcher | UC-007 | Evidence Handoff, Planning Artifact | Phase 4 | Complete |
 | EXEC-01 | Codex Agent | UC-007 | Planning Artifact, Change Proposal | Phase 4 | Complete |
-| ASMP-01 | Codex Agent, Researcher | UC-008 | Decision-Relevant Ambiguity, Change Proposal | Phase 5 | Planned |
-| MIN-01 | Codex Agent | UC-008 | Implementation Candidate, Evidence Handoff | Phase 5 | Planned |
-| SURG-01 | Codex Agent, Skill Maintainer | UC-008 | Change Trace, Planning Artifact | Phase 5 | Planned |
-| GOAL-01 | Codex Agent, Researcher | UC-008 | Verification Criterion, Evidence Handoff | Phase 5 | Planned |
-| BOUND-01 | Codex Agent | UC-008 | Gate Decision, Evidence Source | Phase 5 | Planned |
-| EVAL-04 | Skill Maintainer | UC-005, UC-008 | Evaluation Case, Release Artifact | Phase 5 | Planned |
-| REL-02 | Skill Maintainer | UC-006, UC-008 | Release Artifact | Phase 5 | Planned |
+| ASMP-01 | Codex Agent, Researcher | UC-008 | Decision-Relevant Ambiguity, Change Proposal | Phase 5 | Complete |
+| MIN-01 | Codex Agent | UC-008 | Implementation Candidate, Evidence Handoff | Phase 5 | Complete |
+| SURG-01 | Codex Agent, Skill Maintainer | UC-008 | Change Trace, Planning Artifact | Phase 5 | Complete |
+| GOAL-01 | Codex Agent, Researcher | UC-008 | Verification Criterion, Evidence Handoff | Phase 5 | Complete |
+| BOUND-01 | Codex Agent | UC-008 | Gate Decision, Evidence Source | Phase 5 | Complete |
+| EVAL-04 | Skill Maintainer | UC-005, UC-008 | Evaluation Case, Release Artifact | Phase 5 | Complete |
+| REL-02 | Skill Maintainer | UC-006, UC-008 | Release Artifact | Phase 5 | Complete |
 
 ## Derived Access Notes
 
