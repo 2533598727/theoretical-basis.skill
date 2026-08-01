@@ -5,7 +5,7 @@
 让 AI 在修改科研算法前，主动寻找可追溯、真正适用的理论依据。<br>
 Make AI seek traceable, applicable theoretical support before changing research algorithms.
 
-[![Version](https://img.shields.io/badge/version-1.2.0-0969da?style=flat-square)](./.claude-plugin/plugin.json)
+[![Version](https://img.shields.io/badge/version-1.3.0-0969da?style=flat-square)](./.claude-plugin/plugin.json)
 [![License](https://img.shields.io/github/license/2533598727/theoretical-basis.skill?style=flat-square)](./LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/2533598727/theoretical-basis.skill?style=flat-square&logo=github)](https://github.com/2533598727/theoretical-basis.skill/stargazers)
 [![Validate Skill](https://img.shields.io/github/actions/workflow/status/2533598727/theoretical-basis.skill/validate.yml?branch=main&style=flat-square&label=validation)](https://github.com/2533598727/theoretical-basis.skill/actions/workflows/validate.yml)
@@ -51,6 +51,10 @@ Make AI seek traceable, applicable theoretical support before changing research 
 
 FAIL 不会生成实现任务，PARTIAL 也只能规划证据支持的部分。如果写代码时临时冒出新的算法机制、指标或数据解释，AI 要先停下来，为这项偏离重新找依据，不能借着已经批准的计划顺手改掉。
 
+通过门禁以后，AI 也不能随意发挥。需求里确实存在会改变依据、范围或行为的歧义时，它只问最关键的问题；任务已经清楚，就说明必要假设后继续。可行方案不止一个时，选择满足依据、测试、安全、文档和必要集成的最简单方案。每处改动都要能对应到用户要求、Evidence Handoff 或必要集成，不能顺手清理无关代码。成功与失败标准则要在动手前定好，看到结果后不能临时换指标。
+
+这些做法参考了 [Karpathy Guidelines](https://github.com/multica-ai/andrej-karpathy-skills)，但已经写进本 Skill，外部 Skill 不装也能生效。装上它可以用于其他工程任务；在这里，它只能提供实现习惯，不能签发 PASS、抬高 PARTIAL、推翻 FAIL，也不能代替理论依据。
+
 任务落在现有代码仓库时，`$theoretical-basis` 还可以联动 code-review-graph。它先用 `$explore-codebase` 找到真正受影响的函数、调用链、依赖模块、执行路径和测试；图谱没有建立或明显过期时，再由 `$build-graph` 更新。这样，论文里的结论会对应到具体实现，而不是停留在“注意力模块”“训练流程”这类模糊名称上。代码图谱只能说明代码怎么连，不能冒充理论依据，也不能把 FAIL 变成 PASS。
 
 汇报阶段可以交给 `$humanizer-zh` 收尾。顺序不能反：先把来源、主张、风险、假设、限制和门禁结果写成完整证据账本，再润色中文说明。润色后还要逐项核对，不能为了读起来顺滑而删掉 DOI、符号名、冲突证据、PARTIAL/FAIL 或禁止修改的范围。
@@ -64,6 +68,7 @@ FAIL 不会生成实现任务，PARTIAL 也只能规划证据支持的部分。�
 | 学术检索 | `$academic-search` | 扩展检索词，搜索论文、引用关系和开放获取状态 | [ustc-ai4science/academic-search](https://github.com/ustc-ai4science/academic-search) |
 | 规划落实 | `$spec-skill` | 把通过的依据写进任务边界、验收条件、测试和执行门禁 | [lgwanai/spec-skill](https://github.com/lgwanai/spec-skill) |
 | 中文汇报 | `$humanizer-zh` | 在证据账本冻结后润色中文表达，不改来源、限制和门禁结论 | [op7418/Humanizer-zh](https://github.com/op7418/Humanizer-zh) |
+| 工程约束 | Karpathy Guidelines（可选安装） | 提供澄清、简化、聚焦改动和预先验证的工程启发；不能决定或绕过证据门禁 | [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) |
 
 这些项目是协作关系，不是平级裁决者。只有 `$theoretical-basis` 能给出证据门禁结论；其他项目分别提供代码上下文、文献检索、规划执行和文字整理。
 
@@ -196,7 +201,7 @@ python scripts/validate_skill.py . --self-test-negative
 claude plugin validate . --strict
 ```
 
-验证器检查 UTF-8、Skill 元数据、Claude Code 插件清单、关键安全条款、文档引用和 23 个行为场景；14 个负向自测会故意删掉核心规则，确认主动触发、宿主调用映射、证据交接、代码图谱边界、汇报保真和执行重新门禁等约束缺失时一定报错。GitHub Actions 还会运行 Claude Code 官方插件校验器。
+验证器检查 UTF-8、Skill 元数据、Claude Code 插件清单、关键安全条款、文档引用和 29 个行为场景；19 个负向自测会故意删掉核心规则，确认主动触发、宿主调用映射、证据交接、代码图谱边界、汇报保真和执行重新门禁等约束缺失时一定报错。GitHub Actions 还会运行 Claude Code 官方插件校验器。
 
 ### 贡献
 
@@ -258,8 +263,13 @@ For work in an existing repository, `$theoretical-basis` can also use code-revie
 | Literature retrieval | `$academic-search` | Expands queries and retrieves papers, citation relations, and access status | [ustc-ai4science/academic-search](https://github.com/ustc-ai4science/academic-search) |
 | Planning | `$spec-skill` | Carries verified evidence into task boundaries, acceptance criteria, tests, and execution gates | [lgwanai/spec-skill](https://github.com/lgwanai/spec-skill) |
 | Chinese reporting | `$humanizer-zh` | Polishes Chinese prose after the ledger is frozen without changing evidence or gate status | [op7418/Humanizer-zh](https://github.com/op7418/Humanizer-zh) |
+| Engineering discipline | Karpathy Guidelines (optional install) | Inspires targeted clarification, simplicity, focused changes, and predefined verification; cannot decide or bypass the evidence gate | [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) |
 
 These integrations do not share gate authority. `$theoretical-basis` owns the evidence decision; the other projects provide code context, literature retrieval, planning, and presentation.
+
+After PASS or PARTIAL, implementation stays bounded as well. The agent asks only about ambiguities that can change evidence, scope, or behavior; clear work proceeds with explicit bounded assumptions. Among supported candidates, it chooses the least complex one that still satisfies safety, tests, documentation, and necessary wiring. Every changed hunk must trace to the request, the Evidence Handoff, required integration, or cleanup newly orphaned by the change. Success and failure criteria are fixed before editing rather than selected after results appear.
+
+These compatible ideas are already internalized in this Skill, so installing [Karpathy Guidelines](https://github.com/multica-ai/andrej-karpathy-skills) is optional. The external Skill may provide engineering guidance elsewhere, but here it has no authority to issue PASS, upgrade PARTIAL, override FAIL, or substitute for theoretical support.
 
 ### What problem does it solve?
 
@@ -384,7 +394,7 @@ python scripts/validate_skill.py . --self-test-negative
 claude plugin validate . --strict
 ```
 
-The validator checks UTF-8, Skill metadata, Claude Code manifests, safety clauses, documentation references, and 23 behavior scenarios. Fourteen negative mutations reject passive triggering, broken host-command mapping, missing handoffs, graph-as-evidence mistakes, lossy report rewriting, and execution bypasses. GitHub Actions also runs Claude Code's official plugin validator.
+The validator checks UTF-8, Skill metadata, Claude Code manifests, safety clauses, documentation references, and 29 behavior scenarios. 19 negative mutations reject passive triggering, broken host-command mapping, missing handoffs, graph-as-evidence mistakes, lossy report rewriting, and execution bypasses. GitHub Actions also runs Claude Code's official plugin validator.
 
 ### Contributing
 
