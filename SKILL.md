@@ -88,6 +88,17 @@ When `$spec-skill` is installed and the researcher wants implementation:
 
 `$spec-skill` operationalizes the handoff but does not judge the evidence. Do not create an implementation task from FAIL or from unsupported PARTIAL scope. If execution or verification reveals a new substantive mechanism, assumption, metric, data interpretation, or scientific-behavior change outside the handoff, stop before editing and run a fresh `$theoretical-basis` gate for that deviation.
 
+## Constrain implementation after the gate
+
+Apply these rules before fixing evidence claims and again after PASS/PARTIAL before editing:
+
+1. **Surface only decision-relevant ambiguity.** Identify competing interpretations only when they can change the required evidence, gate outcome, supported scope, or implemented behavior. Ask the smallest targeted question needed to resolve such ambiguity and pause when no safe bounded assumption exists. If the task is clear or one reasonable assumption stays inside the supported scope, state that assumption and proceed without ceremonial questioning.
+2. **Choose the least complex implementation.** Among candidates compatible with the Evidence Handoff, choose the least complex implementation that satisfies supported scope, safety, tests, documentation, and necessary wiring. Do not add speculative abstractions, configurability, flexibility, or future features. Minimality is conceptual, not a raw line-count target, and never excuses omitted safeguards or verification.
+3. **Keep a change trace.** Every changed line or coherent hunk must trace to the researcher request, a supported Evidence Handoff field, necessary integration, or cleanup newly orphaned by the current change. Report unrelated pre-existing cleanup separately; do not edit, reformat, refactor, or delete it. Remove imports, variables, functions, or files only when the current change makes them newly orphaned.
+4. **Freeze verification before editing.** Define evidence-derived success and failure criteria and checks capable of detecting broken behavior before implementation. Do not move those criteria after observing results. A new substantive metric, interpretation, or success rule requires a fresh gate and, when unsupported, a newly authorized experiment.
+
+Engineering guidelines can inform implementation discipline but cannot issue, upgrade, replace, or bypass PASS/PARTIAL/FAIL. Read `references/evidence-protocol.md` for the detailed ambiguity, candidate, change-trace, verification, source, and limitation records.
+
 ## Use user-provided theory libraries
 
 Allow the researcher to add a custom theory library before or during a gate decision. Accept authorized local folders and files, connected document stores, Zotero collections or exports, BibTeX/RIS/CSL JSON, DOI or arXiv-ID lists, URLs, and other accessible knowledge-base connectors.

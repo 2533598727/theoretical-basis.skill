@@ -1,4 +1,4 @@
 interface:
   display_name: "Theoretical Basis / 理论依据"
   short_description: "主动查找科研理论依据，并把证据落实到代码、规划与验证"
-  default_prompt: "Use $theoretical-basis as the proactive gate; ground the change with $explore-codebase, retrieve literature with $academic-search, plan with $spec-skill, and humanize Chinese reporting with $humanizer-zh without altering evidence."
+  default_prompt: "Use $theoretical-basis as the proactive gate; ground code and literature, surface only decision-relevant ambiguity, choose the least complex supported implementation, keep a surgical change trace, and freeze verification before editing."

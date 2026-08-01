@@ -13,8 +13,10 @@
 - [Academic-search integration](#academic-search-integration)
 - [Code-review-graph integration](#code-review-graph-integration)
 - [Evidence Handoff and spec planning](#evidence-handoff-and-spec-planning)
+- [Engineering discipline after the gate](#engineering-discipline-after-the-gate)
 - [Humanized reporting](#humanized-reporting)
 - [Search-design basis](#search-design-basis)
+- [Engineering-discipline basis](#engineering-discipline-basis)
 - [Two-pass search sequence](#two-pass-search-sequence)
 - [Evidence record](#evidence-record)
 - [Unsupported-hypothesis protocol](#unsupported-hypothesis-protocol)
@@ -187,6 +189,64 @@ Keep the normal `$spec-skill` user confirmation between planning and execution. 
 
 During execution and verification, compare each substantive implementation decision with the handoff. If the code would introduce a new mechanism, assumption, metric, data meaning, evaluation rule, or other scientific-behavior change, stop before making that deviation and return it to a fresh `$theoretical-basis` gate. A generic instruction to continue cannot expand the handoff.
 
+## Engineering discipline after the gate
+
+Use this protocol to turn a PASS/PARTIAL Evidence Handoff into a bounded implementation. It does not run on FAIL scope and does not alter the gate decision.
+
+### Resolve only decision-relevant ambiguity
+
+Before fixing evidence claims or implementation details, record any competing interpretations that could change at least one of these items: required claim, applicable source, risk tier, gate outcome, supported or forbidden scope, data meaning, metric, interface behavior, or validation prediction.
+
+- Ask a targeted question only when the answer changes one of those items and no safe bounded assumption is available.
+- State the interpretations and the exact decision they affect; do not ask a broad question when a narrower one will resolve the issue.
+- If the request and handoff already determine the behavior, record any remaining assumption and continue through the normal plan confirmation.
+- Do not use caution as a reason to make clear, reversible, low-risk work wait for ceremonial confirmation.
+
+### Select the minimum supported candidate
+
+Compare viable implementation candidates against the same fields:
+
+| Field | Required record |
+|---|---|
+| Supported mechanism | Evidence Handoff claim and scope the candidate implements |
+| Necessary surface | Symbols, files, interfaces, tests, and documentation that must change |
+| Added complexity | New abstractions, options, branches, dependencies, or public surface |
+| Excluded speculation | Flexibility, configuration, or future behavior not required now |
+| Applicability | Evidence assumptions and safety constraints the candidate preserves |
+
+Choose the least complex candidate that satisfies all supported behavior, safety, tests, documentation, and necessary wiring. Minimality is conceptual rather than a line-count quota. A smaller patch that omits a required test, migration, invariant, documentation update, or integration edge is incomplete, not minimal.
+
+### Record the change trace
+
+Before editing, create a compact trace for each intended file or coherent hunk:
+
+```text
+Researcher request or approved task:
+Evidence Handoff field:
+File, symbol, or hunk:
+Why this change is necessary:
+Necessary integration or verification:
+Newly orphaned cleanup caused by this change:
+```
+
+Each final changed line or hunk must map to one of these records. Mention unrelated pre-existing dead code, formatting, comments, or refactoring opportunities separately and leave them untouched. Remove only imports, variables, functions, files, tests, or documentation made obsolete by the current supported change.
+
+### Freeze goal-driven verification
+
+Before implementation, record:
+
+- the evidence-derived prediction or preserved invariant;
+- success and failure criteria;
+- the check, test, comparison, or measurement used for each criterion;
+- why the check would fail when the relevant behavior is broken;
+- any baseline, boundary, regression, or negative case needed to interpret the result.
+
+Do not revise these criteria after results are visible. If a result exposes a new scientific mechanism, metric, interpretation, or success rule, stop and return that proposal to a fresh evidence gate. For an unsupported proposal, require the normal explicit hypothesis authorization and preregistration rather than relabeling the existing result.
+
+### Preserve authority boundaries
+
+Engineering guides, code-review conventions, prompt collections, and planning Skills may shape implementation discipline. They are expert practice or informal observation unless independently supported and classified otherwise. None can issue, upgrade, replace, or bypass `$theoretical-basis` PASS/PARTIAL/FAIL, broaden supported scope, or authorize an unsupported hypothesis.
+
 ## Humanized reporting
 
 Treat the evidence ledger as the immutable factual layer. After it is complete, `$humanizer-zh` may rewrite the surrounding Chinese explanation for clarity and natural rhythm.
@@ -214,6 +274,17 @@ The broad-search and custom-library rules are grounded in the following directly
 - The [`ustc-ai4science/academic-search`](https://github.com/ustc-ai4science/academic-search) Skill documents discipline routing, query expansion, multi-platform metadata retrieval, citation tracking, DOI/arXiv-ID deduplication, and access-status reporting. These capabilities support retrieval delegation while leaving scientific evidence judgment in this Skill.
 
 These sources justify the retrieval workflow, not the scientific truth of a proposed algorithm change. Every retrieved item must still pass the evidence and applicability checks above.
+
+## Engineering-discipline basis
+
+The post-gate rules are grounded in directly checked sources and bounded by their applicability:
+
+- [ClarifyGPT, arXiv:2310.10996](https://arxiv.org/abs/2310.10996) evaluates detecting ambiguous code-generation requirements and asking targeted clarification before final generation. It also identifies unnecessary interaction on clear requirements as an efficiency and user-experience cost. This supports conditional clarification, not mandatory questioning or universal repository-scale performance claims.
+- Google Engineering Practices, [What to look for in a code review](https://google.github.io/eng-practices/review/reviewer/looking-for.html), advises against speculative generality and unrelated large style changes, and requires tests whose assertions can reveal broken behavior. This is authoritative engineering practice, not a theorem about AI agents.
+- Google Engineering Practices, [Small CLs](https://google.github.io/eng-practices/review/developer/small-cls.html), defines smallness as one focused conceptual change, keeps related tests with logic changes, and separates refactoring when it obscures the functional change. This supports conceptual minimality and change traceability rather than a fixed line quota.
+- [`multica-ai/andrej-karpathy-skills`](https://github.com/multica-ai/andrej-karpathy-skills/tree/2c606141936f1eeef17fa3043a72095b4765b9c2), inspected at commit `2c606141936f1eeef17fa3043a72095b4765b9c2`, supplies the requested vocabulary around assumptions, simplicity, surgical changes, and verifiable goals. Treat it as attributed expert practice. The inspected snapshot contains MIT declarations in its README and Skill frontmatter but no standalone `LICENSE`, and it does not independently evaluate the exact four-rule bundle; use original wording and make no universal effectiveness claim.
+
+These sources support the bounded operational rules above. They do not establish theoretical support for a scientific algorithm change, change the applicable risk threshold, or share gate authority.
 
 ## Two-pass search sequence
 
