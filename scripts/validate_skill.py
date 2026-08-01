@@ -27,7 +27,11 @@ INTEGRATION_REPOSITORIES = (
     "https://github.com/ustc-ai4science/academic-search",
     "https://github.com/lgwanai/spec-skill",
     "https://github.com/op7418/Humanizer-zh",
+    "https://github.com/multica-ai/andrej-karpathy-skills",
 )
+EXPECTED_PLUGIN_VERSION = "1.3.0"
+EXPECTED_CASE_COUNT = 29
+EXPECTED_NEGATIVE_MUTATION_COUNT = 19
 REQUIRED_FILES = (
     "SKILL.md",
     "README.md",
@@ -67,6 +71,11 @@ REQUIRED_TAGS = {
     "code-graph-integration",
     "humanized-report",
     "claude-code",
+    "targeted-clarification",
+    "minimal-supported-design",
+    "surgical-change",
+    "fixed-verification",
+    "karpathy-boundary",
 }
 POLICY_CLAUSES = {
     "SKILL.md": (
@@ -95,6 +104,12 @@ POLICY_CLAUSES = {
         "references/evidence-protocol.md",
         "## Resolve Skill names by host",
         "/theoretical-basis:theoretical-basis",
+        "## Constrain implementation after the gate",
+        "Surface only decision-relevant ambiguity",
+        "Choose the least complex implementation",
+        "Every changed line or coherent hunk must trace",
+        "Freeze verification before editing",
+        "cannot issue, upgrade, replace, or bypass PASS/PARTIAL/FAIL",
     ),
     "references/evidence-protocol.md": (
         "## Basis types",
@@ -119,6 +134,13 @@ POLICY_CLAUSES = {
         "### Required preregistration fields",
         "**Multiple-comparison handling:**",
         "**Stopping rule:**",
+        "## Engineering discipline after the gate",
+        "Resolve only decision-relevant ambiguity",
+        "Choose the least complex candidate",
+        "Each final changed line or hunk must map",
+        "Freeze goal-driven verification",
+        "## Engineering-discipline basis",
+        "None can issue, upgrade, replace, or bypass `$theoretical-basis` PASS/PARTIAL/FAIL",
     ),
 }
 
@@ -209,6 +231,10 @@ def validate_claude_plugin(root: Path, errors: list[str]) -> None:
         version = plugin.get("version")
         if not isinstance(version, str) or not re.fullmatch(r"\d+\.\d+\.\d+", version):
             errors.append(".claude-plugin/plugin.json: semantic version is required")
+        elif version != EXPECTED_PLUGIN_VERSION:
+            errors.append(
+                f".claude-plugin/plugin.json: version must be {EXPECTED_PLUGIN_VERSION}"
+            )
         if plugin.get("repository") != repository:
             errors.append(".claude-plugin/plugin.json: repository URL is incorrect")
         if plugin.get("license") != "MIT":
@@ -293,6 +319,20 @@ def validate_policy(root: Path, errors: list[str]) -> None:
             errors.append(
                 f"README.md: integration repository URL is missing: {integration_url}"
             )
+    plugin = load_json(root / ".claude-plugin/plugin.json", errors)
+    plugin_version = plugin.get("version") if isinstance(plugin, dict) else None
+    if isinstance(plugin_version, str) and f"version-{plugin_version}-" not in readme:
+        errors.append(
+            f"README.md: version badge must match plugin version {plugin_version}"
+        )
+    for required_text in (
+        f"{EXPECTED_CASE_COUNT} 个行为场景",
+        f"{EXPECTED_NEGATIVE_MUTATION_COUNT} 个负向自测",
+        f"{EXPECTED_CASE_COUNT} behavior scenarios",
+        f"{EXPECTED_NEGATIVE_MUTATION_COUNT} negative mutations",
+    ):
+        if required_text not in readme:
+            errors.append(f"README.md: validation summary is missing {required_text!r}")
 
 
 def validate_cases(root: Path, errors: list[str]) -> None:
@@ -302,8 +342,10 @@ def validate_cases(root: Path, errors: list[str]) -> None:
         errors.append("evals/cases.yaml: version must equal 1")
         return
     cases = data.get("cases")
-    if not isinstance(cases, list) or len(cases) < 23:
-        errors.append("evals/cases.yaml: at least twenty-three cases are required")
+    if not isinstance(cases, list) or len(cases) != EXPECTED_CASE_COUNT:
+        errors.append(
+            f"evals/cases.yaml: exactly {EXPECTED_CASE_COUNT} cases are required"
+        )
         return
 
     ids: list[str] = []
@@ -376,6 +418,21 @@ def validate_cases(root: Path, errors: list[str]) -> None:
         "code_graph_grounds_change_not_gate": ("FAIL", "code-graph-integration"),
         "humanized_report_preserves_ledger": ("PASS", "humanized-report"),
         "claude_code_auto_and_direct_invocation": ("FAIL", "claude-code"),
+        "material_ambiguity_requires_targeted_clarification": (
+            "PARTIAL",
+            "targeted-clarification",
+        ),
+        "clear_supported_change_avoids_ceremonial_questioning": (
+            "PASS",
+            "targeted-clarification",
+        ),
+        "multiple_supported_candidates_choose_least_complex": (
+            "PASS",
+            "minimal-supported-design",
+        ),
+        "supported_change_rejects_unrelated_cleanup": ("PASS", "surgical-change"),
+        "verification_criteria_frozen_before_results": ("PASS", "fixed-verification"),
+        "karpathy_guidelines_cannot_override_fail": ("FAIL", "karpathy-boundary"),
     }
     for case_id, (expected_gate, required_tag) in integration_cases.items():
         case = by_id.get(case_id)
@@ -439,7 +496,16 @@ def run_negative_self_test(root: Path) -> None:
         ("references/evidence-protocol.md", "## Evidence Handoff and spec planning", "## Planning notes"),
         ("references/evidence-protocol.md", "## Humanized reporting", "## Report styling"),
         ("references/evidence-protocol.md", "## Custom theory libraries", "## Imported materials"),
+        ("SKILL.md", "Surface only decision-relevant ambiguity", "Ask for clarification"),
+        ("SKILL.md", "Choose the least complex implementation", "Choose an implementation"),
+        ("SKILL.md", "Every changed line or coherent hunk must trace", "Changes should generally relate"),
+        ("SKILL.md", "Freeze verification before editing", "Review verification after editing"),
+        ("references/evidence-protocol.md", "None can issue, upgrade, replace, or bypass `$theoretical-basis` PASS/PARTIAL/FAIL", "External guidelines may determine gate outcomes"),
     )
+    if len(mutations) != EXPECTED_NEGATIVE_MUTATION_COUNT:
+        raise SystemExit(
+            f"SELF-TEST ERROR: expected {EXPECTED_NEGATIVE_MUTATION_COUNT} mutations, got {len(mutations)}"
+        )
     for relative, required, replacement in mutations:
         with tempfile.TemporaryDirectory(prefix="theoretical-basis-negative-") as tmp:
             mutant = Path(tmp) / "mutant"

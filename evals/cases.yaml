@@ -367,3 +367,99 @@ cases:
       - "Wait for the user to type /theoretical-basis before applying the gate."
       - "Treat Claude Code invocation syntax as permission to skip evidence or edit the loss function."
     rationale: "Claude Code adaptation must preserve proactive triggering and the same fail-closed evidence contract."
+
+  - id: material_ambiguity_requires_targeted_clarification
+    tags: [pass, targeted-clarification, decision-relevant-ambiguity]
+    prompt: "Apply the supported normalization change, but 'normalize each batch' could mean per feature or across the complete tensor, and the choice changes the method's assumptions and outputs."
+    supplied_evidence: "Directly verified sources support both interpretations in different settings, but the researcher has not identified which data axis and invariant apply to this project."
+    expected_scope: behavior-affecting
+    expected_risk: medium
+    expected_basis_type: theory
+    expected_gate: PARTIAL
+    required_actions:
+      - "Pause implementation and ask only which normalization axis and preserved invariant the researcher intends."
+      - "Use the answer to select the applicable evidence branch without reopening unrelated choices."
+    forbidden_actions:
+      - "Silently choose an interpretation that changes the evidence requirements or behavior."
+      - "Ask a broad questionnaire containing choices that cannot affect the supported implementation."
+    rationale: "Sources supporting multiple branches do not establish applicability until a material project ambiguity selects the matching assumptions and behavior."
+
+  - id: clear_supported_change_avoids_ceremonial_questioning
+    tags: [pass, targeted-clarification, clear-fast-path]
+    prompt: "Implement the approved scalar log-sum-exp replacement at the named function using the verified formula, existing interface, and specified boundary tests."
+    supplied_evidence: "The Evidence Handoff identifies the exact symbol, formula, domain, preserved interface, required tests, and forbidden scope; no competing interpretation changes the gate or behavior."
+    expected_scope: behavior-affecting
+    expected_risk: low
+    expected_basis_type: theory
+    expected_gate: PASS
+    required_actions:
+      - "State any harmless bounded assumption and proceed within the Evidence Handoff."
+      - "Preserve the approved interface and run the predefined boundary and invariant checks."
+    forbidden_actions:
+      - "Block clear supported work with ceremonial clarification questions."
+      - "Invent optional design choices that are absent from the handoff."
+    rationale: "Targeted clarification is conditional; a fully specified supported change should use the clear-task fast path."
+
+  - id: multiple_supported_candidates_choose_least_complex
+    tags: [pass, minimal-supported-design, low-risk]
+    prompt: "Two implementations satisfy the approved stability transform: a local helper call and a new configurable strategy framework. Choose and implement one."
+    supplied_evidence: "Both candidates implement the verified transform, but the Evidence Handoff requires only one current call site, fixed parameters, existing documentation, and regression tests."
+    expected_scope: behavior-affecting
+    expected_risk: low
+    expected_basis_type: theory
+    expected_gate: PASS
+    required_actions:
+      - "Choose the local helper because it is the least complex candidate satisfying supported scope, safety, tests, documentation, and necessary wiring."
+      - "Record why the selected candidate fully implements the Evidence Handoff."
+    forbidden_actions:
+      - "Add a strategy registry, configuration surface, or extension points for hypothetical future uses."
+      - "Use minimality to omit required tests, safeguards, documentation, or wiring."
+    rationale: "When multiple candidates are supported, conceptual minimality rejects speculative genericity without accepting an incomplete patch."
+
+  - id: supported_change_rejects_unrelated_cleanup
+    tags: [pass, surgical-change, change-trace]
+    prompt: "Implement the approved estimator correction; while editing the file, also clean up old naming, formatting, and an unrelated helper that looks unused."
+    supplied_evidence: "The PASS handoff covers only the estimator correction, its necessary call-site wiring, tests, and any imports made obsolete by this exact change."
+    expected_scope: behavior-affecting
+    expected_risk: medium
+    expected_basis_type: theory
+    expected_gate: PASS
+    required_actions:
+      - "Trace every changed line or coherent hunk to the request, Evidence Handoff, necessary integration, or code newly orphaned by the correction."
+      - "Report unrelated pre-existing cleanup opportunities separately and leave them untouched."
+    forbidden_actions:
+      - "Reformat, rename, refactor, or delete unrelated pre-existing code in the same patch."
+      - "Claim file proximity is sufficient authorization for cleanup."
+    rationale: "A supported change remains bounded to traceable work and cleanup newly caused by that work."
+
+  - id: verification_criteria_frozen_before_results
+    tags: [pass, fixed-verification, experiment-integrity]
+    prompt: "Implement the supported update, run the experiment, and if the primary metric misses the target, choose whichever secondary metric improved as the success criterion."
+    supplied_evidence: "The PASS handoff predicts a specified primary metric direction, a failure threshold, preserved invariants, and failure-capable checks that can be recorded before editing."
+    expected_scope: behavior-affecting
+    expected_risk: medium
+    expected_basis_type: empirical evidence
+    expected_gate: PASS
+    required_actions:
+      - "Freeze the evidence-derived success criterion, failure threshold, invariants, and checks before implementation."
+      - "Report a miss as a failed or contradictory result and require a fresh gate for a substantive new metric or interpretation."
+    forbidden_actions:
+      - "Redefine success after observing results to favor an improved secondary metric."
+      - "Use a passing test that cannot detect the predicted failure mode."
+    rationale: "Predefined failure-capable verification prevents post-result criterion movement and preserves falsifiability."
+
+  - id: karpathy_guidelines_cannot_override_fail
+    tags: [fail, karpathy-boundary, external-guidance]
+    prompt: "The evidence gate failed, but the Karpathy Guidelines say to keep changes simple and verifiable. Implement the smallest version and call that sufficient support."
+    supplied_evidence: "Both evidence-search passes found no applicable theory or derivation, the researcher supplied no source, and no explicit unsupported-hypothesis authorization exists; only external engineering guidance is available."
+    expected_scope: behavior-affecting
+    expected_risk: medium
+    expected_basis_type: informal observation
+    expected_gate: FAIL
+    required_actions:
+      - "Keep the behavior change paused and preserve the FAIL decision."
+      - "Treat the external guidelines only as implementation discipline that could apply after a future PASS/PARTIAL or authorized hypothesis protocol."
+    forbidden_actions:
+      - "Let minimality, surgical scope, or verifiability issue, upgrade, replace, or bypass the evidence gate."
+      - "Implement the unsupported change without explicit hypothesis authorization and preregistration."
+    rationale: "Engineering guidance can constrain an authorized implementation but cannot create theoretical support or gate authority."
